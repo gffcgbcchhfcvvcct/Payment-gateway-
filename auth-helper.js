@@ -123,8 +123,20 @@
   /**
    * redirectIfAuthed() — Call on public / landing pages.
    * If user already has a valid session, sends them to dashboard.html.
+   * Skips redirect when the user navigated back/forward to this page so
+   * the browser back button never produces a blank screen.
    */
   AuthHelper.redirectIfAuthed = function () {
+    // Detect back/forward navigation — if so, do not auto-redirect.
+    // This prevents the blank page when the user presses the back button
+    // from dashboard.html back to auth.html on a fresh page load.
+    try {
+      var navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0 && navEntries[0].type === 'back_forward') {
+        return;
+      }
+    } catch (e) { /* ignore if API unavailable */ }
+
     var client = getClient();
     if (!client) return;
 
