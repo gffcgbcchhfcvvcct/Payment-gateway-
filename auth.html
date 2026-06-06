@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaPay — Sign In / Create Account</title>
+  <meta name="description" content="Sign in or create your NexaPay merchant account." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f5f6fa; color: #1a1f2e; min-height: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    input, select { font-family: inherit; }
+
+    :root {
+      --brand: #3b5bdb; --brand-dark: #2f4ac0; --brand-light: #e8edff;
+      --success: #16a34a; --error: #dc2626;
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: .85rem 1.1rem .75rem; background: #f5f6fa; }
+    .logo-row { display: flex; align-items: center; gap: .4rem; }
+    .logo-icon { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg,#3b5bdb,#748ffc); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-icon svg { width: 14px; height: 14px; }
+    .logo-name { font-size: .82rem; font-weight: 700; letter-spacing: -.1px; color: #4b5563; }
+    .back-btn { display: flex; align-items: center; gap: .3rem; font-size: .82rem; font-weight: 500; color: #6b7280; padding: .3rem .55rem; border-radius: 8px; transition: color .2s, background .2s; }
+    .back-btn:hover { color: #1a1f2e; background: #edf0f7; }
+    .back-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ─── PAGE BODY ─── */
+    .auth-page { padding: 1rem 1.1rem 3rem; max-width: 440px; margin: 0 auto; }
+    .auth-heading { margin-bottom: 1.3rem; }
+    .auth-heading h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -.4px; line-height: 1.2; margin-bottom: .3rem; }
+    .auth-heading p  { font-size: .85rem; color: #6b7280; line-height: 1.5; }
+
+    /* ─── REGISTRATION TYPE TOGGLE ─── */
+    .reg-type { display: flex; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: .25rem; gap: .25rem; margin-bottom: 1.1rem; }
+    .reg-type-btn {
+      flex: 1; padding: .62rem .5rem; border-radius: 9px;
+      font-size: .87rem; font-weight: 600; color: #6b7280;
+      display: flex; align-items: center; justify-content: center; gap: .45rem;
+      transition: background .2s, color .2s; border: none; background: none; cursor: pointer;
+    }
+    .reg-type-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .reg-type-btn.active { background: var(--brand); color: #fff; box-shadow: 0 2px 8px rgba(59,91,219,.22); }
+
+    /* ─── GOOGLE BUTTON ─── */
+    .btn-google { width: 100%; padding: .82rem 1rem; display: flex; align-items: center; justify-content: center; gap: .7rem; background: #fff; border: 1.5px solid #e2e5ea; border-radius: 50px; font-size: .9rem; font-weight: 600; color: #1a1f2e; transition: border-color .2s, box-shadow .2s; margin-bottom: 1.1rem; position: relative; }
+    .btn-google:hover { border-color: #b0b8c8; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+    .btn-google:disabled { opacity: .6; cursor: not-allowed; }
+    .g-icon { width: 19px; height: 19px; flex-shrink: 0; }
+
+    /* Divider */
+    .divider { display: flex; align-items: center; gap: .6rem; font-size: .78rem; color: #9ca3af; margin-bottom: 1.2rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+
+    /* ─── FORM FIELDS ─── */
+    .form-group { margin-bottom: .95rem; }
+    .form-label { display: block; font-size: .83rem; font-weight: 600; color: #1a1f2e; margin-bottom: .35rem; }
+    .required { color: var(--error); margin-left: 2px; }
+    .input-wrap { position: relative; }
+    .form-input {
+      width: 100%; padding: .76rem .9rem;
+      background: #fff; border: 1.5px solid #e5e7eb;
+      border-radius: 10px; font-size: .9rem; color: #1a1f2e;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input::placeholder { color: #b0b8c8; }
+    .form-input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(59,91,219,.1); }
+    .form-input.valid   { border-color: var(--success); }
+    .form-input.invalid { border-color: var(--error); }
+    .form-input.has-right { padding-right: 2.8rem; }
+
+    /* Select styled same as input */
+    select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .85rem center; padding-right: 2.2rem; cursor: pointer; }
+
+    .eye-btn { position: absolute; right: .8rem; top: 50%; transform: translateY(-50%); color: #9ca3af; padding: .2rem; display: flex; align-items: center; transition: color .15s; }
+    .eye-btn:hover { color: #4b5563; }
+    .eye-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .field-err { display: none; align-items: center; gap: .35rem; font-size: .76rem; color: var(--error); margin-top: .3rem; }
+    .field-err.show { display: flex; }
+    .field-err svg { width: 12px; height: 12px; stroke: var(--error); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+    /* Phone row */
+    .phone-row { display: flex; gap: .45rem; }
+    .cc-select { width: 100px; flex-shrink: 0; padding: .76rem .45rem .76rem .7rem; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: .82rem; color: #1a1f2e; outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .45rem center; padding-right: 1.3rem; transition: border-color .2s; }
+    .cc-select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(59,91,219,.1); }
+    .phone-input { flex: 1; }
+
+    /* Hidden field */
+    .field-hidden { display: none; }
+
+    /* ─── PASSWORD RULES ─── */
+    .pwd-rules { display: none; margin-top: .5rem; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: .75rem .9rem; }
+    .pwd-rules.open { display: block; }
+    .pwd-rules-ttl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #9ca3af; margin-bottom: .45rem; }
+    .rule { display: flex; align-items: center; gap: .45rem; font-size: .79rem; color: #9ca3af; padding: .15rem 0; transition: color .2s; }
+    .rule-dot { width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .rule-dot svg { width: 8px; height: 8px; stroke: #fff; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; display: none; }
+    .rule.pass { color: var(--success); }
+    .rule.pass .rule-dot { background: var(--success); border-color: var(--success); }
+    .rule.pass .rule-dot svg { display: block; }
+    .rule.fail { color: var(--error); }
+    .rule.fail .rule-dot { border-color: var(--error); background: #fee2e2; }
+    .strength-row { margin-top: .6rem; }
+    .strength-hd { display: flex; justify-content: space-between; font-size: .7rem; font-weight: 600; color: #9ca3af; margin-bottom: .28rem; }
+    .strength-track { height: 4px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+    .strength-fill  { height: 100%; border-radius: 99px; width: 0; transition: width .3s, background .3s; }
+
+    /* ─── TERMS ─── */
+    .terms-wrap { display: flex; align-items: flex-start; gap: .55rem; margin: .4rem 0 .9rem; }
+    .terms-cb { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; appearance: none; border: 2px solid #d1d5db; border-radius: 4px; cursor: pointer; transition: all .2s; }
+    .terms-cb:checked { background: var(--brand); border-color: var(--brand); background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 8L6.5 11.5L13 5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size: cover; }
+    .terms-cb:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,91,219,.15); }
+    .terms-txt { font-size: .8rem; color: #6b7280; line-height: 1.5; }
+    .terms-txt a { color: var(--brand); font-weight: 500; }
+    .terms-txt a:hover { text-decoration: underline; }
+    .terms-err { font-size: .76rem; color: var(--error); display: none; margin-top: -.4rem; margin-bottom: .9rem; }
+    .terms-err.show { display: block; }
+
+    /* ─── FORGOT ─── */
+    .forgot-row { display: flex; justify-content: flex-end; margin-top: -.3rem; margin-bottom: 1.1rem; }
+    .forgot-link { font-size: .8rem; color: var(--brand); font-weight: 500; }
+    .forgot-link:hover { text-decoration: underline; }
+
+    /* ─── SUBMIT BUTTON ─── */
+    .btn-submit { width: 100%; padding: .88rem; background: var(--brand); color: #fff; border-radius: 50px; font-size: .95rem; font-weight: 700; letter-spacing: .1px; box-shadow: 0 4px 14px rgba(59,91,219,.26); transition: background .2s, box-shadow .2s, transform .15s; display: flex; align-items: center; justify-content: center; gap: .5rem; position: relative; }
+    .btn-submit:hover { background: var(--brand-dark); box-shadow: 0 6px 20px rgba(59,91,219,.36); }
+    .btn-submit:active { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .55; cursor: not-allowed; }
+    .spin { width: 17px; height: 17px; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; display: none; position: absolute; }
+    .btn-submit.loading .btn-txt { opacity: 0; }
+    .btn-submit.loading .spin { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .switch-link { text-align: center; margin-top: 1.1rem; font-size: .84rem; color: #6b7280; }
+    .switch-link a { color: var(--brand); font-weight: 600; }
+    .switch-link a:hover { text-decoration: underline; }
+
+    /* ─── SUCCESS / CONFIRM SCREEN ─── */
+    #successScreen { display: none; text-align: center; padding: 2.5rem 0; }
+    #successScreen.show { display: block; }
+    .check-circle { width: 68px; height: 68px; border-radius: 50%; background: #dcfce7; border: 2px solid #bbf7d0; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; animation: pop .4s cubic-bezier(.34,1.56,.64,1) both; }
+    .check-circle svg { width: 30px; height: 30px; stroke: var(--success); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .mail-circle { width: 68px; height: 68px; border-radius: 50%; background: #eff6ff; border: 2px solid #bfdbfe; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; animation: pop .4s cubic-bezier(.34,1.56,.64,1) both; }
+    .mail-circle svg { width: 30px; height: 30px; stroke: #3b82f6; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes pop { from { opacity:0; transform: scale(.5); } to { opacity:1; transform: scale(1); } }
+    #successScreen h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .35rem; }
+    #successScreen p  { font-size: .85rem; color: #6b7280; margin-bottom: 1.4rem; line-height: 1.6; }
+
+    .btn-dashboard { display: inline-flex; align-items: center; gap: .5rem; background: var(--brand); color: #fff; padding: .82rem 2.1rem; border-radius: 50px; font-weight: 700; font-size: .92rem; box-shadow: 0 4px 14px rgba(59,91,219,.26); transition: background .2s; }
+    .btn-dashboard:hover { background: var(--brand-dark); }
+
+    /* Resend area */
+    .resend-area { margin-top: .5rem; }
+    .btn-resend { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem; font-weight: 600; color: var(--brand); background: none; border: none; cursor: pointer; padding: .5rem .8rem; border-radius: 8px; transition: background .2s; }
+    .btn-resend:hover { background: #e8edff; }
+    .btn-resend:disabled { color: #9ca3af; cursor: not-allowed; background: none; }
+    .resend-timer { font-size: .82rem; color: #9ca3af; font-weight: 500; }
+
+    /* ─── TOAST ─── */
+    .toast-box { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: .5rem; align-items: center; pointer-events: none; }
+    .toast { padding: .7rem 1.15rem; border-radius: 50px; font-size: .82rem; font-weight: 600; pointer-events: all; white-space: nowrap; box-shadow: 0 6px 22px rgba(0,0,0,.14); animation: slideUp .3s ease both; }
+    .toast.ok  { background: #166534; color: #fff; }
+    .toast.bad { background: #991b1b; color: #fff; }
+    @keyframes slideUp   { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes slideDown { to   { opacity:0; transform: translateY(12px); } }
+    .toast.leaving { animation: slideDown .25s ease both; }
+
+    /* ─── PAGE PANELS ─── */
+    #panelSignin, #panelRegister { display: none; }
+    #panelSignin.active, #panelRegister.active { display: block; }
+
+    /* ─── LOADING OVERLAY ─── */
+    .auth-loading { display: none; position: fixed; inset: 0; background: rgba(245,246,250,.92); z-index: 8888; align-items: center; justify-content: center; flex-direction: column; gap: .75rem; }
+    .auth-loading.show { display: flex; }
+    .auth-loading-spin { width: 34px; height: 34px; border: 3px solid #e5e7eb; border-top-color: var(--brand); border-radius: 50%; animation: spin .7s linear infinite; }
+    .auth-loading p { font-size: .85rem; color: #6b7280; font-weight: 500; }
+
+    @media (min-width: 480px) {
+      .auth-page { padding-top: 1.75rem; }
+      .auth-heading h1 { font-size: 1.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast-box" id="toastBox"></div>
+
+<div class="auth-loading" id="authLoading">
+  <div class="auth-loading-spin"></div>
+  <p>Signing you in…</p>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo-row">
+    <img src="nexapay.png" width="28" height="28" alt="NexaPay" style="border-radius:7px;display:block;object-fit:contain;flex-shrink:0;">
+    <span class="logo-name">Nexa<span style="font-weight:900;font-style:italic;">Pay</span></span>
+  </div>
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back
+  </a>
+</div>
+
+<div class="auth-page">
+
+  <!-- ══════════ SIGN IN PANEL ══════════ -->
+  <div id="panelSignin">
+    <div class="auth-heading">
+      <h1>Welcome back</h1>
+      <p>Sign in to your NexaPay merchant account.</p>
+    </div>
+
+    <button class="btn-google" id="googleSigninBtn" onclick="doGoogleSignIn()">
+      <svg class="g-icon" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="divider">or sign in with email</div>
+
+    <form id="signinForm" onsubmit="doSignin(event)" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="si-email">Email Address <span class="required">*</span></label>
+        <div class="input-wrap">
+          <input type="email" id="si-email" class="form-input" placeholder="you@example.co.zm"
+            oninput="liveEmail('si-email','si-email-err')" onblur="liveEmail('si-email','si-email-err')"/>
+        </div>
+        <div class="field-err" id="si-email-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="si-pwd">Password <span class="required">*</span></label>
+        <div class="input-wrap">
+          <input type="password" id="si-pwd" class="form-input has-right" placeholder="Your password" oninput="clearErr('si-pwd','si-pwd-err')"/>
+          <button type="button" class="eye-btn" onclick="toggleEye('si-pwd',this)">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-err" id="si-pwd-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+      </div>
+
+      <div class="forgot-row">
+        <a href="#" class="forgot-link" onclick="doForgot(); return false;">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-submit" id="signinBtn">
+        <div class="spin"></div><span class="btn-txt">Sign In</span>
+      </button>
+    </form>
+
+    <div class="switch-link">
+      Don't have an account? <a href="#" onclick="switchMode('register'); return false;">Get Started</a>
+    </div>
+  </div>
+
+  <!-- ══════════ REGISTER PANEL ══════════ -->
+  <div id="panelRegister">
+    <div id="rgWrap">
+      <div class="auth-heading">
+        <h1>Create Account</h1>
+        <p>Join Elicate Pay as a merchant.</p>
+      </div>
+
+      <!-- Registration Type Toggle -->
+      <div class="reg-type" id="regTypeToggle">
+        <button type="button" class="reg-type-btn active" id="btnIndividual" onclick="setRegType('individual')">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Individual
+        </button>
+        <button type="button" class="reg-type-btn" id="btnBusiness" onclick="setRegType('business')">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Business
+        </button>
+      </div>
+
+      <button class="btn-google" id="googleRegisterBtn" onclick="doGoogleSignIn()">
+        <svg class="g-icon" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="divider">or create with email</div>
+
+      <form id="registerForm" onsubmit="doRegister(event)" novalidate>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label" for="rg-name">Full Name <span class="required">*</span></label>
+          <div class="input-wrap">
+            <input type="text" id="rg-name" class="form-input" placeholder="Mwila Chanda"
+              oninput="liveName('rg-name','rg-name-err')" onblur="liveName('rg-name','rg-name-err')"/>
+          </div>
+          <div class="field-err" id="rg-name-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Business Name (only shown for Business type) -->
+        <div class="form-group field-hidden" id="bizGroup">
+          <label class="form-label" for="rg-biz">Business Name <span class="required">*</span></label>
+          <div class="input-wrap">
+            <input type="text" id="rg-biz" class="form-input" placeholder="My Business Ltd"
+              oninput="liveReq('rg-biz','rg-biz-err','Business name')" onblur="liveReq('rg-biz','rg-biz-err','Business name')"/>
+          </div>
+          <div class="field-err" id="rg-biz-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Country -->
+        <div class="form-group">
+          <label class="form-label" for="rg-country">Country <span class="required">*</span></label>
+          <select id="rg-country" class="form-input" onchange="onCountryChange()">
+            <option value="">Select your country</option>
+            <option value="ZM">🇿🇲 Zambia</option>
+            <option value="ZW">🇿🇼 Zimbabwe</option>
+            <option value="NA">🇳🇦 Namibia</option>
+            <option value="BW">🇧🇼 Botswana</option>
+          </select>
+          <div class="field-err" id="rg-country-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="rg-email">Email Address <span class="required">*</span></label>
+          <div class="input-wrap">
+            <input type="email" id="rg-email" class="form-input" placeholder="you@example.co.zm"
+              oninput="liveEmail('rg-email','rg-email-err')" onblur="liveEmail('rg-email','rg-email-err')"/>
+          </div>
+          <div class="field-err" id="rg-email-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label class="form-label" for="rg-phone">Phone Number <span class="required">*</span></label>
+          <div class="phone-row">
+            <select class="cc-select" id="rg-cc" onchange="updatePhPH()">
+              <option value="+260">🇿🇲 +260</option>
+              <option value="+263">🇿🇼 +263</option>
+              <option value="+264">🇳🇦 +264</option>
+              <option value="+267">🇧🇼 +267</option>
+            </select>
+            <div class="input-wrap phone-input">
+              <input type="tel" id="rg-phone" class="form-input" placeholder="96XXXXXXX"
+                oninput="livePhone('rg-phone','rg-phone-err')" onblur="livePhone('rg-phone','rg-phone-err')"/>
+            </div>
+          </div>
+          <div class="field-err" id="rg-phone-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="rg-pwd">Password <span class="required">*</span></label>
+          <div class="input-wrap">
+            <input type="password" id="rg-pwd" class="form-input has-right" placeholder="Min. 8 characters"
+              oninput="onPwdInput()" onfocus="openRules()" onblur="onPwdBlur()"/>
+            <button type="button" class="eye-btn" onclick="toggleEye('rg-pwd',this)">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="pwd-rules" id="pwdRules">
+            <div class="pwd-rules-ttl">Password must include</div>
+            <div class="rule" id="r-len">   <div class="rule-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div> At least 8 characters</div>
+            <div class="rule" id="r-upper"> <div class="rule-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div> One uppercase letter (A–Z)</div>
+            <div class="rule" id="r-lower"> <div class="rule-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div> One lowercase letter (a–z)</div>
+            <div class="rule" id="r-num">   <div class="rule-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div> One number (0–9)</div>
+            <div class="rule" id="r-sym">   <div class="rule-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div> One special character (!@#$...)</div>
+            <div class="strength-row">
+              <div class="strength-hd"><span>Strength</span><span id="sLabel">—</span></div>
+              <div class="strength-track"><div class="strength-fill" id="sFill"></div></div>
+            </div>
+          </div>
+          <div class="field-err" id="rg-pwd-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="form-label" for="rg-conf">Confirm Password <span class="required">*</span></label>
+          <div class="input-wrap">
+            <input type="password" id="rg-conf" class="form-input has-right" placeholder="Confirm your password"
+              oninput="liveConf()" onblur="liveConf()"/>
+            <button type="button" class="eye-btn" onclick="toggleEye('rg-conf',this)">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="field-err" id="rg-conf-err"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-wrap">
+          <input type="checkbox" id="rg-terms" class="terms-cb" onchange="clearTermsErr()"/>
+          <label for="rg-terms" class="terms-txt">
+            I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
+          </label>
+        </div>
+        <div class="terms-err" id="termsErr">Please accept the Terms of Service and Privacy Policy.</div>
+
+        <button type="submit" class="btn-submit" id="registerBtn">
+          <div class="spin"></div><span class="btn-txt">Create Account</span>
+        </button>
+      </form>
+
+      <div class="switch-link">
+        Already have an account? <a href="#" onclick="switchMode('signin'); return false;">Sign in</a>
+      </div>
+    </div>
+
+    <!-- ── Success: immediate login (no email confirm needed) ── -->
+    <div id="successScreen">
+      <div id="successIcon" class="check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div id="mailIcon" class="mail-circle" style="display:none;">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <h2 id="successTitle">Account Created!</h2>
+      <p id="successMsg">Welcome to NexaPay. Your merchant account is ready.<br>Redirecting to your dashboard…</p>
+
+      <a href="dashboard.html" class="btn-dashboard" id="dashBtn">
+        Go to Dashboard
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+
+      <!-- Resend confirmation (shown when email confirm is required) -->
+      <div class="resend-area" id="resendArea" style="display:none;">
+        <button class="btn-resend" id="resendBtn" onclick="doResend()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+          Resend Email
+        </button>
+        <span class="resend-timer" id="resendTimer">Resend in <strong id="resendCount">60</strong>s</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.auth-page -->
+
+<!-- Supabase JS v2 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════
+// SUPABASE CLIENT
+// ═══════════════════════════════════════════════════
+var SUPABASE_URL = 'https://yfmflzasmxpjtrmolgwc.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_iP6r-OFajYXqy-xjInpfEA_s-RcEDud';
+var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+var _regType     = 'individual';  // 'individual' | 'business'
+var _pendingEmail = '';           // stored for resend
+var _resendTimer  = null;
+
+// ─── Save user to localStorage ───────────────────────────────────────────────
+function saveUser(user, provider) {
+  var profile = {
+    id:       user.id,
+    name:     (user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || '',
+    email:    user.email || '',
+    avatar:   (user.user_metadata && user.user_metadata.avatar_url) || '',
+    provider: provider || 'email'
+  };
+  localStorage.setItem('nexapay_current_user', JSON.stringify(profile));
+  return profile;
+}
+
+// ─── INIT ───────────────────────────────────────────────────────────────────
+(async function init() {
+  var hash = window.location.hash;
+  if (hash && (hash.includes('access_token') || hash.includes('error'))) {
+    document.getElementById('authLoading').classList.add('show');
+    var { data, error } = await supabase.auth.getSession();
+    document.getElementById('authLoading').classList.remove('show');
+    if (!error && data.session) {
+      var u = data.session.user;
+      saveUser(u, 'google');
+      toast('Welcome, ' + (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name) || u.email) + '!', 'ok');
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setTimeout(function(){ window.location.href = 'dashboard.html'; }, 1000);
+      return;
+    } else {
+      var errMsg = (new URLSearchParams(hash.replace('#','?'))).get('error_description') || 'Google sign-in failed.';
+      toast(decodeURIComponent(errMsg.replace(/\+/g,' ')), 'bad');
+      window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+    }
+  }
+
+  var { data: sd } = await supabase.auth.getSession();
+  if (sd && sd.session) {
+    var u = sd.session.user;
+    saveUser(u, (u.app_metadata && u.app_metadata.provider) || 'email');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  var p = new URLSearchParams(window.location.search).get('mode');
+  switchMode(p === 'register' ? 'register' : 'signin');
+
+  supabase.auth.onAuthStateChange(function(event, session) {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session) {
+      var u = session.user;
+      saveUser(u, (u.app_metadata && u.app_metadata.provider) || 'email');
+      window.location.href = 'dashboard.html';
+    }
+  });
+})();
+
+// ─── MODE SWITCH ─────────────────────────────────────────────────────────────
+function switchMode(mode) {
+  var isReg = mode === 'register';
+  document.getElementById('panelSignin').classList.toggle('active', !isReg);
+  document.getElementById('panelRegister').classList.toggle('active', isReg);
+  var url = new URL(window.location.href);
+  url.searchParams.set('mode', mode);
+  history.replaceState({}, '', url);
+  window.scrollTo({ top: 0 });
+}
+
+// ─── REGISTRATION TYPE ───────────────────────────────────────────────────────
+function setRegType(type) {
+  _regType = type;
+  document.getElementById('btnIndividual').classList.toggle('active', type === 'individual');
+  document.getElementById('btnBusiness').classList.toggle('active', type === 'business');
+  var bizGroup = document.getElementById('bizGroup');
+  if (type === 'business') {
+    bizGroup.classList.remove('field-hidden');
+  } else {
+    bizGroup.classList.add('field-hidden');
+    document.getElementById('rg-biz').value = '';
+    clearErr('rg-biz', 'rg-biz-err');
+  }
+}
+
+// ─── COUNTRY → auto-match phone code ─────────────────────────────────────────
+var countryPhone = { ZM: '+260', ZW: '+263', NA: '+264', BW: '+267' };
+var phMap        = { '+260': '96XXXXXXX', '+263': '77XXXXXXX', '+264': '81XXXXXXX', '+267': '71XXXXXXX' };
+
+function onCountryChange() {
+  var code = document.getElementById('rg-country').value;
+  if (!code) return;
+  clearErr('rg-country', 'rg-country-err');
+  var cc = countryPhone[code];
+  if (cc) {
+    document.getElementById('rg-cc').value = cc;
+    document.getElementById('rg-phone').placeholder = phMap[cc] || '9XXXXXXXX';
+  }
+}
+function updatePhPH() {
+  document.getElementById('rg-phone').placeholder = phMap[document.getElementById('rg-cc').value] || '9XXXXXXXX';
+}
+
+// ─── GOOGLE SIGN-IN ──────────────────────────────────────────────────────────
+async function doGoogleSignIn() {
+  var btns = document.querySelectorAll('.btn-google');
+  btns.forEach(function(b){ b.disabled = true; b.style.opacity = '.6'; });
+  document.getElementById('authLoading').classList.add('show');
+  var redirectTo = window.location.origin + window.location.pathname;
+  var { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: redirectTo } });
+  if (error) {
+    document.getElementById('authLoading').classList.remove('show');
+    btns.forEach(function(b){ b.disabled = false; b.style.opacity = ''; });
+    toast(error.message || 'Google sign-in failed.', 'bad');
+  }
+}
+
+// ─── EMAIL SIGN IN ───────────────────────────────────────────────────────────
+async function doSignin(e) {
+  e.preventDefault();
+  var email = document.getElementById('si-email').value.trim();
+  var pwd   = document.getElementById('si-pwd').value;
+  var ok    = true;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('si-email','si-email-err','Enter a valid email address.'); ok = false; }
+  if (!pwd) { setErr('si-pwd','si-pwd-err','Password is required.'); ok = false; }
+  if (!ok) return;
+
+  var btn = document.getElementById('signinBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+  var { data, error } = await supabase.auth.signInWithPassword({ email: email, password: pwd });
+  btn.classList.remove('loading'); btn.disabled = false;
+
+  if (error) {
+    var msg = error.message || 'Sign-in failed.';
+    if (msg.toLowerCase().includes('invalid') || msg.toLowerCase().includes('credentials')) {
+      setErr('si-pwd','si-pwd-err','Incorrect email or password.');
+    } else if (msg.toLowerCase().includes('confirm')) {
+      toast('Please verify your email — check your inbox.', 'bad');
+    } else { toast(msg, 'bad'); }
+    return;
+  }
+  var u = data.user;
+  saveUser(u, 'email');
+  toast('Welcome back, ' + ((u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || email.split('@')[0]) + '!', 'ok');
+  setTimeout(function(){ window.location.href = 'dashboard.html'; }, 900);
+}
+
+// ─── EMAIL SIGN UP ───────────────────────────────────────────────────────────
+async function doRegister(e) {
+  e.preventDefault();
+  var name    = document.getElementById('rg-name').value.trim();
+  var biz     = _regType === 'business' ? document.getElementById('rg-biz').value.trim() : '';
+  var country = document.getElementById('rg-country').value;
+  var email   = document.getElementById('rg-email').value.trim();
+  var phone   = document.getElementById('rg-phone').value.replace(/\s/g,'');
+  var cc      = document.getElementById('rg-cc').value;
+  var pwd     = document.getElementById('rg-pwd').value;
+  var conf    = document.getElementById('rg-conf').value;
+  var terms   = document.getElementById('rg-terms').checked;
+  var ok      = true;
+
+  if (name.length < 2)  { setErr('rg-name','rg-name-err','Full name is required.'); ok = false; }
+  if (_regType === 'business' && biz.length < 2) { setErr('rg-biz','rg-biz-err','Business name is required.'); ok = false; }
+  if (!country) { setErr('rg-country','rg-country-err','Please select your country.'); ok = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('rg-email','rg-email-err','Valid email is required.'); ok = false; }
+  if (!/^[0-9]{7,12}$/.test(phone)) { setErr('rg-phone','rg-phone-err','Valid phone number is required.'); ok = false; }
+  if (!pwd || !allRulesPass()) {
+    setErr('rg-pwd','rg-pwd-err','Password does not meet all requirements.');
+    openRules();
+    RULES.forEach(function(r){ document.getElementById(r.id).classList.toggle('fail', !r.test(document.getElementById('rg-pwd').value)); });
+    ok = false;
+  }
+  if (pwd && conf !== pwd) { setErr('rg-conf','rg-conf-err','Passwords do not match.'); ok = false; }
+  if (!terms) { document.getElementById('termsErr').classList.add('show'); ok = false; }
+  if (!ok) return;
+
+  var btn = document.getElementById('registerBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  var countryNames = { ZM: 'Zambia', ZW: 'Zimbabwe', NA: 'Namibia', BW: 'Botswana' };
+  var { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: pwd,
+    options: {
+      data: {
+        full_name:     name,
+        business_name: biz || null,
+        account_type:  _regType,
+        country:       countryNames[country] || country,
+        phone:         cc + ' ' + phone
+      }
+    }
+  });
+
+  btn.classList.remove('loading'); btn.disabled = false;
+
+  if (error) {
+    var msg = error.message || 'Registration failed.';
+    if (msg.toLowerCase().includes('already') || msg.toLowerCase().includes('registered')) {
+      setErr('rg-email','rg-email-err','An account with this email already exists.');
+    } else { toast(msg, 'bad'); }
+    return;
+  }
+
+  if (data.user) {
+    var profile = saveUser(data.user, 'email');
+    profile.name = name;
+    localStorage.setItem('nexapay_current_user', JSON.stringify(profile));
+  }
+
+  _pendingEmail = email;
+  document.getElementById('rgWrap').style.display = 'none';
+  var ss = document.getElementById('successScreen');
+  ss.classList.add('show');
+  window.scrollTo({ top: 0 });
+
+  if (data.session) {
+    // Email confirm OFF — immediate login
+    document.getElementById('successTitle').textContent = 'Account Created!';
+    document.getElementById('successMsg').innerHTML = 'Welcome to NexaPay. Your account is ready.<br>Redirecting to your dashboard…';
+    document.getElementById('dashBtn').style.display = '';
+    document.getElementById('resendArea').style.display = 'none';
+    setTimeout(function(){ window.location.href = 'dashboard.html'; }, 2800);
+  } else {
+    // Email confirm ON — show resend UI
+    document.getElementById('successIcon').style.display = 'none';
+    document.getElementById('mailIcon').style.display = '';
+    document.getElementById('successTitle').textContent = 'Check Your Inbox';
+    document.getElementById('successMsg').innerHTML =
+      'We sent a confirmation link to<br><strong>' + email + '</strong><br><br>Click the link in your email to activate your account.';
+    document.getElementById('dashBtn').style.display = 'none';
+    document.getElementById('resendArea').style.display = '';
+    startResendTimer();
+  }
+}
+
+// ─── RESEND CONFIRMATION ─────────────────────────────────────────────────────
+function startResendTimer() {
+  var count = 60;
+  var btn   = document.getElementById('resendBtn');
+  var timer = document.getElementById('resendTimer');
+  var num   = document.getElementById('resendCount');
+  btn.disabled = true;
+  timer.style.display = '';
+  num.textContent = count;
+
+  if (_resendTimer) clearInterval(_resendTimer);
+  _resendTimer = setInterval(function() {
+    count--;
+    num.textContent = count;
+    if (count <= 0) {
+      clearInterval(_resendTimer);
+      btn.disabled = false;
+      timer.style.display = 'none';
+    }
+  }, 1000);
+}
+
+async function doResend() {
+  if (!_pendingEmail) return;
+  var btn = document.getElementById('resendBtn');
+  btn.disabled = true;
+  var { error } = await supabase.auth.resend({ type: 'signup', email: _pendingEmail });
+  if (error) {
+    toast(error.message || 'Could not resend. Try again.', 'bad');
+    btn.disabled = false;
+  } else {
+    toast('Confirmation email resent!', 'ok');
+    startResendTimer();
+  }
+}
+
+// ─── FORGOT PASSWORD ─────────────────────────────────────────────────────────
+async function doForgot() {
+  var email = document.getElementById('si-email').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setErr('si-email','si-email-err','Enter your email address first.'); return;
+  }
+  var { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/auth.html' });
+  if (error) { toast(error.message || 'Reset failed.', 'bad'); return; }
+  toast('Password reset email sent to ' + email, 'ok');
+}
+
+// ─── FIELD HELPERS ────────────────────────────────────────────────────────────
+function setErr(id, errId, msg) {
+  var el = document.getElementById(id); el.classList.remove('valid'); el.classList.add('invalid');
+  var e = document.getElementById(errId); e.querySelector('span').textContent = msg; e.classList.add('show');
+}
+function clearErr(id, errId) {
+  document.getElementById(id).classList.remove('invalid');
+  if (errId) document.getElementById(errId).classList.remove('show');
+}
+function setOk(id, errId) { clearErr(id, errId); document.getElementById(id).classList.add('valid'); }
+function liveEmail(id, errId) {
+  var v = document.getElementById(id).value.trim(); if (!v) { clearErr(id,errId); return false; }
+  var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); ok ? setOk(id,errId) : setErr(id,errId,'Enter a valid email address.'); return ok;
+}
+function liveName(id, errId) {
+  var v = document.getElementById(id).value.trim(); if (!v) { clearErr(id,errId); return false; }
+  var ok = v.length >= 2; ok ? setOk(id,errId) : setErr(id,errId,'Please enter your full name.'); return ok;
+}
+function liveReq(id, errId, label) {
+  var v = document.getElementById(id).value.trim(); if (!v) { clearErr(id,errId); return false; }
+  var ok = v.length >= 2; ok ? setOk(id,errId) : setErr(id,errId,label+' is required.'); return ok;
+}
+function livePhone(id, errId) {
+  var v = document.getElementById(id).value.replace(/\s/g,''); if (!v) { clearErr(id,errId); return false; }
+  var ok = /^[0-9]{7,12}$/.test(v); ok ? setOk(id,errId) : setErr(id,errId,'Enter a valid phone number (digits only).'); return ok;
+}
+function liveConf() {
+  var p = document.getElementById('rg-pwd').value, c = document.getElementById('rg-conf').value;
+  if (!c) { clearErr('rg-conf','rg-conf-err'); return false; }
+  var ok = p === c; ok ? setOk('rg-conf','rg-conf-err') : setErr('rg-conf','rg-conf-err','Passwords do not match.'); return ok;
+}
+
+// ─── EYE TOGGLE ──────────────────────────────────────────────────────────────
+function toggleEye(id, btn) {
+  var inp = document.getElementById(id), show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  btn.querySelector('svg').innerHTML = show
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+// ─── PASSWORD RULES ───────────────────────────────────────────────────────────
+var RULES = [
+  { id: 'r-len',   test: function(v){ return v.length >= 8; } },
+  { id: 'r-upper', test: function(v){ return /[A-Z]/.test(v); } },
+  { id: 'r-lower', test: function(v){ return /[a-z]/.test(v); } },
+  { id: 'r-num',   test: function(v){ return /[0-9]/.test(v); } },
+  { id: 'r-sym',   test: function(v){ return /[!@#$%^&*()\-_=+\[\]{};':"\\|,.<>/?`~]/.test(v); } },
+];
+var SNAMES = ['','Weak','Fair','Good','Strong','Very Strong'];
+var SCLRS  = ['','#ef4444','#f97316','#eab308','#22c55e','#16a34a'];
+
+function openRules() { document.getElementById('pwdRules').classList.add('open'); }
+function onPwdBlur()  { if (!document.getElementById('rg-pwd').value) document.getElementById('pwdRules').classList.remove('open'); }
+function onPwdInput() {
+  var v = document.getElementById('rg-pwd').value; clearErr('rg-pwd','rg-pwd-err'); var score = 0;
+  RULES.forEach(function(r){ var pass=r.test(v); var el=document.getElementById(r.id); el.classList.toggle('pass',pass); el.classList.toggle('fail',v.length>0&&!pass); if(pass)score++; });
+  var fill=document.getElementById('sFill'),lbl=document.getElementById('sLabel');
+  fill.style.width=v.length?(score/RULES.length*100)+'%':'0'; fill.style.background=v.length?SCLRS[score]:''; lbl.textContent=v.length?SNAMES[score]:'—';
+  if(document.getElementById('rg-conf').value) liveConf();
+}
+function allRulesPass() { var v=document.getElementById('rg-pwd').value; return RULES.every(function(r){return r.test(v);}); }
+
+// ─── TERMS ────────────────────────────────────────────────────────────────────
+function clearTermsErr() { document.getElementById('termsErr').classList.remove('show'); }
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function toast(msg, type) {
+  var box=document.getElementById('toastBox'), t=document.createElement('div');
+  t.className='toast '+(type||'ok'); t.textContent=msg; box.appendChild(t);
+  setTimeout(function(){ t.classList.add('leaving'); setTimeout(function(){ t.remove(); },280); },3500);
+}
+</script>
+<script src="sw-transitions.js" onerror="void 0"></script>
+</body>
+</html>
