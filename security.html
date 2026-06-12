@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security &amp; Compliance — NexaPay</title>
+  <meta name="description" content="NexaPay is built on bank-grade security standards. PCI DSS Level 1, TLS 1.3, 3D Secure, ISO 27001, and real-time fraud protection." />
+  <link rel="icon" href="nexapay.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f4f5f9; color: #1a1f2e; line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    :root {
+      --brand: #3b5bdb; --brand-dark: #2f4ac0; --brand-light: #e8edff; --brand-muted: #748ffc;
+      --surface: #ffffff; --bg: #f4f5f9; --bg-dark: #edf0f7;
+      --text: #1a1f2e; --text-muted: #6b7280; --text-light: #9ca3af;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06); --shadow: 0 4px 16px rgba(0,0,0,.08);
+      --radius: 16px; --radius-sm: 10px;
+      --nav-h: 68px; --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+    html.dark {
+      --surface: #1a1f2e; --bg: #0f1117; --bg-dark: #161b22;
+      --text: #e6edf3; --text-muted: #8b949e; --text-light: #6e7681; --border: #30363d;
+      --brand-light: rgba(59,91,219,.22);
+    }
+    html.dark body { background: var(--bg); color: var(--text); }
+    html.dark nav { background: rgba(15,17,23,.92); border-bottom-color: rgba(255,255,255,.07); }
+    html.dark nav.scrolled { background: rgba(15,17,23,.98); }
+    html.dark .drawer { background: #161b22; }
+    html.dark .sec-section { background: #161b22; }
+    html.dark .sec-callout { background: rgba(59,91,219,.15); border-color: rgba(59,91,219,.3); }
+    html.dark .sec-callout p { color: var(--text-muted); }
+    html.dark footer { background: #161b22; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h); background: rgba(244,245,249,.92);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.6);
+      display: flex; align-items: center; padding: 0 1.5rem;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    nav.scrolled { background: rgba(244,245,249,.97); box-shadow: 0 1px 20px rgba(0,0,0,.08); }
+    .nav-inner { width: 100%; max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo-link { display: flex; align-items: center; gap: .6rem; }
+    .logo-text { font-size: 1.18rem; font-weight: 900; letter-spacing: -.7px; background: linear-gradient(135deg,#4338ca 0%,#6d28d9 55%,#a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-pay-accent { font-style: italic; }
+    .logo-sub { font-size: .62rem; font-weight: 500; color: var(--text-muted); letter-spacing: .4px; text-transform: uppercase; margin-top: -2px; -webkit-text-fill-color: var(--text-muted); }
+    .nav-right { display: flex; align-items: center; gap: .4rem; }
+    .dark-toggle { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--surface); border: 1.5px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all var(--transition); flex-shrink: 0; }
+    .dark-toggle:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .dark-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .dark-toggle .icon-sun { display: block; } .dark-toggle .icon-moon { display: none; }
+    html.dark .dark-toggle .icon-sun { display: none; } html.dark .dark-toggle .icon-moon { display: block; }
+    .hamburger { width: 42px; height: 42px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: background var(--transition); background: transparent; }
+    .hamburger:hover { background: var(--bg-dark); }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition), width var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* DRAWER */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); opacity: 0; pointer-events: none; z-index: 1001; transition: opacity var(--transition); backdrop-filter: blur(4px); }
+    .overlay.visible { opacity: 1; pointer-events: all; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px,88vw); background: var(--surface); z-index: 1002; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; padding: 1.5rem; box-shadow: -8px 0 40px rgba(0,0,0,.12); }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+    .drawer-close { width: 36px; height: 36px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.25rem; cursor: pointer; transition: background var(--transition), color var(--transition); border: none; }
+    .drawer-close:hover { background: var(--bg-dark); color: var(--text); }
+    .drawer-nav { list-style: none; display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+    .drawer-nav li a { display: flex; align-items: center; gap: .75rem; padding: .85rem 1rem; border-radius: var(--radius-sm); font-weight: 500; font-size: .975rem; color: var(--text); transition: background var(--transition), color var(--transition); }
+    .drawer-nav li a:hover { background: var(--brand-light); color: var(--brand); }
+    .drawer-nav li a .nav-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .drawer-nav li a .nav-icon svg { width: 16px; height: 16px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .drawer-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .drawer-actions { display: flex; flex-direction: column; gap: .75rem; margin-top: .5rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 600; font-size: .95rem; padding: .75rem 1.5rem; border-radius: 12px; transition: all var(--transition); }
+    .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(59,91,219,.3); }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-full { width: 100%; }
+
+    /* PAGE LAYOUT */
+    main { padding-top: var(--nav-h); min-height: 100vh; }
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+    /* PAGE HEADER */
+    .page-header-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .back-btn { display: inline-flex; align-items: center; gap: .4rem; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: .5rem .9rem; font-size: .875rem; font-weight: 600; color: var(--text-muted); transition: all var(--transition); text-decoration: none; flex-shrink: 0; }
+    .back-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .back-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .page-header-title { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+
+    /* SECURITY HERO BANNER */
+    .security-hero-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #4c1d95 100%);
+      border-radius: 20px; padding: 2.5rem 2rem; margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .security-hero-banner::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .security-hero-inner { position: relative; z-index: 1; }
+    .security-hero-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 600; padding: .3rem .75rem; border-radius: 999px; margin-bottom: 1rem; }
+    .security-hero-badge svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .security-hero-banner h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 900; color: #fff; letter-spacing: -.5px; margin-bottom: .6rem; line-height: 1.2; }
+    .security-hero-banner p { font-size: .9rem; color: rgba(255,255,255,.75); line-height: 1.7; max-width: 560px; }
+    .security-badges-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .sec-badge-pill { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: .55rem 1rem; }
+    .sec-badge-pill .badge-icon { width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; }
+    .sec-badge-pill .badge-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .sec-badge-pill .badge-icon svg { width: 18px; height: 18px; stroke: rgba(255,255,255,.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-badge-pill .badge-text { font-size: .78rem; font-weight: 700; color: #fff; }
+    .sec-badge-pill .badge-sub { font-size: .65rem; color: rgba(255,255,255,.65); }
+
+    /* SECTION DIVIDER LABEL */
+    .sec-group-label { font-size: .72rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text-light); margin: 2rem 0 .75rem .1rem; }
+
+    /* SECTION CARDS */
+    .sec-section { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem; margin-bottom: 1.25rem; transition: border-color var(--transition), box-shadow var(--transition); }
+    .sec-section:hover { border-color: #c7d2fe; box-shadow: var(--shadow-sm); }
+    .sec-section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+    .sec-section-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sec-section-icon img { width: 32px; height: 32px; object-fit: contain; }
+    .sec-section-icon svg { width: 22px; height: 22px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-section h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: .2rem; }
+    .sec-sub { font-size: .75rem; color: var(--brand); font-weight: 600; }
+    .sec-section p { font-size: .875rem; color: var(--text-muted); line-height: 1.75; margin-bottom: .65rem; }
+    .sec-section p:last-child { margin-bottom: 0; }
+    .sec-list { list-style: none; display: flex; flex-direction: column; gap: .55rem; margin: .5rem 0; }
+    .sec-list li { display: flex; align-items: flex-start; font-size: .875rem; color: var(--text-muted); line-height: 1.6; padding-left: 1.2rem; position: relative; }
+    .sec-list li::before { content: ''; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); flex-shrink: 0; }
+    .sec-highlights { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .75rem; margin: 1rem 0; }
+    .sec-highlight { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; display: flex; align-items: center; gap: .65rem; }
+    .sec-highlight svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .sec-highlight span { font-size: .8rem; font-weight: 600; color: var(--text); }
+    .sec-callout { background: var(--brand-light); border: 1px solid #c7d2fe; border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: .85rem; margin: 1rem 0; }
+    .sec-callout svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 1px; }
+    .sec-callout p { font-size: .875rem; color: #2d3a7c; margin: 0; line-height: 1.65; }
+    .sec-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: .75rem 0; }
+    @media (max-width: 540px) { .sec-two-col { grid-template-columns: 1fr; } }
+    .sec-stat-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem; }
+    .sec-stat-box .stat-val { font-size: 1.5rem; font-weight: 900; color: var(--brand); letter-spacing: -.5px; }
+    .sec-stat-box .stat-key { font-size: .75rem; color: var(--text-muted); font-weight: 500; margin-top: .15rem; }
+    .sec-tag-row { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+    .sec-tag { display: inline-flex; align-items: center; gap: .35rem; background: var(--brand-light); color: var(--brand); font-size: .75rem; font-weight: 700; padding: .3rem .75rem; border-radius: 999px; border: 1px solid rgba(59,91,219,.2); }
+    .sec-tag svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* FOOTER */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 1.5rem 1.5rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; font-size: .8rem; color: var(--text-light); text-align: center; }
+    .footer-bottom span { color: var(--brand); font-weight: 600; }
+    .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
+    .footer-col h4 { font-size: .78rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul li a { font-size: .875rem; color: var(--text-muted); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--brand); }
+    .footer-top { margin-bottom: 2.5rem; }
+    .footer-brand-desc { font-size: .875rem; color: var(--text-muted); margin: .75rem 0 1.25rem; max-width: 320px; line-height: 1.65; }
+    .footer-contact-icons { display: flex; gap: .75rem; }
+    .footer-icon-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all var(--transition); color: var(--text-muted); }
+    .footer-icon-btn:hover { background: var(--brand-light); border-color: var(--brand); color: var(--brand); }
+    .footer-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .65rem; margin-bottom: .75rem; }
+    .footer-contact-item .fc-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--brand-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .footer-contact-item .fc-icon svg { width: 15px; height: 15px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-contact-item a, .footer-contact-item span { font-size: .835rem; color: var(--text-muted); line-height: 1.5; }
+    .footer-contact-item a:hover { color: var(--brand); }
+  </style>
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');}());</script>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="36" height="36" alt="NexaPay" style="border-radius:10px;display:block;object-fit:contain;">
+      <div>
+        <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+        <div class="logo-sub">by Elicate Technologies</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="30" height="30" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+      <span class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></span>
+    </a>
+    <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
+  </div>
+  <ul class="drawer-nav">
+    <li><a href="index"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Home</a></li>
+    <li><a href="index#features"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Features</a></li>
+    <li><a href="index#pricing"><span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Pricing</a></li>
+    <li><a href="docs"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Documentation</a></li>
+    <li><a href="security"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Security</a></li>
+    <li><a href="faq"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>FAQ</a></li>
+  </ul>
+  <div class="drawer-divider"></div>
+  <div class="drawer-actions">
+    <a href="auth" class="btn btn-outline btn-full">Sign In</a>
+    <a href="auth" class="btn btn-primary btn-full">Get Started</a>
+  </div>
+</div>
+
+<main>
+  <div class="page-wrap">
+
+    <div class="page-header-bar">
+      <a href="index" class="back-btn">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </a>
+      <span class="page-header-title">Security &amp; Compliance</span>
+    </div>
+
+    <!-- HERO -->
+    <div class="security-hero-banner">
+      <div class="security-hero-inner">
+        <div class="security-hero-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Enterprise-Grade Security
+        </div>
+        <h1>Your Payments, Protected at Every Layer</h1>
+        <p>NexaPay is built on a foundation of bank-grade security standards. Every transaction, API call, and data point is protected using the most advanced security protocols available — so you and your customers can transact with complete confidence.</p>
+        <div class="security-badges-row">
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="pci-dss.png" alt="PCI DSS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="badge-text">PCI DSS</div><div class="badge-sub">Level 1 Certified</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="ssl-tls.png" alt="SSL TLS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div><div class="badge-text">TLS 1.3</div><div class="badge-sub">256-bit Encryption</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="3d-secure.png" alt="3D Secure" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="badge-text">3D Secure</div><div class="badge-sub">v2.0 Ready</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="iso-27001.png" alt="ISO 27001" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><div class="badge-text">ISO 27001</div><div class="badge-sub">Information Security</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+            <div><div class="badge-text">GDPR Aligned</div><div class="badge-sub">Data Privacy</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div class="badge-text">99.9% Uptime</div><div class="badge-sub">SLA Guaranteed</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="sec-two-col" style="margin-bottom:1.5rem">
+      <div class="sec-stat-box"><div class="stat-val">256-bit</div><div class="stat-key">AES Encryption at Rest</div></div>
+      <div class="sec-stat-box"><div class="stat-val">TLS 1.3</div><div class="stat-key">Encryption in Transit</div></div>
+      <div class="sec-stat-box"><div class="stat-val">&lt; 60s</div><div class="stat-key">Incident Alert Response</div></div>
+      <div class="sec-stat-box"><div class="stat-val">99.9%</div><div class="stat-key">Guaranteed API Uptime</div></div>
+    </div>
+
+    <!-- GROUP: CERTIFICATIONS -->
+    <div class="sec-group-label">Certifications &amp; Standards</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="pci-dss.png" alt="PCI DSS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><h3>PCI DSS Level 1 Compliance</h3><div class="sec-sub">The gold standard in payment security</div></div>
+      </div>
+      <p>NexaPay is PCI DSS Level 1 compliant — the highest certification level defined by the Payment Card Industry Data Security Standard. This means every component of our payment infrastructure is independently audited annually by a Qualified Security Assessor (QSA).</p>
+      <div class="sec-highlights">
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Annual QSA Audit</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Quarterly Network Scans</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Penetration Testing</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Cardholder Data Protection</span></div>
+      </div>
+      <p>Our compliance covers all 12 PCI DSS requirements including network security, access control, vulnerability management, monitoring, and information security policy. Merchants on NexaPay inherit our compliance posture — reducing your own PCI scope to a simplified SAQ-A or SAQ-A-EP self-assessment questionnaire.</p>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="iso-27001.png" alt="ISO 27001" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div><h3>ISO 27001 — Information Security Management</h3><div class="sec-sub">Internationally recognised standard</div></div>
+      </div>
+      <p>Our information security management system (ISMS) is built to ISO 27001 standards. This covers the full lifecycle of information security — from risk assessment and asset management through to access control, incident management, and business continuity planning.</p>
+      <div class="sec-tag-row">
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Risk Assessment</span>
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Access Control</span>
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Asset Management</span>
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Incident Management</span>
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Business Continuity</span>
+        <span class="sec-tag"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Supplier Relationships</span>
+      </div>
+    </div>
+
+    <!-- GROUP: ENCRYPTION & TRANSPORT -->
+    <div class="sec-group-label">Encryption &amp; Transport Security</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="ssl-tls.png" alt="TLS Encryption" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><h3>TLS 1.3 Encryption in Transit</h3><div class="sec-sub">All data encrypted end-to-end</div></div>
+      </div>
+      <p>All communication between your application and NexaPay APIs is encrypted using TLS 1.3 — the latest and most secure version of the Transport Layer Security protocol. Older TLS versions (1.0, 1.1) and SSL are explicitly rejected at our API gateway.</p>
+      <ul class="sec-list">
+        <li>256-bit AES-GCM encryption for all API traffic and webhook payloads</li>
+        <li>Perfect Forward Secrecy (PFS) enabled on all endpoints via ECDHE key exchange</li>
+        <li>HSTS (HTTP Strict Transport Security) enforced with one-year max-age and preloading</li>
+        <li>Certificate pinning available for mobile SDK integrations</li>
+        <li>All data at rest encrypted using AES-256 with key management via Hardware Security Module (HSM)</li>
+        <li>Automatic certificate rotation — no manual intervention required by merchants</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <div><h3>API Key Security &amp; Access Control</h3><div class="sec-sub">Scoped, rotatable, and IP-restricted</div></div>
+      </div>
+      <p>NexaPay API keys use a two-tier model: a <strong>public key</strong> (safe for client-side) that identifies your account, and a <strong>secret key</strong> that must only be used server-side. Secret keys are never logged, never stored in plaintext, and are hashed with bcrypt in our systems.</p>
+      <ul class="sec-list">
+        <li>Separate sandbox and production key pairs — sandbox keys cannot access live funds</li>
+        <li>Per-key permission scoping — restrict a key to collections only, disbursements only, or read-only reporting</li>
+        <li>IP allowlisting — restrict which server IPs may use a key (configurable in dashboard)</li>
+        <li>Instant key rotation with a 60-second grace window for zero-downtime deploys</li>
+        <li>Activity logs for every API call — searchable by IP, endpoint, timestamp, and response code</li>
+      </ul>
+      <div class="sec-callout">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p><strong>Never expose secret keys in client-side code.</strong> Always make NexaPay API calls from your server. If a key is compromised, rotate it immediately from your dashboard — old keys are revoked within 60 seconds.</p>
+      </div>
+    </div>
+
+    <!-- GROUP: AUTHENTICATION & FRAUD -->
+    <div class="sec-group-label">Authentication &amp; Fraud Prevention</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="3d-secure.png" alt="3D Secure" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><h3>3D Secure Authentication</h3><div class="sec-sub">Additional authentication layer for every payment</div></div>
+      </div>
+      <p>NexaPay supports 3D Secure 2.0 (3DS2) across all supported mobile money networks. This provides an additional authentication layer that confirms the identity of the payer before a transaction is authorised, dramatically reducing fraud and chargebacks.</p>
+      <div class="sec-callout">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>3DS2 enables risk-based authentication — low-risk transactions flow seamlessly without user friction, while high-risk transactions trigger additional verification steps. This means fewer abandoned payments and stronger protection simultaneously.</p>
+      </div>
+      <div class="sec-highlights">
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Risk-Based Auth</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>PIN Verification</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Fewer Chargebacks</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>No Added Friction</span></div>
+      </div>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div><h3>Fraud Detection &amp; Prevention</h3><div class="sec-sub">Real-time threat intelligence</div></div>
+      </div>
+      <p>Our multi-layer fraud detection engine analyses every transaction in real time using machine learning models trained specifically on African mobile money patterns. Suspicious activity is flagged and reviewed within seconds — often before a fraudulent transaction can complete.</p>
+      <ul class="sec-list">
+        <li>Velocity checks — detecting unusual transaction frequency per account, device, and IP</li>
+        <li>Device fingerprinting and geo-IP mismatch detection</li>
+        <li>Phone number reputation scoring across all four supported countries</li>
+        <li>SIM swap detection integration with MTN, Airtel, and EcoCash APIs</li>
+        <li>Merchant-configurable risk thresholds and auto-block rules via dashboard</li>
+        <li>Behavioural anomaly detection — flags deviations from a merchant's normal transaction patterns</li>
+        <li>24/7 fraud operations team monitoring live transaction feeds</li>
+      </ul>
+    </div>
+
+    <!-- GROUP: DATA & PRIVACY -->
+    <div class="sec-group-label">Data Residency &amp; Privacy</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><h3>Data Residency — Your Data Stays in Africa</h3><div class="sec-sub">In-country storage for all four markets</div></div>
+      </div>
+      <p>NexaPay processes and stores all transaction data within African data centres. We maintain separate data residency zones for Zambia, Zimbabwe, Botswana, and Namibia to comply with each country's data sovereignty requirements.</p>
+      <ul class="sec-list">
+        <li>Data for Zambian merchants stored in Zambia-based infrastructure</li>
+        <li>Full compliance with Bank of Zambia, RBOZ, NBFIRA, and BoN data regulations</li>
+        <li>GDPR-aligned data handling for any EU-connected integrations</li>
+        <li>Zero data sharing with advertisers, aggregators, or third-party brokers</li>
+        <li>Right to deletion (RTBF) honoured within 72 hours of a valid request</li>
+        <li>Transaction data retained for a minimum of 7 years as required by financial regulations</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <div><h3>Customer Data Handling</h3><div class="sec-sub">Minimal collection, maximum protection</div></div>
+      </div>
+      <p>NexaPay applies the principle of data minimisation — we collect only what is strictly necessary to process payments and prevent fraud. Customer PINs and wallet passwords are <strong>never</strong> seen or stored by NexaPay; these remain exclusively in the mobile network operator's secure infrastructure.</p>
+      <ul class="sec-list">
+        <li>Phone numbers hashed at ingestion — never stored in plaintext</li>
+        <li>Transaction amounts, timestamps, and status codes stored for settlement and reporting only</li>
+        <li>No tracking of customer browsing behaviour, location, or device beyond fraud signals</li>
+        <li>All customer-facing data requests fulfilled within 30 days per applicable law</li>
+      </ul>
+    </div>
+
+    <!-- GROUP: TESTING & INFRASTRUCTURE -->
+    <div class="sec-group-label">Testing &amp; Infrastructure Security</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div><h3>Penetration Testing</h3><div class="sec-sub">Tested by external experts quarterly</div></div>
+      </div>
+      <p>NexaPay undergoes rigorous penetration testing by independent security firms every quarter. Our scope covers web application security, API security, network infrastructure, mobile SDK security, and social engineering resilience.</p>
+      <ul class="sec-list">
+        <li>OWASP Top 10 vulnerability testing on every major release</li>
+        <li>API fuzzing and injection attack simulation (SQL, NoSQL, command injection)</li>
+        <li>Full network and infrastructure pen test quarterly by certified CREST/OSCP testers</li>
+        <li>All critical findings resolved within 24 hours; high findings within 7 days</li>
+        <li>Summary security reports available to enterprise merchants on request</li>
+        <li>Bug bounty programme — responsible disclosure rewarded for verified vulnerabilities</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div><h3>Infrastructure &amp; Network Security</h3><div class="sec-sub">Defence-in-depth architecture</div></div>
+      </div>
+      <p>NexaPay infrastructure is deployed on dedicated cloud instances (not shared tenancy) with a layered defence architecture. No single point of failure exists in our payment processing path.</p>
+      <ul class="sec-list">
+        <li>Web Application Firewall (WAF) with custom rule sets for payment API patterns</li>
+        <li>DDoS protection — automatic traffic scrubbing at the network edge (up to 1 Tbps)</li>
+        <li>Network segmentation — payment processing, data storage, and management planes are fully isolated</li>
+        <li>Zero-trust internal access — every service-to-service call requires mutual TLS authentication</li>
+        <li>Immutable infrastructure — servers are replaced not patched, eliminating configuration drift</li>
+        <li>Real-time intrusion detection (IDS/IPS) with automated quarantine of anomalous nodes</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><h3>Uptime, SLA &amp; Business Continuity</h3><div class="sec-sub">99.9% guaranteed — no exceptions</div></div>
+      </div>
+      <p>NexaPay's payment API maintains a <strong>99.9% uptime SLA</strong> backed by multi-region redundancy. Real-time status and historical uptime data are published at <strong>status.nexapay.africa</strong>. Planned maintenance windows are announced at least 72 hours in advance via email and the status page.</p>
+      <div class="sec-two-col">
+        <div class="sec-stat-box"><div class="stat-val">99.9%</div><div class="stat-key">API uptime SLA</div></div>
+        <div class="sec-stat-box"><div class="stat-val">&lt; 72h</div><div class="stat-key">Advance notice for maintenance</div></div>
+      </div>
+      <ul class="sec-list">
+        <li>Multi-region active-active deployment — no single region failure takes the API offline</li>
+        <li>Automatic failover with sub-30-second recovery time objective (RTO)</li>
+        <li>Daily encrypted backups with point-in-time recovery up to 30 days</li>
+        <li>Annual disaster recovery drill — documented and results published to enterprise clients</li>
+        <li>Incident communications via email, webhook, and the public status page within 15 minutes of detection</li>
+      </ul>
+    </div>
+
+    <!-- GROUP: INCIDENT RESPONSE -->
+    <div class="sec-group-label">Incident Response</div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div><h3>Incident Response &amp; Breach Notification</h3><div class="sec-sub">Structured, tested, and transparent</div></div>
+      </div>
+      <p>NexaPay maintains a formal Incident Response Plan (IRP) that is tested through tabletop exercises twice per year. In the event of a security incident affecting merchant or customer data, we follow a strict notification timeline.</p>
+      <ul class="sec-list">
+        <li>Security incidents are triaged by our on-call security team within 60 seconds of detection</li>
+        <li>P1 (critical) incidents: affected merchants notified within 1 hour; public notice within 4 hours</li>
+        <li>Regulatory notification: submitted to relevant financial regulators within 24–72 hours as required by law</li>
+        <li>Post-incident report delivered to affected enterprise merchants within 5 business days</li>
+        <li>Root cause analysis and remediation steps documented and shared transparently</li>
+      </ul>
+      <div class="sec-callout">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <p>To report a security vulnerability or suspected breach, contact our security team directly at <strong>security@nexapay.africa</strong>. Responsible disclosure is rewarded — we investigate all reports within 24 hours.</p>
+      </div>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div><h3>Internal Access Controls &amp; Employee Security</h3><div class="sec-sub">Zero-trust, role-based, audited</div></div>
+      </div>
+      <p>Access to production systems and merchant data is governed by strict role-based access control (RBAC). No single employee has unrestricted access to live payment data.</p>
+      <ul class="sec-list">
+        <li>All production access requires multi-factor authentication (FIDO2/hardware key preferred)</li>
+        <li>Principle of least privilege enforced — staff access only what is required for their role</li>
+        <li>All internal access to merchant data is logged, immutable, and reviewed weekly</li>
+        <li>Background checks conducted for all employees with access to financial systems</li>
+        <li>Mandatory annual security awareness training for all staff</li>
+        <li>Immediate access revocation on employee departure — automated via HR system integration</li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="index" class="logo-link" style="margin-bottom:.75rem;display:inline-flex">
+        <img src="nexapay.png" width="32" height="32" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+        <div>
+          <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+          <div class="logo-sub">by Elicate Technologies</div>
+        </div>
+      </a>
+      <p class="footer-brand-desc">Accept mobile money payments seamlessly across Zambia, Zimbabwe, Botswana, and Namibia. Built for developers and merchants by Elicate Technologies Limited.</p>
+      <div class="footer-contact-icons">
+        <a href="mailto:support@nexapay.africa" class="footer-icon-btn" title="Email us">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="https://wa.me/27634530070" class="footer-icon-btn" title="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index#features">Features</a></li>
+          <li><a href="docs">Documentation</a></li>
+          <li><a href="index#pricing">Pricing</a></li>
+          <li><a href="index#how-it-works">How It Works</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="blog">Blog</a></li>
+          <li><a href="security">Security</a></li>
+          <li><a href="faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms">Terms of Service</a></li>
+          <li><a href="privacy">Privacy Policy</a></li>
+          <li><a href="security">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <a href="mailto:support@nexapay.africa">support@nexapay.africa</a>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <a href="https://wa.me/27634530070">+27 63 453 0070</a>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <span>Room 217, Broadway, Ndola, Zambia</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 <span>Elicate Technologies Limited</span>. All rights reserved. &nbsp;&middot;&nbsp; NexaPay &mdash; Mobile Payments for Southern Africa
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleDrawer() {
+    var drawer = document.getElementById('drawer');
+    var overlay = document.getElementById('overlay');
+    var hamburger = document.getElementById('hamburger');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    hamburger.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function() {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+  document.getElementById('dark-toggle').addEventListener('click', function() {
+    var isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+  window.addEventListener('resize', function() { if (window.innerWidth > 768) closeDrawer(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDrawer(); });
+</script>
+</body>
+</html>

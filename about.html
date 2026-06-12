@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About NexaPay — Elicate Technologies Limited</title>
+  <meta name="description" content="Learn about NexaPay, the mobile money payment gateway for Southern Africa built by Elicate Technologies Limited." />
+  <link rel="icon" href="nexapay.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f4f5f9; color: #1a1f2e; line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    :root {
+      --brand: #3b5bdb; --brand-dark: #2f4ac0; --brand-light: #e8edff;
+      --accent: #748ffc; --surface: #ffffff; --bg: #f4f5f9; --bg-dark: #edf0f7;
+      --text: #1a1f2e; --text-muted: #6b7280; --text-light: #9ca3af;
+      --border: #e5e7eb; --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow: 0 4px 16px rgba(0,0,0,.08); --radius: 16px; --radius-sm: 10px;
+      --nav-h: 68; --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+    html.dark {
+      --surface: #1a1f2e; --bg: #0f1117; --bg-dark: #161b22;
+      --text: #e6edf3; --text-muted: #8b949e; --text-light: #6e7681;
+      --border: #30363d; --brand-light: rgba(59,91,219,.22);
+    }
+    html.dark body { background: var(--bg); color: var(--text); }
+    html.dark nav { background: rgba(15,17,23,.92); border-bottom-color: rgba(255,255,255,.07); }
+    html.dark nav.scrolled { background: rgba(15,17,23,.98); }
+    html.dark .drawer { background: #161b22; }
+    html.dark footer { background: #161b22; }
+    html.dark .toc-bar { background: var(--surface); }
+    html.dark .about-section { background: var(--surface); }
+    html.dark .about-intro-box { background: var(--bg); border-color: var(--border); }
+    html.dark .about-intro-box p { color: var(--text-muted); }
+    html.dark .highlight-card { background: var(--bg); }
+    html.dark .team-card { background: #161b22; }
+    html.dark .country-table td { color: var(--text-muted); }
+    html.dark .callout-info { background: rgba(59,91,219,.15); border-color: rgba(59,91,219,.3); }
+
+    /* ===== NAVBAR ===== */
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand), var(--accent)); transform-origin: left; transform: scaleX(0); z-index: 1100; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: calc(var(--nav-h) * 1px); background: rgba(244,245,249,.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,.6); display: flex; align-items: center; padding: 0 1.5rem; transition: background var(--transition), box-shadow var(--transition); }
+    nav.scrolled { background: rgba(244,245,249,.97); box-shadow: 0 1px 20px rgba(0,0,0,.08); }
+    .nav-inner { width: 100%; max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo-link { display: flex; align-items: center; gap: .6rem; }
+    .logo-text { font-size: 1.18rem; font-weight: 900; letter-spacing: -.7px; background: linear-gradient(135deg,#4338ca 0%,#6d28d9 55%,#a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-pay-accent { font-weight: 900; font-style: italic; }
+    .logo-sub { font-size: .62rem; font-weight: 500; color: var(--text-muted); letter-spacing: .4px; text-transform: uppercase; margin-top: -2px; -webkit-text-fill-color: var(--text-muted); }
+    .nav-right { display: flex; align-items: center; gap: .4rem; }
+    .dark-toggle { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--surface); border: 1.5px solid var(--border); color: var(--text-muted); cursor: pointer; transition: all var(--transition); }
+    .dark-toggle:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .dark-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .dark-toggle .icon-sun { display: block; } .dark-toggle .icon-moon { display: none; }
+    html.dark .dark-toggle .icon-sun { display: none; } html.dark .dark-toggle .icon-moon { display: block; }
+    .hamburger { width: 42px; height: 42px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; background: transparent; transition: background var(--transition); }
+    .hamburger:hover { background: var(--bg-dark); }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition), width var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== DRAWER ===== */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); opacity: 0; pointer-events: none; z-index: 1001; transition: opacity var(--transition); backdrop-filter: blur(4px); }
+    .overlay.visible { opacity: 1; pointer-events: all; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px, 88vw); background: var(--surface); z-index: 1002; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; padding: 1.5rem; box-shadow: -8px 0 40px rgba(0,0,0,.12); }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+    .drawer-close { width: 36px; height: 36px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.25rem; cursor: pointer; }
+    .drawer-close:hover { background: var(--bg-dark); color: var(--text); }
+    .drawer-nav { list-style: none; display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+    .drawer-nav li a, .drawer-nav li button { display: flex; align-items: center; gap: .75rem; padding: .85rem 1rem; border-radius: var(--radius-sm); font-weight: 500; font-size: .975rem; color: var(--text); transition: background var(--transition), color var(--transition); width: 100%; text-align: left; background: none; border: none; cursor: pointer; font-family: inherit; }
+    .drawer-nav li a:hover, .drawer-nav li button:hover { background: var(--brand-light); color: var(--brand); }
+    .drawer-nav li a .nav-icon, .drawer-nav li button .nav-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .drawer-nav li a .nav-icon svg, .drawer-nav li button .nav-icon svg { width: 16px; height: 16px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .drawer-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .drawer-actions { display: flex; flex-direction: column; gap: .75rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 600; font-size: .95rem; padding: .75rem 1.5rem; border-radius: 12px; transition: all var(--transition); }
+    .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(59,91,219,.3); }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-full { width: 100%; }
+
+    /* ===== ABOUT HERO ===== */
+    .about-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b5bdb 50%, #4c1d95 100%);
+      padding: calc(var(--nav-h) * 1px + 3.5rem) 1.5rem 3.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .about-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+    .about-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .about-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .78rem; font-weight: 600; letter-spacing: .5px; padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.25rem; }
+    .about-badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .about-hero h1 { font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 900; color: #fff; letter-spacing: -.6px; line-height: 1.15; margin-bottom: .85rem; }
+    .about-hero p { font-size: .95rem; color: rgba(255,255,255,.7); max-width: 520px; margin: 0 auto 1.75rem; line-height: 1.7; }
+    .about-meta { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+    .about-meta-item { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: rgba(255,255,255,.65); }
+    .about-meta-item svg { width: 14px; height: 14px; stroke: rgba(255,255,255,.5); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== TOC BAR ===== */
+    .toc-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: .85rem 1.5rem; position: sticky; top: calc(var(--nav-h) * 1px); z-index: 800; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .toc-bar::-webkit-scrollbar { display: none; }
+    .toc-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: .5rem; align-items: center; }
+    .toc-label { font-size: .72rem; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-light); margin-right: .25rem; flex-shrink: 0; }
+    .toc-pill { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 600; color: var(--text-muted); background: var(--bg); border: 1px solid var(--border); cursor: pointer; transition: all var(--transition); flex-shrink: 0; }
+    .toc-pill:hover, .toc-pill.active { background: var(--brand-light); border-color: #c7d2fe; color: var(--brand); }
+    .toc-pill .num { font-size: .68rem; }
+
+    /* ===== LAYOUT ===== */
+    .about-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 5rem; display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media (min-width: 900px) { .about-layout { grid-template-columns: 240px 1fr; align-items: start; } }
+    .about-sidebar { display: none; }
+    @media (min-width: 900px) { .about-sidebar { display: block; position: sticky; top: calc(var(--nav-h) * 1px + 60px); } }
+    .sidebar-title { font-size: .72rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text-light); margin-bottom: .85rem; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .sidebar-nav li a { display: flex; align-items: center; gap: .6rem; padding: .5rem .75rem; border-radius: 8px; font-size: .83rem; color: var(--text-muted); transition: all var(--transition); border-left: 2px solid transparent; }
+    .sidebar-nav li a:hover { color: var(--brand); background: var(--brand-light); border-left-color: var(--brand); }
+    .sidebar-nav li a .sn { font-size: .68rem; font-weight: 700; color: var(--accent); min-width: 18px; }
+    .sidebar-back { display: flex; align-items: center; gap: .5rem; font-size: .83rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1.5rem; padding: .6rem .75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); transition: all var(--transition); }
+    .sidebar-back:hover { color: var(--brand); border-color: #c7d2fe; background: var(--brand-light); }
+    .sidebar-back svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== CONTENT ===== */
+    .about-content { min-width: 0; }
+    .about-intro-box { background: var(--brand-light); border: 1px solid #c7d2fe; border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2.5rem; }
+    .about-intro-box p { font-size: .9rem; color: #3d4f9a; line-height: 1.75; }
+    .about-intro-box strong { color: var(--brand); }
+
+    /* Section blocks */
+    .about-section { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 2rem; margin-bottom: 1.5rem; scroll-margin-top: calc(var(--nav-h) * 1px + 70px); transition: border-color var(--transition), box-shadow var(--transition); }
+    .about-section:hover { border-color: #c7d2fe; box-shadow: var(--shadow-sm); }
+    .as-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+    .as-num { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; font-size: .82rem; font-weight: 800; color: var(--brand); }
+    .as-title { font-size: 1.1rem; font-weight: 800; color: var(--text); letter-spacing: -.2px; }
+    .about-section p { font-size: .9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: .85rem; }
+    .about-section p:last-child { margin-bottom: 0; }
+    .about-section h4 { font-size: .9rem; font-weight: 700; color: var(--text); margin: 1.25rem 0 .5rem; }
+    .about-section ul, .about-section ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: .55rem; margin: .5rem 0 .85rem; }
+    .about-section ul li, .about-section ol li { font-size: .9rem; color: var(--text-muted); line-height: 1.7; }
+    .about-section ul { list-style-type: none; padding-left: 0; }
+    .about-section ul li { padding-left: 1.3rem; position: relative; }
+    .about-section ul li::before { content: ''; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+    .hl { color: var(--brand); font-weight: 700; }
+    .hl-green { color: #16a34a; font-weight: 700; }
+
+    /* Highlights grid */
+    .highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .85rem; margin: 1.25rem 0; }
+    .highlight-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; display: flex; align-items: flex-start; gap: .75rem; transition: border-color var(--transition), box-shadow var(--transition); }
+    .highlight-card:hover { border-color: #c7d2fe; box-shadow: var(--shadow-sm); }
+    .hc-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .hc-icon svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .hc-text h5 { font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .hc-text p { font-size: .78rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+    /* Country table */
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid var(--border); }
+    .country-table { width: 100%; border-collapse: collapse; margin: 0; font-size: .87rem; min-width: 520px; }
+    .country-table th { background: var(--brand-light); color: var(--brand); font-weight: 700; font-size: .75rem; letter-spacing: .5px; text-transform: uppercase; padding: .6rem 1rem; text-align: left; border-bottom: 2px solid #c7d2fe; white-space: nowrap; }
+    .country-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+    .country-table tr:last-child td { border-bottom: none; }
+    .country-table tr:hover td { background: var(--bg); }
+    .flag-tag { font-size: .85rem; font-weight: 600; color: var(--text); white-space: nowrap; }
+
+    /* Values list */
+    .values-list { display: flex; flex-direction: column; gap: .85rem; margin: 1rem 0; }
+    .value-item { display: flex; align-items: flex-start; gap: .85rem; }
+    .value-num { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .value-body h5 { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .value-body p { font-size: .875rem; color: var(--text-muted); line-height: 1.65; margin: 0; }
+
+    /* Team cards */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+    .team-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1rem; text-align: center; transition: transform var(--transition), box-shadow var(--transition); }
+    .team-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: #c7d2fe; }
+    .team-avatar { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto .85rem; overflow: hidden; background: var(--brand-light); display: flex; align-items: center; justify-content: center; }
+    .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .team-avatar .avatar-placeholder { font-size: 1.6rem; font-weight: 900; color: var(--brand); }
+    .team-name { font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: .15rem; }
+    .team-role { font-size: .75rem; color: var(--brand); font-weight: 600; margin-bottom: .35rem; }
+    .team-bio { font-size: .75rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* Stats banner inside section */
+    .about-stats-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.25rem 0; }
+    @media (min-width: 600px) { .about-stats-row { grid-template-columns: repeat(4, 1fr); } }
+    .about-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; text-align: center; }
+    .about-stat-num { font-size: 1.6rem; font-weight: 900; color: var(--brand); letter-spacing: -1px; line-height: 1; margin-bottom: .25rem; }
+    .about-stat-label { font-size: .72rem; color: var(--text-muted); font-weight: 500; }
+
+    /* Callout */
+    .callout { border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .875rem; line-height: 1.7; display: flex; gap: .85rem; align-items: flex-start; }
+    .callout-info { background: var(--brand-light); border: 1px solid #c7d2fe; color: #2d3a7c; }
+    .callout svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
+    .callout p { margin: 0; }
+
+    /* Hero image wrap */
+    .about-hero-img { width: 100%; max-width: 700px; margin: 1.5rem auto 0; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,.3); }
+    .about-hero-img img { width: 100%; border-radius: 20px; display: block; }
+    .about-hero-img-placeholder { width: 100%; height: 220px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); font-size: .85rem; font-weight: 600; }
+
+    /* Contact box */
+    .contact-box { background: linear-gradient(135deg, #1e3a8a 0%, #3b5bdb 60%, #4c1d95 100%); border-radius: var(--radius); padding: 2rem; margin-top: 2rem; position: relative; overflow: hidden; }
+    .contact-box::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .contact-box-inner { position: relative; z-index: 1; }
+    .contact-box h3 { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: .4rem; }
+    .contact-box p { font-size: .875rem; color: rgba(255,255,255,.7); margin-bottom: 1.25rem; }
+    .contact-box-items { display: flex; flex-direction: column; gap: .85rem; }
+    .contact-box-item { display: flex; align-items: center; gap: .85rem; }
+    .contact-box-icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-box-icon svg { width: 16px; height: 16px; stroke: rgba(255,255,255,.85); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-box-item a, .contact-box-item span { font-size: .875rem; color: rgba(255,255,255,.85); }
+    .contact-box-item a:hover { color: #fff; text-decoration: underline; }
+
+    /* Back to top */
+    .back-top-wrap { text-align: center; margin-top: 2rem; }
+    .back-top-btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--brand); color: #fff; border: none; border-radius: 10px; padding: .65rem 1.4rem; font-size: .85rem; font-weight: 600; cursor: pointer; transition: background var(--transition); font-family: inherit; }
+    .back-top-btn:hover { background: var(--brand-dark); }
+    .back-top-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 1.5rem 1.5rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { margin-bottom: 2.5rem; }
+    .footer-brand-desc { font-size: .875rem; color: var(--text-muted); margin: .75rem 0 1.25rem; max-width: 320px; line-height: 1.65; }
+    .footer-contact-icons { display: flex; gap: .75rem; }
+    .footer-icon-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all var(--transition); color: var(--text-muted); }
+    .footer-icon-btn:hover { background: var(--brand-light); border-color: var(--brand); color: var(--brand); }
+    .footer-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
+    .footer-col h4 { font-size: .78rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul li a { font-size: .875rem; color: var(--text-muted); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--brand); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .65rem; margin-bottom: .75rem; }
+    .footer-contact-item .fc-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--brand-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .footer-contact-item .fc-icon svg { width: 15px; height: 15px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-contact-item a, .footer-contact-item span { font-size: .835rem; color: var(--text-muted); line-height: 1.5; }
+    .footer-contact-item a:hover { color: var(--brand); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; font-size: .8rem; color: var(--text-light); text-align: center; }
+    .footer-bottom span { color: var(--brand); font-weight: 600; }
+
+    @keyframes pageFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    body { animation: pageFadeIn .35s ease both; }
+  </style>
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');}());</script>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="36" height="36" alt="NexaPay" style="border-radius:10px;display:block;object-fit:contain;">
+      <div>
+        <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+        <div class="logo-sub">by Elicate Technologies</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== DRAWER ===== -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="30" height="30" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+      <span class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></span>
+    </a>
+    <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
+  </div>
+  <ul class="drawer-nav">
+    <li><a href="index"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Home</a></li>
+    <li><a href="index#features"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Features</a></li>
+    <li><a href="docs"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Documentation</a></li>
+    <li><a href="index#pricing"><span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Pricing</a></li>
+    <li><a href="about"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>About Us</a></li>
+    <li><a href="blog"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>Blog</a></li>
+  </ul>
+  <div class="drawer-divider"></div>
+  <div class="drawer-actions">
+    <a href="auth" class="btn btn-outline btn-full">Sign In</a>
+    <a href="auth" class="btn btn-primary btn-full">Get Started</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="about-hero">
+  <div class="about-hero-inner">
+    <div class="about-badge">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Elicate Technologies Limited
+    </div>
+    <h1>Building Africa's Payment Future</h1>
+    <p>We are a Southern African fintech company on a mission to make digital payments simple, fast, and accessible for every business — from startups to enterprises — across the continent.</p>
+    <div class="about-meta">
+      <div class="about-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ndola, Zambia
+      </div>
+      <div class="about-meta-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Founded 2022
+      </div>
+      <div class="about-meta-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        4 Countries
+      </div>
+      <div class="about-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        1,000+ Merchants
+      </div>
+    </div>
+    <div class="about-hero-img" style="margin-top:2rem">
+      <img src="about-hero.png" alt="NexaPay Team" onerror="this.parentElement.innerHTML='<div class=\'about-hero-img-placeholder\'>📸 Place about-hero.png here</div>'"/>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOC BAR ===== -->
+<div class="toc-bar">
+  <div class="toc-bar-inner">
+    <span class="toc-label">Sections</span>
+    <a class="toc-pill" href="#about-story" onclick="scrollTo('about-story')"><span class="num">01</span> Our Story</a>
+    <a class="toc-pill" href="#about-mission" onclick="scrollTo('about-mission')"><span class="num">02</span> Mission</a>
+    <a class="toc-pill" href="#about-vision" onclick="scrollTo('about-vision')"><span class="num">03</span> Vision</a>
+    <a class="toc-pill" href="#about-values" onclick="scrollTo('about-values')"><span class="num">04</span> Values</a>
+    <a class="toc-pill" href="#about-highlights" onclick="scrollTo('about-highlights')"><span class="num">05</span> Highlights</a>
+    <a class="toc-pill" href="#about-team" onclick="scrollTo('about-team')"><span class="num">06</span> Team</a>
+    <a class="toc-pill" href="#about-countries" onclick="scrollTo('about-countries')"><span class="num">07</span> Countries</a>
+    <a class="toc-pill" href="#about-tech" onclick="scrollTo('about-tech')"><span class="num">08</span> Technology</a>
+    <a class="toc-pill" href="#about-contact" onclick="scrollTo('about-contact')"><span class="num">09</span> Contact</a>
+  </div>
+</div>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="about-layout">
+
+  <!-- Sidebar -->
+  <aside class="about-sidebar">
+    <a href="index" class="sidebar-back">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Home
+    </a>
+    <p class="sidebar-title">About NexaPay</p>
+    <ul class="sidebar-nav">
+      <li><a href="#about-story"><span class="sn">01</span> Our Story</a></li>
+      <li><a href="#about-mission"><span class="sn">02</span> Mission</a></li>
+      <li><a href="#about-vision"><span class="sn">03</span> Vision</a></li>
+      <li><a href="#about-values"><span class="sn">04</span> Our Values</a></li>
+      <li><a href="#about-highlights"><span class="sn">05</span> Key Highlights</a></li>
+      <li><a href="#about-team"><span class="sn">06</span> Leadership Team</a></li>
+      <li><a href="#about-countries"><span class="sn">07</span> Countries We Serve</a></li>
+      <li><a href="#about-tech"><span class="sn">08</span> Technology</a></li>
+      <li><a href="#about-contact"><span class="sn">09</span> Get in Touch</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <main class="about-content">
+
+    <div class="about-intro-box">
+      <p><strong>NexaPay</strong> is a unified mobile money payment gateway built by <strong>Elicate Technologies Limited</strong>, a fintech company headquartered in Ndola, Zambia. We give developers and merchants a single, powerful API to accept digital payments across <strong>Zambia, Zimbabwe, Botswana, and Namibia</strong> — without the complexity of integrating each mobile network separately.</p>
+    </div>
+
+    <!-- 01 Our Story -->
+    <div class="about-section" id="about-story">
+      <div class="as-header">
+        <div class="as-num">01</div>
+        <div class="as-title">Our Story</div>
+      </div>
+      <p>NexaPay was born out of a simple frustration: building a business in Southern Africa meant navigating a maze of separate mobile money APIs, incomplete documentation, unpredictable uptime, and no unified way to collect payments across borders. Every developer integrating payments in this region faced the same challenges — and every merchant felt the cost of that complexity.</p>
+      <p>In 2022, the founding team at <span class="hl">Elicate Technologies Limited</span> set out to change that. Based out of Ndola, Zambia — a city at the heart of the Copperbelt — we began building what we wished had existed: a clean, reliable, developer-first payment gateway designed specifically for Southern Africa.</p>
+      <p>We spent our first year deep in integrations — direct API partnerships with MTN Zambia, Airtel Money, EcoCash Zimbabwe, Orange Botswana, and MTC Namibia. We built redundancy, failover routing, real-time monitoring, and a merchant dashboard that made sense. We stress-tested everything. Then we opened to merchants.</p>
+      <p>Today NexaPay processes over <span class="hl">1 million transactions</span> per year across four countries, supports 1,000+ active merchants, and maintains a <span class="hl-green">99.9% uptime</span> guarantee. We are just getting started.</p>
+    </div>
+
+    <!-- 02 Mission -->
+    <div class="about-section" id="about-mission">
+      <div class="as-header">
+        <div class="as-num">02</div>
+        <div class="as-title">Our Mission</div>
+      </div>
+      <p>Our mission is to <span class="hl">remove the friction from digital payments in Southern Africa</span> — giving every developer, merchant, and business the tools to accept mobile money as easily as they would swipe a card anywhere else in the world.</p>
+      <p>We believe that access to reliable, affordable, and developer-friendly payment infrastructure is a catalyst for economic growth. When a small business in Lusaka can add a payment button to their website in an afternoon, when a marketplace in Harare can collect from customers across the region, when a SaaS startup in Gaborone can charge subscriptions in local currency — the entire ecosystem wins.</p>
+      <div class="callout callout-info">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p><strong>Payments should be infrastructure, not a barrier.</strong> That is the principle behind every design decision we make at NexaPay.</p>
+      </div>
+      <p>We achieve this mission by maintaining direct integrations with all major mobile money networks in our supported countries, providing best-in-class documentation, keeping our API simple, and pricing fairly — with no hidden fees and automatic volume discounts.</p>
+    </div>
+
+    <!-- 03 Vision -->
+    <div class="about-section" id="about-vision">
+      <div class="as-header">
+        <div class="as-num">03</div>
+        <div class="as-title">Our Vision</div>
+      </div>
+      <p>Our vision is to be the payment layer that powers the <span class="hl">digital economy of Sub-Saharan Africa</span>. We see a future where any business on the continent — regardless of size — can access the same quality of payment infrastructure available to Fortune 500 companies, at a fraction of the cost.</p>
+      <p>We are building toward a Southern Africa where:</p>
+      <ul>
+        <li>Every mobile device is a point of sale and a payment terminal</li>
+        <li>Cross-border payments between SADC countries are instant and cheap</li>
+        <li>Small businesses can compete globally because payment collection is never the bottleneck</li>
+        <li>Developers in Africa build world-class products without fighting fragmented APIs</li>
+        <li>Financial inclusion reaches the last mile — rural merchants, informal traders, gig workers</li>
+      </ul>
+      <p>NexaPay is currently live in four countries. Our roadmap includes expansion to <span class="hl">South Africa, Malawi, Tanzania, and Mozambique</span> by 2027, and a full Pan-African coverage by 2030.</p>
+    </div>
+
+    <!-- 04 Values -->
+    <div class="about-section" id="about-values">
+      <div class="as-header">
+        <div class="as-num">04</div>
+        <div class="as-title">Our Values</div>
+      </div>
+      <p>Everything we build and every decision we make is guided by five core values that define what NexaPay stands for.</p>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-num">1</div>
+          <div class="value-body">
+            <h5>Developer First</h5>
+            <p>We design for the developers who integrate us. Clear documentation, predictable APIs, fast sandbox access, and honest error messages — always.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">2</div>
+          <div class="value-body">
+            <h5>Radical Transparency</h5>
+            <p>No hidden fees. No surprise charges. No marketing speak. We price simply, communicate openly, and share our uptime and incident history publicly.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">3</div>
+          <div class="value-body">
+            <h5>African Context First</h5>
+            <p>We don't bolt Africa onto a product designed for Europe. Our infrastructure, fraud models, compliance approach, and currency handling are built ground-up for Southern African realities.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">4</div>
+          <div class="value-body">
+            <h5>Relentless Reliability</h5>
+            <p>Payments cannot fail. We invest heavily in redundancy, multi-network failover, 24/7 monitoring, and rapid incident response. Reliability is not a feature — it is the product.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">5</div>
+          <div class="value-body">
+            <h5>Security Without Compromise</h5>
+            <p>PCI DSS Level 1, TLS 1.3, 3D Secure, real-time fraud detection. Security is built into everything we do — not added as an afterthought.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Highlights -->
+    <div class="about-section" id="about-highlights">
+      <div class="as-header">
+        <div class="as-num">05</div>
+        <div class="as-title">Key Highlights</div>
+      </div>
+      <div class="about-stats-row">
+        <div class="about-stat"><div class="about-stat-num">99.9%</div><div class="about-stat-label">Uptime Guarantee</div></div>
+        <div class="about-stat"><div class="about-stat-num">1M+</div><div class="about-stat-label">Transactions / Year</div></div>
+        <div class="about-stat"><div class="about-stat-num">1K+</div><div class="about-stat-label">Active Merchants</div></div>
+        <div class="about-stat"><div class="about-stat-num">12+</div><div class="about-stat-label">Networks Integrated</div></div>
+      </div>
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="hc-text"><h5>2-Second Payments</h5><p>Average transaction time across all networks</p></div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="hc-text"><h5>PCI DSS Level 1</h5><p>Highest certification — audited annually</p></div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="hc-text"><h5>4 Countries Live</h5><p>Zambia, Zimbabwe, Botswana, Namibia</p></div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="hc-text"><h5>Open Source SDKs</h5><p>JS, Python, PHP — MIT licensed</p></div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="hc-text"><h5>Real-time Dashboard</h5><p>Live analytics across all countries</p></div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="hc-text"><h5>Instant Webhooks</h5><p>Real-time events with 5x retry logic</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 Team -->
+    <div class="about-section" id="about-team">
+      <div class="as-header">
+        <div class="as-num">06</div>
+        <div class="as-title">Leadership Team</div>
+      </div>
+      <p>NexaPay is built by a passionate team of engineers, product designers, and fintech specialists who understand the Southern African market from the inside.</p>
+      <div class="about-hero-img" style="margin:1.25rem 0;max-width:100%;border-radius:14px">
+        <img src="about-team.png" alt="NexaPay Leadership Team" onerror="this.parentElement.style.display='none'"/>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar"><img src="about-ceo.png" alt="CEO" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="avatar-placeholder" style="display:none">ET</span></div>
+          <div class="team-name">Elicate Technologies</div>
+          <div class="team-role">Founding Team</div>
+          <div class="team-bio">Building Africa's payment infrastructure one API at a time.</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><span class="avatar-placeholder">🛡️</span></div>
+          <div class="team-name">Security Lead</div>
+          <div class="team-role">Compliance &amp; Risk</div>
+          <div class="team-bio">PCI DSS, fraud detection, and regulatory compliance across 4 jurisdictions.</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><span class="avatar-placeholder">⚙️</span></div>
+          <div class="team-name">Engineering Team</div>
+          <div class="team-role">Platform &amp; API</div>
+          <div class="team-bio">Maintaining 99.9% uptime with direct integrations to all 12+ mobile networks.</div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><span class="avatar-placeholder">📈</span></div>
+          <div class="team-name">Growth &amp; Partnerships</div>
+          <div class="team-role">Merchant Success</div>
+          <div class="team-bio">Onboarding and growing 1,000+ merchants across Southern Africa.</div>
+        </div>
+      </div>
+      <p style="margin-top:1rem">We are a small, focused team that moves fast and ships high-quality software. We are always looking for talented people who share our passion for building products that matter. <a href="mailto:careers@nexapay.africa" style="color:var(--brand);font-weight:600">View open roles →</a></p>
+    </div>
+
+    <!-- 07 Countries -->
+    <div class="about-section" id="about-countries">
+      <div class="as-header">
+        <div class="as-num">07</div>
+        <div class="as-title">Countries We Serve</div>
+      </div>
+      <p>NexaPay is currently live in four countries across Southern Africa, with direct integrations into the major mobile money networks in each market.</p>
+      <div class="table-scroll-wrap">
+        <table class="country-table">
+          <thead>
+            <tr><th>Country</th><th>Currency</th><th>Networks</th><th>Regulator</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="flag-tag">🇿🇲 Zambia</span></td>
+              <td>ZMW (Kwacha)</td>
+              <td>MTN Mobile Money, Airtel Money, Zamtel Kwacha</td>
+              <td>Bank of Zambia (BoZ)</td>
+            </tr>
+            <tr>
+              <td><span class="flag-tag">🇿🇼 Zimbabwe</span></td>
+              <td>USD / ZiG</td>
+              <td>EcoCash, OneMoney, Telecash</td>
+              <td>Reserve Bank of Zimbabwe (RBZ)</td>
+            </tr>
+            <tr>
+              <td><span class="flag-tag">🇧🇼 Botswana</span></td>
+              <td>BWP (Pula)</td>
+              <td>Orange Money, MyZaka (BancABC), BTC Mobile</td>
+              <td>NBFIRA / Bank of Botswana</td>
+            </tr>
+            <tr>
+              <td><span class="flag-tag">🇳🇦 Namibia</span></td>
+              <td>NAD (Namibian Dollar)</td>
+              <td>MTC MobiPay, TN Mobile Pay, Telecom NA Pay</td>
+              <td>Bank of Namibia (BoN)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>We maintain full regulatory compliance in each market, including AML/KYC requirements, data residency obligations, and periodic reporting to the relevant central banks. All merchant onboarding is subject to our compliance review process.</p>
+    </div>
+
+    <!-- 08 Technology -->
+    <div class="about-section" id="about-tech">
+      <div class="as-header">
+        <div class="as-num">08</div>
+        <div class="as-title">Technology &amp; Infrastructure</div>
+      </div>
+      <p>NexaPay is built on a modern, cloud-native infrastructure with African data centres at its core. Our platform is designed for high availability, low latency, and rapid network partner integrations.</p>
+      <h4>Core Platform</h4>
+      <ul>
+        <li>RESTful JSON API with OpenAPI 3.0 specification — machine-readable and client-generatable</li>
+        <li>TLS 1.3 enforced on all endpoints; HSTS with one-year max-age</li>
+        <li>African data centres — data processed and stored in-country for each jurisdiction</li>
+        <li>Multi-region active-active deployment with automatic failover</li>
+        <li>Real-time webhook delivery with HMAC-SHA256 signing and 5x exponential retry</li>
+      </ul>
+      <h4>Network Integrations</h4>
+      <ul>
+        <li>Direct API partnerships (not aggregator-dependent) with all 12+ supported networks</li>
+        <li>Smart routing — automatically falls back to alternate network if primary is degraded</li>
+        <li>SIM swap detection via real-time telco APIs on MTN, Airtel, and EcoCash</li>
+        <li>Network health monitoring with sub-60-second alerting on degradation</li>
+      </ul>
+      <h4>Developer Experience</h4>
+      <ul>
+        <li>Open-source SDKs: JavaScript/TypeScript, Python, PHP (MIT licensed)</li>
+        <li>Full-featured sandbox mirroring production exactly</li>
+        <li>Interactive API reference with live "Try it" requests</li>
+        <li>Webhook replay and event inspector in the merchant dashboard</li>
+      </ul>
+      <div class="callout callout-info">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <p>Our API is versioned with a stable <strong>v1</strong> path. We guarantee backwards compatibility within major versions and provide a minimum 12-month deprecation notice for any breaking changes.</p>
+      </div>
+    </div>
+
+    <!-- 09 Contact -->
+    <div class="about-section" id="about-contact">
+      <div class="as-header">
+        <div class="as-num">09</div>
+        <div class="as-title">Get in Touch</div>
+      </div>
+      <p>Whether you are a developer ready to integrate, a merchant exploring your options, a potential partner, or a journalist — we would love to hear from you.</p>
+      <div class="contact-box">
+        <div class="contact-box-inner">
+          <h3>Contact Elicate Technologies Limited</h3>
+          <p>Our team responds to all inquiries within one business day. Enterprise merchants receive priority support.</p>
+          <div class="contact-box-items">
+            <div class="contact-box-item">
+              <div class="contact-box-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <a href="mailto:support@nexapay.africa">support@nexapay.africa</a>
+            </div>
+            <div class="contact-box-item">
+              <div class="contact-box-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <a href="mailto:enterprise@nexapay.africa">enterprise@nexapay.africa</a>
+            </div>
+            <div class="contact-box-item">
+              <div class="contact-box-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <a href="https://wa.me/27634530070">+27 63 453 0070 (WhatsApp / Call)</a>
+            </div>
+            <div class="contact-box-item">
+              <div class="contact-box-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <span>Room 217, Broadway, Ndola, Copperbelt, Zambia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-top-wrap">
+      <button class="back-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        Back to Top
+      </button>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="index" class="logo-link" style="margin-bottom:.75rem;display:inline-flex">
+        <img src="nexapay.png" width="32" height="32" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+        <div>
+          <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+          <div class="logo-sub">by Elicate Technologies</div>
+        </div>
+      </a>
+      <p class="footer-brand-desc">Accept mobile money payments seamlessly across Zambia, Zimbabwe, Botswana, and Namibia. Built for developers and merchants by Elicate Technologies Limited.</p>
+      <div class="footer-contact-icons">
+        <a href="mailto:support@nexapay.africa" class="footer-icon-btn"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+        <a href="https://wa.me/27634530070" class="footer-icon-btn"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index#features">Features</a></li>
+          <li><a href="docs">Documentation</a></li>
+          <li><a href="index#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about">About Us</a></li>
+          <li><a href="blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms">Terms of Service</a></li>
+          <li><a href="privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <a href="mailto:support@nexapay.africa">support@nexapay.africa</a>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <span>Room 217, Broadway, Ndola, Zambia</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 <span>Elicate Technologies Limited</span>. All rights reserved. &nbsp;&middot;&nbsp; NexaPay &mdash; Mobile Payments for Southern Africa
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleDrawer() {
+    const d=document.getElementById('drawer'),o=document.getElementById('overlay'),h=document.getElementById('hamburger');
+    d.classList.toggle('open'); o.classList.toggle('visible'); h.classList.toggle('open');
+    document.body.style.overflow=d.classList.contains('open')?'hidden':'';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  const navbar=document.getElementById('navbar');
+  const progressBar=document.getElementById('progressBar');
+  window.addEventListener('scroll',()=>{
+    navbar.classList.toggle('scrolled',window.scrollY>20);
+    const s=window.scrollY/(document.body.scrollHeight-window.innerHeight);
+    progressBar.style.transform=`scaleX(${s})`;
+  },{passive:true});
+  window.addEventListener('resize',()=>{ if(window.innerWidth>768)closeDrawer(); });
+  (function(){
+    var btn=document.getElementById('dark-toggle');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      var d=document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme',d?'dark':'light');
+    });
+  })();
+  function scrollTo(id) {
+    event&&event.preventDefault();
+    const el=document.getElementById(id);
+    if(el){ const top=el.getBoundingClientRect().top+window.scrollY-68-60; window.scrollTo({top,behavior:'smooth'}); }
+  }
+</script>
+<script src="sw-transitions.js"></script>
+</body>
+</html>
