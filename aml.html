@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="NexaPay Anti-Money Laundering (AML) Policy — Our commitment to preventing financial crime across Zambia, Zimbabwe, Botswana, and Namibia."/>
+  <meta name="keywords" content="NexaPay AML policy, anti-money laundering, compliance, financial crime, Southern Africa, Zambia, Zimbabwe, Botswana, Namibia" />
+  <meta name="author" content="Elicate Technologies Limited" />
+  <meta property="og:title" content="AML Policy — NexaPay" />
+  <meta property="og:description" content="NexaPay's Anti-Money Laundering policy covering customer due diligence, suspicious activity reporting, and sanctions compliance across Southern Africa." />
+  <meta property="og:image" content="nexapay.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NexaPay" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="AML Policy — NexaPay" />
+  <meta name="twitter:description" content="NexaPay's Anti-Money Laundering policy — how we protect our platform and customers from financial crime across Southern Africa." />
+  <link rel="icon" href="nexapay.png" type="image/png" />
+  <link rel="canonical" href="https://nexapay.africa/aml" />
+  <title>AML Policy — NexaPay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brand:       #3b5bdb;
+      --brand-dark:  #2f4ac5;
+      --brand-light: #eef2ff;
+      --accent:      #748ffc;
+      --bg:          #f8f9ff;
+      --surface:     #ffffff;
+      --border:      #e8ecf4;
+      --text:        #1a1f2e;
+      --text-muted:  #5a6278;
+      --text-light:  #9ca3bf;
+      --radius:      16px;
+      --shadow-sm:   0 1px 4px rgba(59,91,219,.07), 0 2px 8px rgba(0,0,0,.04);
+      --shadow:      0 4px 16px rgba(59,91,219,.12), 0 2px 8px rgba(0,0,0,.06);
+      --nav-h:       64;
+      --transition:  .2s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== DARK MODE ===== */
+    html.dark {
+      --surface: #1a1f2e; --bg: #0f1117;
+      --text: #e6edf3; --text-muted: #8b949e; --text-light: #6e7681;
+      --border: #30363d; --brand-light: rgba(59,91,219,.22);
+      --shadow-sm: 0 1px 4px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.2);
+      --shadow: 0 4px 16px rgba(0,0,0,.3);
+    }
+    html.dark body { background: var(--bg); color: var(--text); }
+    html.dark nav#navbar { background: rgba(15,17,23,.92); border-bottom-color: rgba(255,255,255,.07); }
+    html.dark nav#navbar.scrolled { background: rgba(15,17,23,.98); }
+    html.dark .drawer { background: #161b22; }
+    html.dark .aml-section { background: var(--surface); }
+    html.dark .toc-bar { background: rgba(15,17,23,.95); }
+    html.dark footer { background: #161b22; }
+    html.dark .contact-box { background: linear-gradient(135deg, #1a1f3a, #1f2b40); }
+    html.dark .aml-intro-box { background: rgba(180,53,9,.12); border-color: rgba(251,146,60,.3); }
+    html.dark .aml-intro-box p { color: #fed7aa; }
+    html.dark .sanctions-table td { color: var(--text-muted); }
+
+    /* ===== DARK MODE TOGGLE ===== */
+    .dark-toggle {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text-muted); cursor: pointer;
+      transition: all var(--transition); flex-shrink: 0;
+    }
+    .dark-toggle:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .dark-toggle svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .dark-toggle .icon-sun { display: block; }
+    .dark-toggle .icon-moon { display: none; }
+    html.dark .dark-toggle .icon-sun { display: none; }
+    html.dark .dark-toggle .icon-moon { display: block; }
+
+    /* ===== NAVBAR ===== */
+    nav#navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: calc(var(--nav-h) * 1px); z-index: 900;
+      background: rgba(248,249,255,.9);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    nav#navbar.scrolled {
+      border-bottom-color: var(--border);
+      box-shadow: 0 2px 12px rgba(59,91,219,.08);
+      background: rgba(248,249,255,.97);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.25rem;
+    }
+    .logo-link { display: flex; align-items: center; gap: .65rem; }
+    .logo-text {
+      font-size: 1.1rem; font-weight: 800; letter-spacing: -.3px;
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-sub { font-size: .65rem; color: var(--text-light); font-weight: 500; letter-spacing: .2px; }
+
+    .hamburger {
+      width: 42px; height: 42px; border-radius: 10px; border: 1.5px solid var(--border);
+      background: var(--surface); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+      transition: all var(--transition);
+    }
+    .hamburger:hover { border-color: var(--brand); background: var(--brand-light); }
+    .hamburger span {
+      display: block; width: 18px; height: 2px; border-radius: 2px;
+      background: var(--text-muted); transition: all var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== OVERLAY ===== */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(15,20,40,.45);
+      backdrop-filter: blur(2px); z-index: 950;
+      opacity: 0; pointer-events: none; transition: opacity .25s ease;
+    }
+    .overlay.visible { opacity: 1; pointer-events: all; }
+
+    /* ===== DRAWER ===== */
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 288px;
+      background: var(--surface); z-index: 1000;
+      box-shadow: -8px 0 32px rgba(59,91,219,.14);
+      transform: translateX(100%);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border);
+    }
+    .drawer-close {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--bg); cursor: pointer; font-size: 1rem; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .drawer-close:hover { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+    .drawer-nav { list-style: none; padding: 1rem .75rem; flex: 1; }
+    .drawer-nav li a {
+      display: flex; align-items: center; gap: .85rem;
+      padding: .85rem 1rem; border-radius: 10px;
+      font-size: .925rem; font-weight: 500; color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .drawer-nav li a:hover { background: var(--brand-light); color: var(--brand); }
+    .nav-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .nav-icon svg {
+      width: 15px; height: 15px; stroke: var(--text-muted);
+      fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .drawer-nav li a:hover .nav-icon { background: var(--brand-light); border-color: #c7d2fe; }
+    .drawer-nav li a:hover .nav-icon svg { stroke: var(--brand); }
+    .drawer-divider { height: 1px; background: var(--border); margin: .5rem .75rem; }
+    .drawer-actions { padding: 1rem .75rem 1.5rem; display: flex; flex-direction: column; gap: .65rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 12px; font-weight: 600; font-size: .9rem; cursor: pointer; transition: all var(--transition); }
+    .btn-outline { border: 1.5px solid var(--border); background: transparent; color: var(--text-muted); padding: .7rem 1.5rem; }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-primary { background: var(--brand); color: #fff; border: none; padding: .7rem 1.5rem; box-shadow: 0 4px 14px rgba(59,91,219,.3); }
+    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59,91,219,.4); }
+    .btn-full { width: 100%; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #b45309, #f97316, #3b5bdb);
+      transform-origin: left; transform: scaleX(0);
+      z-index: 1100; transition: transform .1s;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-on-scroll {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .anim-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== AML HERO ===== */
+    .aml-hero {
+      background: linear-gradient(135deg, #431407 0%, #7c2d12 30%, #1e3a8a 70%, #1e1b4b 100%);
+      padding: calc(var(--nav-h) * 1px + 3.5rem) 1.5rem 3.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .aml-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+    .aml-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .aml-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.9); font-size: .78rem; font-weight: 600;
+      letter-spacing: .5px; padding: .35rem .9rem; border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+    .aml-badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .aml-hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 900;
+      color: #fff; letter-spacing: -.6px; line-height: 1.15;
+      margin-bottom: .85rem;
+    }
+    .aml-hero p { font-size: .95rem; color: rgba(255,255,255,.7); max-width: 540px; margin: 0 auto 1.75rem; line-height: 1.7; }
+    .aml-meta { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
+    .aml-meta-item { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: rgba(255,255,255,.65); }
+    .aml-meta-item svg { width: 14px; height: 14px; stroke: rgba(255,255,255,.5); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Country flag pills */
+    .country-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: 1.5rem; }
+    .country-pill {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px; padding: .3rem .8rem;
+      font-size: .75rem; font-weight: 600; color: rgba(255,255,255,.9);
+    }
+
+    /* ===== TOC BAR ===== */
+    .toc-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: .85rem 1.5rem; position: sticky; top: calc(var(--nav-h) * 1px);
+      z-index: 800; overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .toc-bar::-webkit-scrollbar { display: none; }
+    .toc-bar-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: .5rem; align-items: center; }
+    .toc-label { font-size: .72rem; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-light); margin-right: .25rem; flex-shrink: 0; }
+    .toc-pill {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .3rem .75rem; border-radius: 999px;
+      font-size: .78rem; font-weight: 600; color: var(--text-muted);
+      background: var(--bg); border: 1px solid var(--border);
+      cursor: pointer; transition: all var(--transition); flex-shrink: 0;
+    }
+    .toc-pill:hover, .toc-pill.active { background: var(--brand-light); border-color: #c7d2fe; color: var(--brand); }
+    .toc-pill .num { font-size: .68rem; }
+
+    /* ===== MAIN LAYOUT ===== */
+    .aml-layout {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      display: grid; grid-template-columns: 1fr; gap: 2rem;
+    }
+    @media (min-width: 900px) {
+      .aml-layout { grid-template-columns: 240px 1fr; align-items: start; }
+    }
+
+    /* ===== SIDEBAR ===== */
+    .aml-sidebar { display: none; }
+    @media (min-width: 900px) {
+      .aml-sidebar { display: block; position: sticky; top: calc(var(--nav-h) * 1px + 60px); }
+    }
+    .sidebar-title { font-size: .72rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text-light); margin-bottom: .85rem; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .sidebar-nav li a {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .5rem .75rem; border-radius: 8px;
+      font-size: .83rem; color: var(--text-muted); transition: all var(--transition);
+      border-left: 2px solid transparent;
+    }
+    .sidebar-nav li a:hover { color: var(--brand); background: var(--brand-light); border-left-color: var(--brand); }
+    .sidebar-nav li a .sn { font-size: .68rem; font-weight: 700; color: var(--accent); min-width: 18px; }
+    .sidebar-back {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .83rem; color: var(--text-muted); font-weight: 600;
+      margin-bottom: 1.5rem; padding: .6rem .75rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      transition: all var(--transition);
+    }
+    .sidebar-back:hover { color: var(--brand); border-color: #c7d2fe; background: var(--brand-light); }
+    .sidebar-back svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== CONTENT ===== */
+    .aml-content { min-width: 0; }
+    .aml-intro-box {
+      background: #fff7ed; border: 1px solid #fed7aa;
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .aml-intro-box p { font-size: .9rem; color: #92400e; line-height: 1.75; }
+    .aml-intro-box strong { color: #b45309; }
+
+    /* ===== SECTION BLOCKS ===== */
+    .aml-section {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border); padding: 2rem;
+      margin-bottom: 1.5rem;
+      scroll-margin-top: calc(var(--nav-h) * 1px + 70px);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .aml-section:hover { border-color: #c7d2fe; box-shadow: var(--shadow-sm); }
+    .as-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+    .as-num {
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px;
+      background: var(--brand-light); display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; font-weight: 800; color: var(--brand);
+    }
+    .as-icon {
+      width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+      background: var(--brand-light); display: flex; align-items: center; justify-content: center;
+    }
+    .as-icon svg { width: 22px; height: 22px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .as-title { font-size: 1.1rem; font-weight: 800; color: var(--text); letter-spacing: -.2px; }
+    .as-sub { font-size: .75rem; color: var(--brand); font-weight: 600; margin-top: .1rem; }
+
+    .aml-section p { font-size: .9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: .85rem; }
+    .aml-section p:last-child { margin-bottom: 0; }
+    .aml-section h4 { font-size: .9rem; font-weight: 700; color: var(--text); margin: 1.25rem 0 .5rem; }
+    .aml-section ul {
+      padding-left: 0; display: flex; flex-direction: column; gap: .55rem;
+      margin: .5rem 0 .85rem;
+    }
+    .aml-section ul li {
+      font-size: .9rem; color: var(--text-muted); line-height: 1.7;
+      padding-left: 1.3rem; position: relative;
+    }
+    .aml-section ul li::before {
+      content: ''; position: absolute; left: 0; top: .6em;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--brand);
+    }
+    .aml-section ul li.highlight-item { color: var(--text); font-weight: 500; }
+    .aml-section ul li.highlight-item::before { background: #b45309; }
+
+    .hl { color: var(--brand); font-weight: 700; }
+    .hl-warn { color: #b45309; font-weight: 700; }
+    .hl-green { color: #16a34a; font-weight: 700; }
+    .hl-red { color: #dc2626; font-weight: 700; }
+
+    /* ===== HIGHLIGHT CARDS ===== */
+    .highlight-grid { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: .75rem 0 1rem; }
+    @media (min-width: 600px) { .highlight-grid { grid-template-columns: repeat(2, 1fr); } }
+    .highlight-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.1rem;
+      transition: all var(--transition);
+    }
+    .highlight-card:hover { border-color: #c7d2fe; background: var(--brand-light); }
+    .highlight-card-title {
+      font-size: .88rem; font-weight: 700; color: var(--brand);
+      margin-bottom: .3rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .highlight-card-title svg { width: 16px; height: 16px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .highlight-card p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+    /* ===== RISK LEVEL BADGES ===== */
+    .risk-badges { display: flex; flex-wrap: wrap; gap: .6rem; margin: .75rem 0 1rem; }
+    .risk-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      border-radius: 8px; padding: .5rem .9rem;
+      font-size: .8rem; font-weight: 700;
+    }
+    .risk-low { background: #f0fdf4; border: 1px solid #86efac; color: #16a34a; }
+    .risk-medium { background: #fffbeb; border: 1px solid #fcd34d; color: #b45309; }
+    .risk-high { background: #fff1f2; border: 1px solid #fecdd3; color: #dc2626; }
+    .risk-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+    /* ===== SANCTIONS TABLE ===== */
+    .sanctions-table { width: 100%; border-collapse: collapse; margin: .75rem 0 1rem; font-size: .87rem; }
+    .sanctions-table th {
+      background: var(--brand-light); color: var(--brand); font-weight: 700;
+      font-size: .75rem; letter-spacing: .5px; text-transform: uppercase;
+      padding: .6rem 1rem; text-align: left; border-bottom: 2px solid #c7d2fe;
+    }
+    .sanctions-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+    .sanctions-table tr:last-child td { border-bottom: none; }
+    .sanctions-table tr:hover td { background: var(--bg); }
+    .sanctions-table td:first-child { font-weight: 600; color: var(--text); font-size: .84rem; }
+
+    /* ===== COUNTRY TABLE ===== */
+    .country-table { width: 100%; border-collapse: collapse; margin: .75rem 0 1rem; font-size: .87rem; }
+    .country-table th {
+      background: var(--brand-light); color: var(--brand); font-weight: 700;
+      font-size: .75rem; letter-spacing: .5px; text-transform: uppercase;
+      padding: .6rem 1rem; text-align: left; border-bottom: 2px solid #c7d2fe;
+    }
+    .country-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+    .country-table tr:last-child td { border-bottom: none; }
+    .country-table tr:hover td { background: var(--bg); }
+    .flag-tag { font-size: .85rem; font-weight: 600; color: var(--text); }
+
+    /* ===== CALLOUTS ===== */
+    .callout {
+      border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
+      font-size: .875rem; line-height: 1.7; display: flex; gap: .85rem; align-items: flex-start;
+    }
+    .callout-info { background: var(--brand-light); border: 1px solid #c7d2fe; color: #2d3a7c; }
+    .callout-warn { background: #fff7ed; border: 1px solid #fed7aa; color: #92400e; }
+    .callout-danger { background: #fff1f2; border: 1px solid #fecdd3; color: #9f1239; }
+    .callout-green { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+    .callout svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; margin-top: 1px; }
+    .callout p { margin: 0; font-size: .875rem; }
+
+    /* ===== CONTACT BOX ===== */
+    .contact-box {
+      background: linear-gradient(135deg, #431407 0%, #7c2d12 40%, #1e3a8a 100%);
+      border-radius: var(--radius); padding: 2rem; margin-top: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .contact-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+    .contact-box-inner { position: relative; z-index: 1; }
+    .contact-box h3 { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: .4rem; }
+    .contact-box p { font-size: .875rem; color: rgba(255,255,255,.7); margin-bottom: 1.25rem; }
+    .contact-box-items { display: flex; flex-direction: column; gap: .85rem; }
+    .contact-box-item { display: flex; align-items: center; gap: .85rem; }
+    .contact-box-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-box-icon svg { width: 16px; height: 16px; stroke: rgba(255,255,255,.85); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-box-item a, .contact-box-item span { font-size: .875rem; color: rgba(255,255,255,.85); }
+    .contact-box-item a:hover { color: #fff; text-decoration: underline; }
+
+    /* ===== BACK TO TOP ===== */
+    .back-top-wrap { text-align: center; margin-top: 2rem; }
+    .back-top-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--brand); color: #fff;
+      padding: .7rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: .875rem;
+      transition: all var(--transition); cursor: pointer;
+    }
+    .back-top-btn:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,91,219,.35); }
+    .back-top-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { margin-bottom: 2.5rem; }
+    .footer-brand-desc { font-size: .875rem; color: var(--text-muted); margin: .75rem 0 1.25rem; max-width: 320px; line-height: 1.65; }
+    .footer-contact-icons { display: flex; gap: .75rem; }
+    .footer-icon-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition); color: var(--text-muted);
+    }
+    .footer-icon-btn:hover { background: var(--brand-light); border-color: var(--brand); color: var(--brand); transform: translateY(-2px); }
+    .footer-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
+    .footer-col h4 { font-size: .78rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul li a { font-size: .875rem; color: var(--text-muted); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--brand); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .65rem; margin-bottom: .75rem; }
+    .footer-contact-item .fc-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--brand-light); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-contact-item .fc-icon svg { width: 15px; height: 15px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-contact-item a, .footer-contact-item span { font-size: .835rem; color: var(--text-muted); line-height: 1.5; }
+    .footer-contact-item a:hover { color: var(--brand); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 1.5rem;
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      align-items: center; justify-content: center;
+      font-size: .8rem; color: var(--text-light); text-align: center;
+    }
+    .footer-bottom a { color: var(--text-light); transition: color var(--transition); }
+    .footer-bottom a:hover { color: var(--brand); }
+    .footer-bottom span { color: var(--brand); font-weight: 600; }
+
+    @media (max-width: 500px) {
+      .aml-section { padding: 1.4rem 1.1rem; }
+      .aml-hero h1 { font-size: 1.7rem; }
+    }
+  </style>
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');}());</script>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Side overlay -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="36" height="36" alt="NexaPay" style="border-radius:10px;display:block;object-fit:contain;">
+      <div>
+        <div class="logo-text">Nexa<span style="font-weight:900;font-style:italic;">Pay</span></div>
+        <div class="logo-sub">by Elicate Technologies</div>
+      </div>
+    </a>
+    <div style="display:flex;align-items:center;gap:.4rem;">
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== DRAWER ===== -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <a href="index" class="logo-link">
+      <img src="nexapay.png" width="30" height="30" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+      <span class="logo-text">Nexa<span style="font-weight:900;font-style:italic;">Pay</span></span>
+    </a>
+    <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
+  </div>
+  <ul class="drawer-nav">
+    <li>
+      <a href="index#features" onclick="navigateTo('index#features')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        Features
+      </a>
+    </li>
+    <li>
+      <a href="index#how-it-works" onclick="navigateTo('index#how-it-works')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        How It Works
+      </a>
+    </li>
+    <li>
+      <a href="docs" onclick="navigateTo('docs')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+        Documentation
+      </a>
+    </li>
+    <li>
+      <a href="index#pricing" onclick="navigateTo('index#pricing')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        Pricing
+      </a>
+    </li>
+  </ul>
+  <div class="drawer-divider"></div>
+  <div class="drawer-actions">
+    <a href="auth" class="btn btn-outline btn-full">Sign In</a>
+    <a href="auth" class="btn btn-primary btn-full">Get Started</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="aml-hero">
+  <div class="aml-hero-inner">
+    <div class="aml-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Compliance &amp; Legal
+    </div>
+    <h1>Anti-Money Laundering Policy</h1>
+    <p>NexaPay is committed to preventing financial crime, money laundering, and terrorist financing across every market we operate in — Zambia, Zimbabwe, Botswana, and Namibia.</p>
+    <div class="aml-meta">
+      <div class="aml-meta-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Last Updated: June 2025
+      </div>
+      <div class="aml-meta-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        14 Sections
+      </div>
+      <div class="aml-meta-item">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        4 Countries
+      </div>
+    </div>
+    <div class="country-pills">
+      <span class="country-pill">🇿🇲 Zambia</span>
+      <span class="country-pill">🇿🇼 Zimbabwe</span>
+      <span class="country-pill">🇧🇼 Botswana</span>
+      <span class="country-pill">🇳🇦 Namibia</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TABLE OF CONTENTS BAR ===== -->
+<div class="toc-bar">
+  <div class="toc-bar-inner">
+    <span class="toc-label">Jump to</span>
+    <a class="toc-pill" onclick="jumpTo('sec1')"><span class="num">01</span> Introduction</a>
+    <a class="toc-pill" onclick="jumpTo('sec2')"><span class="num">02</span> Objectives</a>
+    <a class="toc-pill" onclick="jumpTo('sec3')"><span class="num">03</span> Scope</a>
+    <a class="toc-pill" onclick="jumpTo('sec4')"><span class="num">04</span> Customer Due Diligence</a>
+    <a class="toc-pill" onclick="jumpTo('sec5')"><span class="num">05</span> Enhanced Due Diligence</a>
+    <a class="toc-pill" onclick="jumpTo('sec6')"><span class="num">06</span> Suspicious Activity</a>
+    <a class="toc-pill" onclick="jumpTo('sec7')"><span class="num">07</span> Record Keeping</a>
+    <a class="toc-pill" onclick="jumpTo('sec8')"><span class="num">08</span> Employee Training</a>
+    <a class="toc-pill" onclick="jumpTo('sec9')"><span class="num">09</span> Third-Party Relations</a>
+    <a class="toc-pill" onclick="jumpTo('sec10')"><span class="num">10</span> Sanctions Compliance</a>
+    <a class="toc-pill" onclick="jumpTo('sec11')"><span class="num">11</span> Internal Controls</a>
+    <a class="toc-pill" onclick="jumpTo('sec12')"><span class="num">12</span> Reporting Obligations</a>
+    <a class="toc-pill" onclick="jumpTo('sec13')"><span class="num">13</span> Policy Review</a>
+    <a class="toc-pill" onclick="jumpTo('sec14')"><span class="num">14</span> Contact</a>
+  </div>
+</div>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<div class="aml-layout">
+
+  <!-- Sidebar (desktop only) -->
+  <aside class="aml-sidebar">
+    <a href="index" class="sidebar-back" onclick="navigateTo('index')">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Home
+    </a>
+    <div class="sidebar-title">Sections</div>
+    <ul class="sidebar-nav">
+      <li><a href="#sec1" onclick="jumpTo('sec1')"><span class="sn">01</span> Introduction</a></li>
+      <li><a href="#sec2" onclick="jumpTo('sec2')"><span class="sn">02</span> Objectives</a></li>
+      <li><a href="#sec3" onclick="jumpTo('sec3')"><span class="sn">03</span> Scope</a></li>
+      <li><a href="#sec4" onclick="jumpTo('sec4')"><span class="sn">04</span> Customer Due Diligence</a></li>
+      <li><a href="#sec5" onclick="jumpTo('sec5')"><span class="sn">05</span> Enhanced Due Diligence</a></li>
+      <li><a href="#sec6" onclick="jumpTo('sec6')"><span class="sn">06</span> Suspicious Activity</a></li>
+      <li><a href="#sec7" onclick="jumpTo('sec7')"><span class="sn">07</span> Record Keeping</a></li>
+      <li><a href="#sec8" onclick="jumpTo('sec8')"><span class="sn">08</span> Employee Training</a></li>
+      <li><a href="#sec9" onclick="jumpTo('sec9')"><span class="sn">09</span> Third-Party Relations</a></li>
+      <li><a href="#sec10" onclick="jumpTo('sec10')"><span class="sn">10</span> Sanctions Compliance</a></li>
+      <li><a href="#sec11" onclick="jumpTo('sec11')"><span class="sn">11</span> Internal Controls</a></li>
+      <li><a href="#sec12" onclick="jumpTo('sec12')"><span class="sn">12</span> Reporting Obligations</a></li>
+      <li><a href="#sec13" onclick="jumpTo('sec13')"><span class="sn">13</span> Policy Review</a></li>
+      <li><a href="#sec14" onclick="jumpTo('sec14')"><span class="sn">14</span> Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <main class="aml-content">
+
+    <!-- Intro notice -->
+    <div class="aml-intro-box anim-on-scroll">
+      <p><strong>IMPORTANT COMPLIANCE NOTICE.</strong> This Anti-Money Laundering (AML) Policy governs all use of <strong>NexaPay</strong>'s payment gateway, APIs, and financial services. NexaPay operates across <strong>Zambia, Zimbabwe, Botswana, and Namibia</strong> and is fully committed to compliance with the applicable AML laws and regulations in each jurisdiction. All customers, employees, and partners are bound by this policy.</p>
+    </div>
+
+    <!-- ─── SECTION 1 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec1">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Introduction</div>
+          <div class="as-sub">Our commitment to clean finance</div>
+        </div>
+      </div>
+      <p><strong class="hl">NexaPay</strong> (a payment gateway platform operated by <strong class="hl">Elicate Technologies Limited</strong>) is committed to preventing money laundering, terrorist financing, and other illegal activities through our financial services across Southern Africa.</p>
+      <p>This Anti-Money Laundering (AML) Policy outlines the measures we take to comply with applicable laws and regulations in all four jurisdictions where we operate, including:</p>
+      <ul>
+        <li class="highlight-item"><strong>Zambia</strong> — the Prohibition and Prevention of Money Laundering Act (PPML Act) and Financial Intelligence Centre Act</li>
+        <li class="highlight-item"><strong>Zimbabwe</strong> — the Money Laundering and Proceeds of Crime Act (MLPCA) and Reserve Bank of Zimbabwe guidelines</li>
+        <li class="highlight-item"><strong>Botswana</strong> — the Financial Intelligence Act and the Proceeds of Serious Crime Act</li>
+        <li class="highlight-item"><strong>Namibia</strong> — the Financial Intelligence Act (FIA) and Bank of Namibia AML/CFT directives</li>
+      </ul>
+      <p>We also adhere to international AML standards set by the <strong class="hl">Financial Action Task Force (FATF)</strong> and the <strong class="hl">Eastern and Southern Africa Anti-Money Laundering Group (ESAAMLG)</strong>.</p>
+      <div class="callout callout-info">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>NexaPay's payment infrastructure spans mobile money networks across Zambia (MTN, Airtel), Zimbabwe (EcoCash, Innbucks), Botswana (Orange Money, Mascom MyZaka), and Namibia (MTC MobiPay, Bank Windhoek). This cross-border reach makes robust AML controls essential to every transaction we process.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 2 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec2">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Objectives</div>
+          <div class="as-sub">What this policy sets out to achieve</div>
+        </div>
+      </div>
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="highlight-card-title">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Prevention
+          </div>
+          <p>Stop NexaPay's platform from being used for money laundering, terrorist financing, or any other form of financial crime across Zambia, Zimbabwe, Botswana, and Namibia.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-card-title">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Compliance
+          </div>
+          <p>Ensure full compliance with all applicable AML laws, regulations, and financial intelligence directives in every jurisdiction where NexaPay operates.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-card-title">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Risk Management
+          </div>
+          <p>Identify, assess, and mitigate risks associated with money laundering and terrorist financing across all customer segments and transaction types.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-card-title">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Reporting
+          </div>
+          <p>Establish clear procedures for detecting and reporting suspicious activities to the relevant financial intelligence units in each country we operate.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 3 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec3">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Scope</div>
+          <div class="as-sub">Who and what this policy covers</div>
+        </div>
+      </div>
+      <p>This AML Policy applies to all customers, employees, contractors, and third-party service providers involved in the use of NexaPay's services across our four operating markets. It covers:</p>
+      <ul>
+        <li class="highlight-item">Mobile money payment processing (MTN, Airtel, EcoCash, Innbucks, Orange Money, Mascom MyZaka, MTC MobiPay)</li>
+        <li>Payment API users and integrated merchants</li>
+        <li>Virtual card holders and digital wallet users</li>
+        <li>Cross-border payment and settlement users</li>
+        <li>Businesses using NexaPay's merchant dashboard and payment links</li>
+      </ul>
+      <table class="country-table">
+        <thead>
+          <tr><th>Country</th><th>Regulatory Authority</th><th>Key AML Framework</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="flag-tag">🇿🇲 Zambia</span></td>
+            <td>Financial Intelligence Centre (FIC)</td>
+            <td>PPML Act, Banking &amp; Financial Services Act</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇿🇼 Zimbabwe</span></td>
+            <td>Financial Intelligence Unit (FIU Zimbabwe)</td>
+            <td>Money Laundering &amp; Proceeds of Crime Act</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇧🇼 Botswana</span></td>
+            <td>Financial Intelligence Agency (FIA)</td>
+            <td>Financial Intelligence Act, Proceeds of Serious Crime Act</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇳🇦 Namibia</span></td>
+            <td>Financial Intelligence Centre (FIC Namibia)</td>
+            <td>Financial Intelligence Act, Bank of Namibia Directives</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ─── SECTION 4 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec4">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Customer Due Diligence (CDD)</div>
+          <div class="as-sub">Know Your Customer — verified and risk-assessed</div>
+        </div>
+      </div>
+      <p>NexaPay implements comprehensive <strong class="hl">Customer Due Diligence (CDD)</strong> measures across all four jurisdictions to verify customer identities and assess the risk associated with their activities. Our KYC process includes:</p>
+      <h4>Identity Verification</h4>
+      <p>We collect and verify government-issued identification from all customers during onboarding:</p>
+      <ul>
+        <li>National ID card, passport, or driver's licence</li>
+        <li>Proof of address (utility bill, bank statement — not older than 3 months)</li>
+        <li>Business registration documents for merchant accounts</li>
+        <li>Tax Identification Numbers (TIN) where applicable per jurisdiction</li>
+      </ul>
+      <h4>Risk Classification</h4>
+      <p>All customers are classified into one of three risk tiers based on their profile, transaction history, geographic exposure, and business nature:</p>
+      <div class="risk-badges">
+        <span class="risk-badge risk-low"><span class="dot"></span> Low Risk — Streamlined onboarding, standard monitoring</span>
+        <span class="risk-badge risk-medium"><span class="dot"></span> Medium Risk — Additional verification, periodic review</span>
+        <span class="risk-badge risk-high"><span class="dot"></span> High Risk — Enhanced Due Diligence required, senior approval</span>
+      </div>
+      <h4>Ongoing Transaction Monitoring</h4>
+      <p>NexaPay continuously monitors customer transactions for patterns consistent with money laundering, structuring, layering, or terrorist financing. Our systems apply automated rules and threshold alerts calibrated for each country's regulatory requirements and local transaction norms.</p>
+      <div class="callout callout-info">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>NexaPay will not onboard or continue to serve any customer who refuses to provide required identification documents or who provides false information. Accounts will be immediately suspended pending investigation.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 5 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec5">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Enhanced Due Diligence (EDD)</div>
+          <div class="as-sub">Elevated scrutiny for high-risk relationships</div>
+        </div>
+      </div>
+      <p>For customers classified as <strong class="hl-warn">high-risk</strong>, NexaPay applies Enhanced Due Diligence measures that go beyond standard CDD. EDD is triggered by factors including — but not limited to — Politically Exposed Person (PEP) status, operations in high-risk jurisdictions, complex ownership structures, or unusual transaction volumes.</p>
+      <p>EDD measures include:</p>
+      <ul>
+        <li class="highlight-item">Obtaining detailed information on the customer's source of funds and source of wealth</li>
+        <li>Conducting enhanced background checks and adverse media screening</li>
+        <li>More frequent transaction reviews (monthly or as warranted)</li>
+        <li>Requiring senior management approval before onboarding or continued engagement</li>
+        <li>Applying lower transaction thresholds and tighter velocity controls</li>
+        <li>Obtaining additional documentation on the purpose and intended nature of the business relationship</li>
+      </ul>
+      <div class="callout callout-warn">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p><strong>Politically Exposed Persons (PEPs):</strong> Customers who are PEPs — or immediate family members and close associates of PEPs — are automatically subject to EDD regardless of their transaction volumes. This applies to PEPs from all four of NexaPay's operating countries and internationally.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 6 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec6">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Suspicious Activity Reporting</div>
+          <div class="as-sub">Detecting and escalating red flags</div>
+        </div>
+      </div>
+      <p>NexaPay is legally obligated to report suspicious activities to the relevant financial intelligence authorities in Zambia, Zimbabwe, Botswana, and Namibia. All staff are trained to identify and escalate the following red flags:</p>
+      <ul>
+        <li class="highlight-item">Unusual or unusually large transactions with no apparent legitimate business purpose</li>
+        <li class="highlight-item">Transactions structured in patterns that appear designed to avoid reporting thresholds (structuring / smurfing)</li>
+        <li>Transactions involving counterparties in jurisdictions identified as high-risk by FATF</li>
+        <li>Customers reluctant to provide required KYC documentation or who provide inconsistent information</li>
+        <li>Sudden unexplained increases in transaction volume or value inconsistent with the customer's profile</li>
+        <li>Rapid movement of funds through accounts with no clear commercial rationale</li>
+        <li>Attempts to evade record-keeping, reporting requirements, or compliance checks</li>
+        <li>Payments to or from sanctioned individuals, entities, or jurisdictions</li>
+      </ul>
+      <div class="callout callout-danger">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <p><strong>Tipping-off is prohibited.</strong> NexaPay employees are strictly prohibited from informing any customer or third party that a Suspicious Activity Report (SAR) or Suspicious Transaction Report (STR) has been filed or is under consideration. Violation of this prohibition may constitute a criminal offence under the laws of each jurisdiction.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 7 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec7">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Record Keeping</div>
+          <div class="as-sub">Secure retention of compliance records</div>
+        </div>
+      </div>
+      <p>NexaPay maintains comprehensive records to support regulatory oversight, legal proceedings, and internal compliance reviews. All records are stored securely with strict access controls and tamper-evident audit logging.</p>
+      <h4>What We Retain</h4>
+      <ul>
+        <li>All customer identification documents and KYC records</li>
+        <li>Transaction records — including amounts, parties, timestamps, and channels</li>
+        <li>Suspicious Activity Reports (SARs) and Suspicious Transaction Reports (STRs)</li>
+        <li>Correspondence with regulatory authorities</li>
+        <li>Internal compliance decisions, risk assessments, and audit trails</li>
+      </ul>
+      <h4>Retention Period</h4>
+      <p>Records are retained for a minimum of <strong class="hl">5 years</strong> from the date of the transaction or the end of the customer relationship — whichever is later — in compliance with the laws of Zambia, Zimbabwe, Botswana, and Namibia. Where local law requires a longer period, the longer period applies.</p>
+      <div class="callout callout-green">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <p>Upon lawful request, NexaPay will promptly provide records to the Financial Intelligence Centre (Zambia/Namibia), Financial Intelligence Unit (Zimbabwe), or Financial Intelligence Agency (Botswana) in the format required by each authority.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 8 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec8">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Employee Training</div>
+          <div class="as-sub">Building a compliance-first culture</div>
+        </div>
+      </div>
+      <p>All NexaPay employees — regardless of role — receive mandatory AML training as part of their onboarding and on a continuing basis. Employees in compliance, operations, and customer-facing roles receive additional role-specific training.</p>
+      <p>Our training programme covers:</p>
+      <ul>
+        <li class="highlight-item">The AML laws and regulations applicable in Zambia, Zimbabwe, Botswana, and Namibia</li>
+        <li>How to recognise money laundering typologies and red flags</li>
+        <li>Internal escalation and suspicious activity reporting procedures</li>
+        <li>Customer Due Diligence and Enhanced Due Diligence requirements</li>
+        <li>Record-keeping obligations and data protection standards</li>
+        <li>Sanctions screening and PEP identification procedures</li>
+        <li>Tipping-off prohibitions and legal obligations</li>
+      </ul>
+      <p>Training is reviewed and updated at least annually, or whenever there is a material change in regulations or NexaPay's product offering. Completion of mandatory training is tracked and forms part of each employee's compliance record.</p>
+    </div>
+
+    <!-- ─── SECTION 9 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec9">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Third-Party Relationships</div>
+          <div class="as-sub">Holding partners to our standards</div>
+        </div>
+      </div>
+      <p>NexaPay conducts formal due diligence on all third-party service providers — including mobile money operators, banking partners, payment processors, and technology vendors — before entering into any business relationship with them.</p>
+      <p>Our third-party AML requirements include:</p>
+      <ul>
+        <li>Verification that the third party holds all required licences and regulatory approvals in their jurisdiction</li>
+        <li>Assessment of the third party's own AML/KYC programme and controls</li>
+        <li>Contractual obligations requiring ongoing AML compliance</li>
+        <li>Periodic re-assessment of third-party risk profiles</li>
+        <li>Right to audit or request evidence of AML compliance from high-risk third parties</li>
+      </ul>
+      <p>NexaPay will immediately terminate relationships with any third party found to be knowingly facilitating money laundering, terrorist financing, or sanctions evasion, and will report such findings to the relevant authorities.</p>
+    </div>
+
+    <!-- ─── SECTION 10 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec10">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Sanctions Compliance</div>
+          <div class="as-sub">Screening against global watchlists</div>
+        </div>
+      </div>
+      <p>NexaPay screens all customers, transactions, and counterparties against comprehensive sanctions databases and Politically Exposed Persons (PEP) lists in real time. Any potential match triggers an immediate hold on the transaction pending investigation by our compliance team.</p>
+      <h4>Sanctions &amp; Watchlists Screened</h4>
+      <table class="sanctions-table">
+        <thead>
+          <tr><th>List / Database</th><th>Issuing Authority</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>UN Security Council Consolidated List</td><td>United Nations</td></tr>
+          <tr><td>OFAC Specially Designated Nationals (SDN)</td><td>United States Treasury</td></tr>
+          <tr><td>HM Treasury Financial Sanctions Targets</td><td>United Kingdom</td></tr>
+          <tr><td>EU Consolidated Financial Sanctions List</td><td>European Union</td></tr>
+          <tr><td>FATF High-Risk Jurisdictions</td><td>Financial Action Task Force</td></tr>
+          <tr><td>Global PEP List</td><td>Open Sanctions / World-Check</td></tr>
+          <tr><td>NAZK Sanctions List</td><td>Ukraine</td></tr>
+          <tr><td>Interpol Notices</td><td>Interpol</td></tr>
+          <tr><td>FBI / DEA Watchlists</td><td>United States</td></tr>
+          <tr><td>EUROPOL Watchlists</td><td>European Union</td></tr>
+          <tr><td>ESAAMLG Regional Alerts</td><td>Eastern &amp; Southern Africa AML Group</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-danger">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <p><strong>Matched accounts will be blocked immediately.</strong> Any confirmed match against a sanctions list or PEP watchlist will result in the account being suspended, all pending transactions being cancelled, and the matter being reported to the relevant financial intelligence authority. NexaPay will cooperate fully with law enforcement.</p>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 11 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec11">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Internal Controls &amp; Audits</div>
+          <div class="as-sub">Continuous improvement of our AML programme</div>
+        </div>
+      </div>
+      <p>NexaPay maintains robust internal controls to ensure ongoing compliance with this AML Policy and the applicable laws across all four markets.</p>
+      <p>Our internal control framework includes:</p>
+      <ul>
+        <li class="highlight-item">A dedicated Compliance Officer responsible for AML programme oversight</li>
+        <li>Automated transaction monitoring systems with configurable rule sets per jurisdiction</li>
+        <li>Segregation of duties between compliance, operations, and product teams</li>
+        <li>Regular internal audits of AML procedures — at least annually</li>
+        <li>Independent external audits conducted as required by regulatory authorities</li>
+        <li>Board-level reporting on AML programme effectiveness and key risk indicators</li>
+        <li>Formal escalation procedures for compliance breaches or near-misses</li>
+      </ul>
+      <p>Findings from audits are documented, tracked to resolution, and used to improve our AML programme. Material findings are reported to senior management and relevant regulatory bodies where required.</p>
+    </div>
+
+    <!-- ─── SECTION 12 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec12">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Reporting Obligations</div>
+          <div class="as-sub">Transparency with financial intelligence authorities</div>
+        </div>
+      </div>
+      <p>NexaPay has formal reporting obligations to financial intelligence authorities in each jurisdiction. We file all required reports within the statutory deadlines and cooperate fully with investigations:</p>
+      <table class="country-table">
+        <thead>
+          <tr><th>Country</th><th>Reporting Authority</th><th>Report Types</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="flag-tag">🇿🇲 Zambia</span></td>
+            <td>Financial Intelligence Centre (FIC)</td>
+            <td>STRs, CTRs (above ZMW threshold), Periodic Reports</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇿🇼 Zimbabwe</span></td>
+            <td>Financial Intelligence Unit (FIU)</td>
+            <td>STRs, Cash Transaction Reports, Cross-border Reports</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇧🇼 Botswana</span></td>
+            <td>Financial Intelligence Agency (FIA)</td>
+            <td>STRs, CTRs, Property-associated Reports</td>
+          </tr>
+          <tr>
+            <td><span class="flag-tag">🇳🇦 Namibia</span></td>
+            <td>FIC Namibia / Bank of Namibia</td>
+            <td>STRs, Large Cash Transaction Reports, EFT Reports</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>NexaPay will cooperate fully with law enforcement agencies, financial intelligence units, and regulatory authorities in any investigation related to money laundering, terrorist financing, or sanctions violations — in all four jurisdictions and internationally.</p>
+    </div>
+
+    <!-- ─── SECTION 13 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec13">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Policy Review</div>
+          <div class="as-sub">Keeping pace with evolving regulations</div>
+        </div>
+      </div>
+      <p>This AML Policy is a living document. It is reviewed and updated at least <strong class="hl">annually</strong> and immediately upon any of the following triggers:</p>
+      <ul>
+        <li class="highlight-item">Material changes in AML legislation in Zambia, Zimbabwe, Botswana, or Namibia</li>
+        <li>Updated FATF guidance or ESAAMLG regional typologies affecting Southern Africa</li>
+        <li>Significant changes in NexaPay's products, services, or geographic operations</li>
+        <li>Findings from internal or external audits that require policy updates</li>
+        <li>Identification of new money laundering or terrorist financing typologies in our markets</li>
+      </ul>
+      <p>All updates to this policy are communicated to relevant employees and stakeholders and are made effective from the date published. The policy version is recorded together with the effective date.</p>
+    </div>
+
+    <!-- ─── SECTION 14 ─── -->
+    <div class="aml-section anim-on-scroll" id="sec14">
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="as-title">Contact Information</div>
+          <div class="as-sub">Reach our compliance team</div>
+        </div>
+      </div>
+      <p>For any questions, concerns, or reports related to this AML Policy — including to report suspected financial crime — please contact NexaPay's Compliance Team directly:</p>
+    </div>
+
+    <!-- Contact box -->
+    <div class="contact-box anim-on-scroll">
+      <div class="contact-box-inner">
+        <h3>Compliance Team</h3>
+        <p>Elicate Technologies Limited — NexaPay Compliance &amp; AML. Available Monday–Friday, 08:00–17:00 CAT across all operating markets.</p>
+        <div class="contact-box-items">
+          <div class="contact-box-item">
+            <div class="contact-box-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <a href="mailto:compliance@nexapay.africa">compliance@nexapay.africa</a>
+          </div>
+          <div class="contact-box-item">
+            <div class="contact-box-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <a href="mailto:support@nexapay.africa">support@nexapay.africa — General enquiries</a>
+          </div>
+          <div class="contact-box-item">
+            <div class="contact-box-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Room 217, Broadway, Ndola, Zambia</span>
+          </div>
+          <div class="contact-box-item">
+            <div class="contact-box-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span>24/7 support for urgent compliance matters</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="back-top-wrap anim-on-scroll">
+      <button class="back-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        Back to Top
+      </button>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="index" class="logo-link" style="margin-bottom:.75rem;display:inline-flex" onclick="navigateTo('index')">
+        <svg width="30" height="30" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="10" fill="url(#logoGradFt2)"/><path d="M9 17.5L13 13L16 17L20 11L25 17.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 22.5H25" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/><defs><linearGradient id="logoGradFt2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3b5bdb"/><stop offset="100%" stop-color="#748ffc"/></linearGradient></defs></svg>
+        <div>
+          <div class="logo-text">NexaPay</div>
+          <div class="logo-sub">by Elicate Technologies</div>
+        </div>
+      </a>
+      <p class="footer-brand-desc">
+        Smart payment tools designed to help businesses accept mobile money across Zambia, Zimbabwe, Botswana, and Namibia — with one simple API.
+      </p>
+      <div class="footer-contact-icons">
+        <a href="mailto:support@nexapay.africa" class="footer-icon-btn" title="Email us">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="tel:+260975360754" class="footer-icon-btn" title="Call us">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index#features" onclick="navigateTo('index#features')">Payment Processing</a></li>
+          <li><a href="index#features" onclick="navigateTo('index#features')">Digital Wallet</a></li>
+          <li><a href="index#features" onclick="navigateTo('index#features')">Money Transfer</a></li>
+          <li><a href="index#features" onclick="navigateTo('index#features')">Merchant Solutions</a></li>
+          <li><a href="docs" onclick="navigateTo('docs')">API Integration</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="about" onclick="navigateTo('about')">About Us</a></li>
+          <li><a href="docs" onclick="navigateTo('docs')">API Docs</a></li>
+          <li><a href="faq" onclick="navigateTo('faq')">FAQ</a></li>
+          <li><a href="index#contact" onclick="navigateTo('index#contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms" onclick="navigateTo('terms')">Terms of Use</a></li>
+          <li><a href="privacy" onclick="navigateTo('privacy')">Privacy Policy</a></li>
+          <li><a href="aml" style="color:var(--brand);font-weight:600;">AML Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--text-light);margin-bottom:.15rem;">24/7 Support</div>
+            <a href="mailto:support@nexapay.africa">support@nexapay.africa</a>
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <span>Room 217, Broadway, Ndola, Zambia</span>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <a href="tel:+260975360754">+260 975 360 754</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 <span>Elicate Technologies Limited</span>. All rights reserved.
+      &nbsp;&middot;&nbsp;
+      <a href="terms">Terms of Use</a>
+      &nbsp;&middot;&nbsp;
+      <a href="privacy">Privacy Policy</a>
+      &nbsp;&middot;&nbsp;
+      <a href="aml" style="color:var(--brand);">AML Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== DRAWER =====
+  function toggleDrawer() {
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const hamburger = document.getElementById('hamburger');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    hamburger.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===== NAVIGATE =====
+  function navigateTo(url) {
+    if (event) event.preventDefault();
+    closeDrawer();
+    if (window.NexaPayNav) {
+      window.NexaPayNav.go(url);
+    } else {
+      window.location.href = url;
+    }
+  }
+
+  // ===== JUMP TO SECTION =====
+  function jumpTo(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      const navH = 64 + 52;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.toc-pill').forEach(p => p.classList.remove('active'));
+    const secs = ['sec1','sec2','sec3','sec4','sec5','sec6','sec7','sec8','sec9','sec10','sec11','sec12','sec13','sec14'];
+    const pills = document.querySelectorAll('.toc-pill');
+    const idx = secs.indexOf(id);
+    if (idx >= 0 && pills[idx]) pills[idx].classList.add('active');
+  }
+
+  // ===== NAVBAR SCROLL =====
+  const navbar = document.getElementById('navbar');
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    progressBar.style.transform = `scaleX(${isNaN(scrolled) ? 0 : scrolled})`;
+  }, { passive: true });
+
+  // ===== FADE-IN ANIMATIONS =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.anim-on-scroll').forEach(el => observer.observe(el));
+
+  // ===== ACTIVE SECTION TRACKING IN TOC =====
+  const sections = document.querySelectorAll('.aml-section');
+  const tocPills = document.querySelectorAll('.toc-pill');
+  const sectionIds = Array.from(sections).map(s => s.id);
+
+  const secObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sectionIds.indexOf(entry.target.id);
+        if (idx >= 0) {
+          tocPills.forEach(p => p.classList.remove('active'));
+          if (tocPills[idx]) {
+            tocPills[idx].classList.add('active');
+            const tocBar = document.querySelector('.toc-bar');
+            if (tocBar) {
+              const pill = tocPills[idx];
+              const target = pill.offsetLeft - tocBar.clientWidth / 2 + pill.offsetWidth / 2;
+              tocBar.scrollTo({ left: target, behavior: 'smooth' });
+            }
+          }
+        }
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '-64px 0px -40% 0px' });
+  sections.forEach(s => secObserver.observe(s));
+
+  // ===== CLOSE DRAWER ON RESIZE =====
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeDrawer();
+  });
+
+  // ===== DARK MODE TOGGLE =====
+  (function() {
+    var btn = document.getElementById('dark-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  })();
+</script>
+
+<!-- Page transition system -->
+<script src="sw-transitions.js"></script>
+</body>
+</html>
