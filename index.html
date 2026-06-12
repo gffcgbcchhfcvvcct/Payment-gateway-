@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaPay — Accept Mobile Money Across Southern Africa</title>
+  <meta name="description" content="NexaPay gives developers a simple, powerful API to integrate mobile money payments across Zambia, Zimbabwe, Botswana, and Namibia." />
+  <meta name="keywords" content="mobile money API, payment gateway, Zambia, Zimbabwe, Botswana, Namibia, MTN, Airtel, EcoCash, Orange Money, NexaPay, fintech, Southern Africa" />
+  <meta name="author" content="Elicate Technologies Limited" />
+  <meta property="og:title" content="NexaPay — Accept Mobile Money Across Southern Africa" />
+  <meta property="og:description" content="NexaPay gives developers a simple, powerful API to integrate mobile money payments across Zambia, Zimbabwe, Botswana, and Namibia." />
+  <meta property="og:image" content="nexapay.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NexaPay" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NexaPay — Accept Mobile Money Across Southern Africa" />
+  <meta name="twitter:description" content="Accept mobile money payments via MTN, Airtel, EcoCash, Orange Money and more. One API, four countries, instant settlements." />
+  <meta name="twitter:image" content="nexapay.png" />
+  <link rel="icon" href="nexapay.png" type="image/png" />
+  <link rel="canonical" href="https://nexapay.africa/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f4f5f9;
+      color: #1a1f2e;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --brand: #3b5bdb;
+      --brand-dark: #2f4ac0;
+      --brand-light: #e8edff;
+      --brand-muted: #748ffc;
+      --accent: #5c7cfa;
+      --surface: #ffffff;
+      --bg: #f4f5f9;
+      --bg-dark: #edf0f7;
+      --text: #1a1f2e;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow: 0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg: 0 12px 40px rgba(59,91,219,.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --nav-h: 68px;
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+      --code-bg: #0f1117; --code-surface: #161b22; --code-border: #30363d;
+    }
+
+    /* ===== DARK MODE ===== */
+    html.dark {
+      --surface: #1a1f2e; --bg: #0f1117; --bg-dark: #161b22;
+      --text: #e6edf3; --text-muted: #8b949e; --text-light: #6e7681;
+      --border: #30363d;
+      --brand-light: rgba(59,91,219,.22);
+    }
+    html.dark body { background: var(--bg); color: var(--text); }
+    html.dark nav { background: rgba(15,17,23,.92); border-bottom-color: rgba(255,255,255,.07); }
+    html.dark nav.scrolled { background: rgba(15,17,23,.98); }
+    html.dark .drawer { background: #161b22; }
+    html.dark .feature-card { background: #161b22; }
+    html.dark .why-us-section { background: #161b22; }
+    html.dark .why-stat-card { background: #1a1f2e; border-color: var(--border); }
+    html.dark .ready-cta { background: #0f1117; }
+    html.dark footer { background: #161b22; }
+    html.dark .networks-section { background: #161b22; }
+    html.dark .network-chip { background: #1a1f2e; border-color: var(--border); }
+    html.dark .contact-form { background: #161b22; }
+    html.dark input, html.dark textarea { background: #0f1117; border-color: var(--border); color: var(--text); }
+    html.dark .panel-overlay { background: #0f1117; }
+    html.dark .panel-overlay .panel-inner { background: #0f1117; }
+    html.dark .faq-item { background: #161b22; border-color: var(--border); }
+    html.dark .analytics-card { background: #161b22; border-color: var(--border); }
+
+    /* ===== DARK MODE TOGGLE ===== */
+    .dark-toggle {
+      width: 36px; height: 36px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text-muted); cursor: pointer;
+      transition: all var(--transition); flex-shrink: 0;
+    }
+    .dark-toggle:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .dark-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .dark-toggle .icon-sun { display: block; }
+    .dark-toggle .icon-moon { display: none; }
+    html.dark .dark-toggle .icon-sun { display: none; }
+    html.dark .dark-toggle .icon-moon { display: block; }
+
+    /* ===== NAV RIGHT ===== */
+    .nav-right { display: flex; align-items: center; gap: .4rem; }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(244,245,249,.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.6);
+      display: flex; align-items: center;
+      padding: 0 1.5rem;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(244,245,249,.97);
+      box-shadow: 0 1px 20px rgba(0,0,0,.08);
+    }
+    .nav-inner {
+      width: 100%; max-width: 1140px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo-link { display: flex; align-items: center; gap: .6rem; }
+    .logo-text { font-size: 1.18rem; font-weight: 900; letter-spacing: -.7px; background: linear-gradient(135deg,#4338ca 0%,#6d28d9 55%,#a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .logo-pay-accent { font-weight: 900; font-style: italic; }
+    .logo-sub { font-size: .62rem; font-weight: 500; color: var(--text-muted); letter-spacing: .4px; text-transform: uppercase; margin-top: -2px; -webkit-text-fill-color: var(--text-muted); }
+
+    .hamburger {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+      cursor: pointer; transition: background var(--transition);
+      background: transparent;
+    }
+    .hamburger:hover { background: var(--bg-dark); }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition), width var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== SIDE DRAWER ===== */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.35);
+      opacity: 0; pointer-events: none; z-index: 1001;
+      transition: opacity var(--transition);
+      backdrop-filter: blur(4px);
+    }
+    .overlay.visible { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(340px, 88vw);
+      background: var(--surface);
+      z-index: 1002;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+      padding: 1.5rem;
+      box-shadow: -8px 0 40px rgba(0,0,0,.12);
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem; padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-close {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg); display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 1.25rem; font-weight: 300;
+      cursor: pointer; transition: background var(--transition), color var(--transition);
+      border: none;
+    }
+    .drawer-close:hover { background: var(--bg-dark); color: var(--text); }
+
+    .drawer-nav { list-style: none; display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+    .drawer-nav li a, .drawer-nav li button {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .85rem 1rem; border-radius: var(--radius-sm);
+      font-weight: 500; font-size: .975rem; color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+      font-family: inherit;
+    }
+    .drawer-nav li a:hover, .drawer-nav li button:hover { background: var(--brand-light); color: var(--brand); }
+    .drawer-nav li a .nav-icon, .drawer-nav li button .nav-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--bg); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background var(--transition);
+    }
+    .drawer-nav li a:hover .nav-icon, .drawer-nav li button:hover .nav-icon { background: var(--brand-light); }
+    .drawer-nav li a .nav-icon svg, .drawer-nav li button .nav-icon svg { width: 16px; height: 16px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .drawer-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+    .drawer-actions { display: flex; flex-direction: column; gap: .75rem; margin-top: .5rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 600; font-size: .95rem; padding: .75rem 1.5rem; border-radius: 12px; transition: all var(--transition); position: relative; overflow: hidden; }
+    .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(59,91,219,.3); }
+    .btn-primary:hover { background: var(--brand-dark); box-shadow: 0 6px 20px rgba(59,91,219,.45); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-full { width: 100%; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      padding: calc(var(--nav-h) + 4rem) 1.5rem 5rem;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -30%; left: -20%; right: -20%; height: 70%;
+      background: radial-gradient(ellipse at center, rgba(59,91,219,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 999px; padding: .4rem 1rem;
+      font-size: .82rem; font-weight: 500; color: var(--text-muted);
+      box-shadow: var(--shadow-sm); margin-bottom: 2rem;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.2); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(34,197,94,.2)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,.08)} }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 4.2rem);
+      font-weight: 900; line-height: 1.1; letter-spacing: -1.5px;
+      color: var(--text); margin-bottom: 1.25rem;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #3b5bdb 0%, #748ffc 60%, #a78bfa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-muted); max-width: 540px;
+      margin: 0 auto 2.5rem; line-height: 1.7;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-actions {
+      display: flex; flex-direction: column; align-items: center; gap: .85rem;
+      animation: fadeUp .6s .3s ease both;
+      width: 100%;
+    }
+    .hero-actions .btn-hero-primary {
+      background: var(--brand); color: #fff;
+      font-weight: 700; font-size: 1rem; padding: .9rem 2.25rem;
+      border-radius: 14px; box-shadow: 0 6px 24px rgba(59,91,219,.35);
+      transition: all var(--transition);
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .hero-actions .btn-hero-primary:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(59,91,219,.45); }
+    .hero-actions .btn-hero-secondary {
+      background: var(--surface); color: var(--text);
+      font-weight: 600; font-size: 1rem; padding: .9rem 2.25rem;
+      border-radius: 14px; border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm); transition: all var(--transition);
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .hero-actions .btn-hero-secondary:hover { border-color: var(--brand); color: var(--brand); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* ===== CODE CARD ===== */
+    .code-card-wrap { width: 100%; max-width: 520px; margin: 3.5rem auto 0; animation: fadeUp .6s .45s ease both; }
+    .code-card { background: var(--code-bg); border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,.25), 0 8px 24px rgba(0,0,0,.3), 0 24px 48px rgba(0,0,0,.2); overflow: hidden; border: 1px solid var(--code-border); }
+    .code-header { background: var(--code-surface); border-bottom: 1px solid var(--code-border); padding: 1rem 1.25rem .85rem; display: flex; align-items: center; gap: .75rem; }
+    .code-dots { display: flex; gap: 7px; align-items: center; }
+    .code-dot { width: 13px; height: 13px; border-radius: 50%; }
+    .code-dot.red { background: #ff5f57; }
+    .code-dot.yellow { background: #febc2e; }
+    .code-dot.green { background: #28c840; }
+    .code-filename { font-size: .8rem; font-weight: 500; color: #9ca3af; font-family: 'JetBrains Mono', monospace; margin-left: .15rem; }
+    .code-copy-btn { margin-left: auto; display: flex; align-items: center; gap: .4rem; padding: .32rem .7rem; border-radius: 8px; background: #f4f5f9; border: none; font-size: .73rem; font-weight: 600; color: #6b7280; cursor: pointer; font-family: 'Inter', sans-serif; transition: all var(--transition); white-space: nowrap; flex-shrink: 0; }
+    .code-copy-btn:hover { background: var(--brand-light); color: var(--brand); }
+    .code-copy-btn.copied { background: #dcfce7; color: #15803d; }
+    .code-copy-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .code-tabs { display: flex; border-bottom: 1px solid var(--code-border); background: var(--code-surface); overflow-x: auto; scrollbar-width: none; }
+    .code-tabs::-webkit-scrollbar { display: none; }
+    .code-tab { padding: .6rem 1.05rem; font-size: .77rem; font-weight: 600; color: #8b949e; cursor: pointer; white-space: nowrap; border: none; border-bottom: 2px solid transparent; background: none; font-family: inherit; transition: all var(--transition); }
+    .code-tab.active { color: #79c0ff; border-bottom-color: #79c0ff; background: rgba(121,192,255,.08); }
+    .code-tab:hover:not(.active) { color: #e6edf3; background: rgba(255,255,255,.05); }
+    .code-body { padding: 1.5rem 1.5rem 1.6rem; font-family: 'JetBrains Mono', monospace; font-size: .83rem; line-height: 2; background: var(--code-bg); }
+    .code-pane { display: none; }
+    .code-pane.active { display: block; }
+    .c-comment { color: #8b949e; font-style: italic; }
+    .c-keyword { color: #ff7b72; font-weight: 700; }
+    .c-var { color: #79c0ff; font-weight: 600; }
+    .c-fn { color: #d2a8ff; font-weight: 600; }
+    .c-string { color: #7ee787; }
+    .c-num { color: #79c0ff; font-weight: 600; }
+    .c-prop { color: #ffa657; }
+
+    /* ===== QUICK FEATURES ===== */
+    .quick-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; width: 100%; max-width: 560px; margin: 2.5rem auto 0; animation: fadeUp .6s .55s ease both; }
+    .qf-item { background: var(--surface); border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: transform var(--transition), box-shadow var(--transition); }
+    .qf-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .qf-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--brand-light); margin: 0 auto .75rem; display: flex; align-items: center; justify-content: center; }
+    .qf-icon svg { width: 24px; height: 24px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .qf-title { font-weight: 700; font-size: .9rem; margin-bottom: .25rem; }
+    .qf-sub { font-size: .75rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ===== NETWORKS ===== */
+    .networks-section { padding: 2rem 1.5rem; background: var(--surface); }
+    .networks-inner { max-width: 700px; margin: 0 auto; }
+    .networks-label { text-align: center; font-size: .78rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--text-light); margin-bottom: 1.5rem; }
+    .networks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: .7rem; }
+    .network-chip { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: .55rem .4rem; display: flex; flex-direction: column; align-items: center; gap: .3rem; font-size: .67rem; font-weight: 600; color: var(--text-muted); text-align: center; }
+    .network-chip img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; }
+    .network-chip .net-placeholder { width: 28px; height: 28px; border-radius: 6px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; font-size: .55rem; font-weight: 700; color: var(--brand); }
+    .country-tag { font-size: .58rem; padding: .1rem .35rem; border-radius: 4px; background: var(--brand-light); color: var(--brand); font-weight: 600; }
+
+    /* ===== SECTION WRAPPER ===== */
+    .section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -.6px; margin-bottom: .75rem; }
+    .section-header p { font-size: 1rem; color: var(--text-muted); max-width: 520px; margin: 0 auto; }
+
+    /* ===== FEATURES GRID ===== */
+    #features { background: var(--bg); }
+    .features-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 600px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+    .feature-card { background: var(--surface); border-radius: var(--radius); padding: 1.75rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: #c7d2fe; }
+    .feature-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--brand-light); margin-bottom: 1.1rem; display: flex; align-items: center; justify-content: center; }
+    .feature-icon svg { width: 24px; height: 24px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+    .feature-card p { font-size: .875rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ===== HOW IT WORKS ===== */
+    #how-it-works { background: var(--surface); }
+    .steps { display: flex; flex-direction: column; gap: 2rem; position: relative; }
+    .steps::before { content: ''; position: absolute; left: 27px; top: 54px; bottom: 54px; width: 2px; background: linear-gradient(to bottom, var(--brand-light), transparent); }
+    .step { display: flex; gap: 1.25rem; align-items: flex-start; opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .step.visible { opacity: 1; transform: translateY(0); }
+    .step-icon-wrap { width: 56px; height: 56px; flex-shrink: 0; background: var(--brand-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .step-icon-wrap svg { width: 24px; height: 24px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .step-label { font-size: .72rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--brand); margin-bottom: .35rem; }
+    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
+    .step p { font-size: .9rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ===== PRICING CAROUSEL ===== */
+    #pricing { background: var(--bg); }
+    .pricing-carousel-wrap {
+      overflow: hidden; position: relative;
+    }
+    .pricing-carousel {
+      display: flex; gap: 1.25rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -ms-overflow-style: none;
+      padding: .5rem .25rem 1.25rem;
+      cursor: grab;
+    }
+    .pricing-carousel::-webkit-scrollbar { display: none; }
+    .pricing-carousel.grabbing { cursor: grabbing; }
+    .pricing-country-card {
+      flex: 0 0 min(320px, 85vw); scroll-snap-align: center;
+      border-radius: 24px; padding: 2rem 1.75rem;
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .pricing-country-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.25); }
+    .pricing-country-card::before {
+      content: ''; position: absolute; top: -40%; right: -20%;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      pointer-events: none;
+    }
+    .pricing-country-card::after {
+      content: ''; position: absolute; bottom: -30%; left: -10%;
+      width: 150px; height: 150px; border-radius: 50%;
+      background: rgba(255,255,255,.05);
+      pointer-events: none;
+    }
+
+    /* Zambia card */
+    .pcc-zambia { background: linear-gradient(135deg, #16a34a 0%, #15803d 55%, #166534 100%); }
+    /* Zimbabwe card */
+    .pcc-zimbabwe { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 40%, #991b1b 100%); }
+    /* Botswana card */
+    .pcc-botswana { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 55%, #1e3a8a 100%); }
+    /* Namibia card */
+    .pcc-namibia { background: linear-gradient(135deg, #b45309 0%, #92400e 50%, #78350f 100%); }
+
+    .pcc-flag { font-size: 2.2rem; margin-bottom: .75rem; line-height: 1; }
+    .pcc-country { font-size: 1.35rem; font-weight: 900; color: #fff; letter-spacing: -.3px; margin-bottom: .2rem; }
+    .pcc-currency { font-size: .78rem; color: rgba(255,255,255,.7); font-weight: 600; letter-spacing: .5px; margin-bottom: 1.25rem; }
+    .pcc-rate-row { display: flex; align-items: baseline; gap: .3rem; margin-bottom: 1.5rem; }
+    .pcc-rate-big { font-size: 3.2rem; font-weight: 900; color: #fff; letter-spacing: -2px; line-height: 1; }
+    .pcc-rate-label { font-size: .88rem; color: rgba(255,255,255,.75); font-weight: 500; }
+    .pcc-divider { height: 1px; background: rgba(255,255,255,.2); margin-bottom: 1.25rem; }
+    .pcc-features { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.5rem; }
+    .pcc-features li { display: flex; align-items: flex-start; gap: .6rem; font-size: .85rem; color: rgba(255,255,255,.9); line-height: 1.45; }
+    .pcc-check { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .pcc-check svg { width: 10px; height: 10px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .pcc-tiers { background: rgba(0,0,0,.15); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; }
+    .pcc-tiers-title { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.65); letter-spacing: .6px; text-transform: uppercase; margin-bottom: .65rem; }
+    .pcc-tier-row { display: flex; justify-content: space-between; align-items: center; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .pcc-tier-row:last-child { border-bottom: none; }
+    .pcc-tier-vol { font-size: .78rem; color: rgba(255,255,255,.75); }
+    .pcc-tier-rate { font-size: .82rem; font-weight: 700; color: #fff; }
+    .pcc-networks { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.5rem; }
+    .pcc-net-chip { font-size: .7rem; font-weight: 600; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2); color: #fff; border-radius: 6px; padding: .25rem .6rem; }
+    .btn-pcc {
+      display: block; text-align: center; width: 100%;
+      background: rgba(255,255,255,.15); color: #fff;
+      border: 1.5px solid rgba(255,255,255,.35); border-radius: 12px;
+      padding: .8rem; font-weight: 700; font-size: .9rem;
+      transition: all var(--transition); position: relative; z-index: 1;
+    }
+    .btn-pcc:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.6); transform: translateY(-1px); }
+    .pricing-carousel-dots { display: flex; justify-content: center; gap: .5rem; margin-top: .5rem; }
+    .pc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background .3s, width .3s; cursor: pointer; }
+    .pc-dot.active { background: var(--brand); width: 24px; border-radius: 4px; }
+    .pricing-enterprise-cta {
+      margin-top: 2.5rem; text-align: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2rem 1.5rem;
+    }
+    .pricing-enterprise-cta h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .4rem; }
+    .pricing-enterprise-cta p { font-size: .9rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .btn-enterprise { display: inline-flex; align-items: center; gap: .5rem; background: var(--brand); color: #fff; padding: .8rem 1.75rem; border-radius: 12px; font-weight: 700; font-size: .9rem; box-shadow: 0 4px 14px rgba(59,91,219,.3); transition: all var(--transition); }
+    .btn-enterprise:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,91,219,.4); }
+
+    /* ===== ANALYTICS SECTION ===== */
+    .analytics-section {
+      padding: 4rem 1.5rem;
+      background: var(--surface);
+    }
+    .analytics-inner { max-width: 1100px; margin: 0 auto; }
+    .analytics-header { text-align: center; margin-bottom: 2.5rem; }
+    .analytics-header h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -.5px; margin-bottom: .6rem; }
+    .analytics-header p { font-size: .95rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+    .analytics-scroll-wrap { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .analytics-scroll-wrap::-webkit-scrollbar { display: none; }
+    .analytics-grid {
+      display: flex; gap: 1.25rem; min-width: 900px;
+    }
+    .analytics-card {
+      flex: 1; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .analytics-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .analytics-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .analytics-card-title { font-weight: 800; font-size: 1rem; color: var(--text); display: flex; align-items: center; gap: .5rem; }
+    .analytics-card-title .flag-circle { font-size: 1.4rem; }
+    .analytics-badge { font-size: .7rem; font-weight: 700; padding: .25rem .6rem; border-radius: 6px; }
+    .analytics-badge.up { background: #dcfce7; color: #16a34a; }
+    .analytics-badge.trend { background: var(--brand-light); color: var(--brand); }
+
+    /* Bar chart */
+    .bar-chart { display: flex; align-items: flex-end; gap: .4rem; height: 90px; margin-bottom: .75rem; }
+    .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: .25rem; flex: 1; }
+    .bar {
+      width: 100%; border-radius: 6px 6px 0 0;
+      position: relative; overflow: hidden;
+      animation: barGrow .9s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .bar::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,.15); }
+    .bar-label { font-size: .6rem; color: var(--text-light); font-weight: 600; white-space: nowrap; }
+    @keyframes barGrow { from { transform: scaleY(0); transform-origin: bottom; } to { transform: scaleY(1); } }
+    .bar:nth-child(1) { animation-delay: .05s; }
+    .bar:nth-child(2) { animation-delay: .1s; }
+    .bar:nth-child(3) { animation-delay: .15s; }
+    .bar:nth-child(4) { animation-delay: .2s; }
+    .bar:nth-child(5) { animation-delay: .25s; }
+    .bar:nth-child(6) { animation-delay: .3s; }
+
+    /* Zambia bars */
+    .ac-zm .bar { background: linear-gradient(to top, #16a34a, #4ade80); }
+    /* Zimbabwe bars */
+    .ac-zw .bar { background: linear-gradient(to top, #dc2626, #f87171); }
+    /* Botswana bars */
+    .ac-bw .bar { background: linear-gradient(to top, #1d4ed8, #60a5fa); }
+    /* Namibia bars */
+    .ac-na .bar { background: linear-gradient(to top, #b45309, #fbbf24); }
+
+    .analytics-stats { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: .75rem; }
+    .analytics-stat { background: var(--surface); border-radius: 10px; padding: .7rem .8rem; }
+    .analytics-stat-val { font-size: 1.1rem; font-weight: 900; color: var(--text); letter-spacing: -.5px; }
+    .analytics-stat-key { font-size: .68rem; color: var(--text-muted); margin-top: .1rem; }
+    .analytics-networks-row { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .analytics-net-badge { font-size: .65rem; font-weight: 600; background: var(--brand-light); color: var(--brand); border-radius: 5px; padding: .2rem .45rem; }
+    .analytics-scroll-hint { text-align: center; margin-top: 1rem; font-size: .78rem; color: var(--text-light); display: flex; align-items: center; justify-content: center; gap: .3rem; }
+    @media (min-width: 1100px) { .analytics-grid { min-width: unset; } .analytics-scroll-hint { display: none; } }
+
+    /* ===== STATS BANNER ===== */
+    .stats-banner { background: linear-gradient(135deg, #1e3a8a 0%, #3b5bdb 45%, #4c1d95 100%); padding: 3.5rem 1.5rem; position: relative; overflow: hidden; }
+    .stats-banner::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .stats-banner-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+    .stats-banner-top { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.5rem; margin-bottom: 2.75rem; }
+    .stats-banner-headline { flex: 1; min-width: 220px; }
+    .stats-banner-headline h2 { font-size: clamp(1.3rem, 3.5vw, 2rem); font-weight: 800; color: #fff; line-height: 1.25; letter-spacing: -.4px; margin-bottom: .5rem; }
+    .stats-banner-headline p { font-size: .875rem; color: rgba(255,255,255,.65); }
+    .stats-cta-btn { display: inline-flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.12); color: #fff; border: 1.5px solid rgba(255,255,255,.25); padding: .7rem 1.4rem; border-radius: 10px; font-weight: 600; font-size: .9rem; transition: all var(--transition); white-space: nowrap; align-self: flex-start; }
+    .stats-cta-btn:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.5); transform: translateX(3px); }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    @media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+    .stat-num { font-size: clamp(2rem, 6vw, 3rem); font-weight: 900; color: #fff; letter-spacing: -1.5px; line-height: 1; margin-bottom: .3rem; }
+    .stat-num sup { font-size: 55%; vertical-align: super; font-weight: 700; }
+    .stat-num span.plus { font-size: 70%; }
+    .stat-label { font-size: .8rem; color: rgba(255,255,255,.6); font-weight: 500; }
+
+    /* ===== WHY US ===== */
+    .why-us-section { padding: 5rem 1.5rem; background: var(--surface); position: relative; overflow: hidden; }
+    .why-us-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: clamp(5rem, 22vw, 13rem); font-weight: 900; color: rgba(59,91,219,.045); white-space: nowrap; pointer-events: none; user-select: none; letter-spacing: -4px; line-height: 1; }
+    .why-us-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 3rem; position: relative; z-index: 1; }
+    @media (min-width: 900px) { .why-us-inner { grid-template-columns: 1fr 1fr; align-items: center; } }
+    .why-us-label { font-size: .75rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--brand); margin-bottom: .75rem; }
+    .why-us-left h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -.5px; line-height: 1.2; margin-bottom: 1rem; }
+    .why-us-left p { font-size: .9rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.75; }
+    .why-us-checklist { list-style: none; display: flex; flex-direction: column; gap: .65rem; margin-bottom: 2rem; }
+    .why-us-checklist li { display: flex; align-items: center; gap: .7rem; font-size: .9rem; color: var(--text); }
+    .why-us-checklist li::before { content: ''; display: inline-flex; flex-shrink: 0; width: 18px; height: 18px; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%233b5bdb' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+    .btn-why-us { display: inline-flex; align-items: center; gap: .5rem; background: var(--brand); color: #fff; padding: .8rem 1.75rem; border-radius: 12px; font-weight: 700; font-size: .95rem; box-shadow: 0 4px 14px rgba(59,91,219,.3); transition: all var(--transition); }
+    .btn-why-us:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,91,219,.4); }
+    .why-us-stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .why-stat-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem 1.25rem; text-align: center; transition: transform var(--transition), box-shadow var(--transition); }
+    .why-stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .why-stat-emoji { font-size: 2rem; margin-bottom: .5rem; line-height: 1; }
+    .why-stat-num { font-size: 1.75rem; font-weight: 900; color: var(--brand); letter-spacing: -1px; }
+    .why-stat-label { font-size: .78rem; color: var(--text-muted); margin-top: .2rem; }
+
+    /* ===== READY CTA ===== */
+    .ready-cta { background: var(--bg); padding: 5rem 1.5rem; text-align: center; }
+    .ready-cta-inner { max-width: 600px; margin: 0 auto; }
+    .ready-cta h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: -.6px; margin-bottom: .75rem; line-height: 1.2; }
+    .ready-cta p { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .btn-ready { display: inline-flex; align-items: center; gap: .5rem; background: var(--brand); color: #fff; padding: .95rem 2.25rem; border-radius: 14px; font-weight: 700; font-size: 1rem; box-shadow: 0 6px 20px rgba(59,91,219,.35); transition: all var(--transition); }
+    .btn-ready:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(59,91,219,.45); }
+
+    /* ===== COLLECTION SHOWCASE ===== */
+    .collection-section { background: linear-gradient(135deg, #1e3a8a 0%, #3b5bdb 55%, #4c1d95 100%); padding: 5rem 1.5rem; overflow: hidden; position: relative; }
+    .collection-section::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .collection-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; position: relative; z-index: 1; }
+    .collection-text { text-align: center; }
+    .collection-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .78rem; font-weight: 600; letter-spacing: .5px; padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.1rem; }
+    .collection-badge svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .collection-text h2 { font-size: clamp(1.7rem, 5vw, 2.6rem); font-weight: 900; color: #fff; letter-spacing: -.5px; line-height: 1.15; margin-bottom: .85rem; }
+    .collection-text p { font-size: .95rem; color: rgba(255,255,255,.7); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+    .collection-img-wrap { width: 100%; max-width: 360px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 24px; padding: 1rem; box-shadow: 0 24px 64px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.2); }
+    .collection-img-wrap img { width: 100%; border-radius: 16px; display: block; }
+
+    /* ===== CONTACT ===== */
+    .contact-section { background: var(--bg); padding: 5rem 1.5rem; }
+    .contact-inner { max-width: 540px; margin: 0 auto; }
+    .contact-header { text-align: center; margin-bottom: 2.5rem; }
+    .contact-header h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -.5px; color: var(--text); margin-bottom: .6rem; }
+    .contact-header p { font-size: .95rem; color: var(--text-muted); line-height: 1.65; }
+    .contact-card { background: #fff; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,.04), 0 8px 24px rgba(59,91,219,.10), 0 24px 48px rgba(59,91,219,.07); padding: 2rem 1.75rem; }
+    .cf-group { margin-bottom: 1.1rem; }
+    .cf-input, .cf-textarea { width: 100%; padding: .82rem 1rem; background: #f8f9ff; border: 1.5px solid #e8ecf4; border-radius: 12px; font-size: .92rem; color: var(--text); font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s, box-shadow .2s; }
+    .cf-input::placeholder, .cf-textarea::placeholder { color: #b0b8c8; }
+    .cf-input:focus, .cf-textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(59,91,219,.1); background: #fff; }
+    .cf-textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+    .btn-send { width: 100%; padding: .95rem; background: var(--brand); color: #fff; border: none; border-radius: 50px; font-size: .98rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; letter-spacing: .2px; box-shadow: 0 6px 20px rgba(59,91,219,.35); transition: background .2s, transform .15s, box-shadow .2s; display: flex; align-items: center; justify-content: center; gap: .5rem; }
+    .btn-send:hover { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(59,91,219,.45); }
+    .btn-send:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .cf-success { display: none; text-align: center; padding: 1.5rem 0 .5rem; }
+    .cf-success.show { display: block; }
+    .cf-success-icon { width: 56px; height: 56px; border-radius: 50%; background: #dcfce7; border: 2px solid #bbf7d0; display: flex; align-items: center; justify-content: center; margin: 0 auto .85rem; animation: cfPop .4s cubic-bezier(.34,1.56,.64,1) both; }
+    .cf-success-icon svg { width: 26px; height: 26px; stroke: #16a34a; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes cfPop { from { opacity:0; transform:scale(.5); } to { opacity:1; transform:scale(1); } }
+    .cf-success h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: .3rem; }
+    .cf-success p { font-size: .85rem; color: var(--text-muted); }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 1.5rem 1.5rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { margin-bottom: 2.5rem; }
+    .footer-brand-desc { font-size: .875rem; color: var(--text-muted); margin: .75rem 0 1.25rem; max-width: 320px; line-height: 1.65; }
+    .footer-contact-icons { display: flex; gap: .75rem; }
+    .footer-icon-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all var(--transition); color: var(--text-muted); }
+    .footer-icon-btn:hover { background: var(--brand-light); border-color: var(--brand); color: var(--brand); transform: translateY(-2px); }
+    .footer-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
+    .footer-col h4 { font-size: .78rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul li a { font-size: .875rem; color: var(--text-muted); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--brand); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .65rem; margin-bottom: .75rem; }
+    .footer-contact-item .fc-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--brand-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .footer-contact-item .fc-icon svg { width: 15px; height: 15px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-contact-item a, .footer-contact-item span { font-size: .835rem; color: var(--text-muted); line-height: 1.5; }
+    .footer-contact-item a:hover { color: var(--brand); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: center; font-size: .8rem; color: var(--text-light); text-align: center; }
+    .footer-bottom span { color: var(--brand); font-weight: 600; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pageFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    body { animation: pageFadeIn .35s ease both; }
+    .anim-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+    .anim-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
+      .hero-actions { flex-direction: row; justify-content: center; }
+      .code-card-wrap { margin-top: 4rem; }
+    }
+
+    /* ===== SCROLL INDICATOR ===== */
+    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand), var(--accent)); transform-origin: left; transform: scaleX(0); z-index: 1100; transition: transform .1s; }
+
+    /* ===== PANEL OVERLAY (Security & FAQ) ===== */
+    .panel-overlay {
+      position: fixed; inset: 0; z-index: 1200;
+      background: var(--bg);
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+    .panel-overlay.open { transform: translateX(0); }
+    .panel-topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(244,245,249,.95); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.5rem;
+    }
+    html.dark .panel-topbar { background: rgba(15,17,23,.95); }
+    .panel-back-btn {
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: .5rem .9rem;
+      font-size: .875rem; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; transition: all var(--transition); flex-shrink: 0;
+    }
+    .panel-back-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .panel-back-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .panel-topbar-title { font-size: 1rem; font-weight: 800; color: var(--text); }
+    .panel-inner { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; width: 100%; }
+
+    /* Security Panel */
+    .security-hero-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #4c1d95 100%);
+      border-radius: 20px; padding: 2.5rem 2rem; margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .security-hero-banner::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .security-hero-inner { position: relative; z-index: 1; }
+    .security-hero-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 600; padding: .3rem .75rem; border-radius: 999px; margin-bottom: 1rem; }
+    .security-hero-badge svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .security-hero-banner h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; color: #fff; letter-spacing: -.5px; margin-bottom: .6rem; line-height: 1.2; }
+    .security-hero-banner p { font-size: .9rem; color: rgba(255,255,255,.75); line-height: 1.7; max-width: 540px; }
+    .security-badges-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .sec-badge-pill { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: .55rem 1rem; }
+    .sec-badge-pill .badge-icon { width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; }
+    .sec-badge-pill .badge-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .sec-badge-pill .badge-icon svg { width: 18px; height: 18px; stroke: rgba(255,255,255,.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-badge-pill .badge-text { font-size: .78rem; font-weight: 700; color: #fff; }
+    .sec-badge-pill .badge-sub { font-size: .65rem; color: rgba(255,255,255,.65); }
+
+    .sec-section { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem; margin-bottom: 1.25rem; transition: border-color var(--transition), box-shadow var(--transition); }
+    .sec-section:hover { border-color: #c7d2fe; box-shadow: var(--shadow-sm); }
+    .sec-section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+    .sec-section-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sec-section-icon img { width: 32px; height: 32px; object-fit: contain; }
+    .sec-section-icon svg { width: 22px; height: 22px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-section h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: .2rem; }
+    .sec-section .sec-sub { font-size: .75rem; color: var(--brand); font-weight: 600; }
+    .sec-section p { font-size: .875rem; color: var(--text-muted); line-height: 1.75; margin-bottom: .65rem; }
+    .sec-section p:last-child { margin-bottom: 0; }
+    .sec-list { list-style: none; display: flex; flex-direction: column; gap: .55rem; margin: .5rem 0; }
+    .sec-list li { display: flex; align-items: flex-start; gap: .65rem; font-size: .875rem; color: var(--text-muted); line-height: 1.6; padding-left: 1.2rem; position: relative; }
+    .sec-list li::before { content: ''; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+    .sec-highlights { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .75rem; margin: 1rem 0; }
+    .sec-highlight { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; display: flex; align-items: center; gap: .65rem; }
+    .sec-highlight svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .sec-highlight span { font-size: .8rem; font-weight: 600; color: var(--text); }
+    .sec-callout { background: var(--brand-light); border: 1px solid #c7d2fe; border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: .85rem; margin: 1rem 0; }
+    .sec-callout svg { width: 18px; height: 18px; stroke: var(--brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 1px; }
+    .sec-callout p { font-size: .875rem; color: #2d3a7c; margin: 0; line-height: 1.65; }
+
+    /* FAQ Panel */
+    .faq-hero-banner {
+      background: linear-gradient(135deg, #065f46 0%, #047857 50%, #1e3a8a 100%);
+      border-radius: 20px; padding: 2.5rem 2rem; margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .faq-hero-banner::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/svg%3E") repeat; pointer-events: none; }
+    .faq-hero-inner { position: relative; z-index: 1; }
+    .faq-hero-banner h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; color: #fff; letter-spacing: -.5px; margin-bottom: .6rem; line-height: 1.2; }
+    .faq-hero-banner p { font-size: .9rem; color: rgba(255,255,255,.75); line-height: 1.7; max-width: 500px; }
+    .faq-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .75rem; font-weight: 600; padding: .3rem .75rem; border-radius: 999px; margin-bottom: 1rem; }
+    .faq-badge svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .faq-category-title { font-size: .72rem; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text-light); margin: 1.75rem 0 .75rem; }
+    .faq-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; margin-bottom: .65rem;
+      overflow: hidden; transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .faq-item:hover { border-color: #c7d2fe; }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.1rem 1.25rem; cursor: pointer;
+      font-weight: 600; font-size: .9rem; color: var(--text);
+      transition: color var(--transition);
+      user-select: none;
+    }
+    .faq-q:hover { color: var(--brand); }
+    .faq-q.open { color: var(--brand); }
+    .faq-chevron { width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; transition: transform .3s, background .2s; }
+    .faq-chevron svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s; }
+    .faq-q.open .faq-chevron { background: var(--brand-light); transform: rotate(180deg); }
+    .faq-q.open .faq-chevron svg { stroke: var(--brand); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.4,0,.2,1), padding .3s; }
+    .faq-a.open { max-height: 600px; }
+    .faq-a-inner { padding: 0 1.25rem 1.25rem; font-size: .875rem; color: var(--text-muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .faq-a-inner strong { color: var(--text); }
+    .faq-a-inner ul { list-style: none; margin: .5rem 0; display: flex; flex-direction: column; gap: .4rem; }
+    .faq-a-inner ul li { padding-left: 1.1rem; position: relative; }
+    .faq-a-inner ul li::before { content: ''; position: absolute; left: 0; top: .6em; width: 5px; height: 5px; border-radius: 50%; background: var(--brand); }
+
+    /* ===== SPIN ANIM ===== */
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== SERVICES SECTION ===== */
+    #services { background: var(--bg); }
+    html.dark #services { background: var(--bg); }
+    .services-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1.25rem;
+    }
+    @media (min-width: 560px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .service-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 1.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: .9rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--sc-grad, linear-gradient(90deg, var(--brand), #748ffc));
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: #c7d2fe; }
+    .service-card:hover::before { opacity: 1; }
+
+    .sc-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--sc-bg, var(--brand-light));
+    }
+    .sc-icon svg { width: 24px; height: 24px; stroke: var(--sc-color, var(--brand)); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .sc-title { font-size: 1rem; font-weight: 800; color: var(--text); letter-spacing: -.2px; }
+    .sc-desc { font-size: .875rem; color: var(--text-muted); line-height: 1.7; flex: 1; }
+    .sc-tag {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .3px;
+      color: var(--sc-color, var(--brand)); background: var(--sc-bg, var(--brand-light));
+      border-radius: 999px; padding: .25rem .7rem; align-self: flex-start;
+    }
+
+    /* colour variants */
+    .sc-blue   { --sc-grad: linear-gradient(90deg,#3b5bdb,#748ffc); --sc-bg: #eef2ff; --sc-color: #3b5bdb; }
+    .sc-purple { --sc-grad: linear-gradient(90deg,#7c3aed,#a78bfa); --sc-bg: #f3e8ff; --sc-color: #7c3aed; }
+    .sc-green  { --sc-grad: linear-gradient(90deg,#16a34a,#4ade80); --sc-bg: #f0fdf4; --sc-color: #16a34a; }
+    .sc-orange { --sc-grad: linear-gradient(90deg,#ea580c,#fb923c); --sc-bg: #fff7ed; --sc-color: #ea580c; }
+    .sc-teal   { --sc-grad: linear-gradient(90deg,#0d9488,#2dd4bf); --sc-bg: #f0fdfa; --sc-color: #0d9488; }
+    .sc-rose   { --sc-grad: linear-gradient(90deg,#e11d48,#fb7185); --sc-bg: #fff1f2; --sc-color: #e11d48; }
+    .sc-amber  { --sc-grad: linear-gradient(90deg,#b45309,#fbbf24); --sc-bg: #fffbeb; --sc-color: #b45309; }
+    .sc-sky    { --sc-grad: linear-gradient(90deg,#0284c7,#38bdf8); --sc-bg: #f0f9ff; --sc-color: #0284c7; }
+
+    html.dark .service-card { background: var(--surface); }
+    html.dark .sc-blue   { --sc-bg: rgba(59,91,219,.18); }
+    html.dark .sc-purple { --sc-bg: rgba(124,58,237,.18); }
+    html.dark .sc-green  { --sc-bg: rgba(22,163,74,.18); }
+    html.dark .sc-orange { --sc-bg: rgba(234,88,12,.18); }
+    html.dark .sc-teal   { --sc-bg: rgba(13,148,136,.18); }
+    html.dark .sc-rose   { --sc-bg: rgba(225,29,72,.18); }
+    html.dark .sc-amber  { --sc-bg: rgba(180,83,9,.18); }
+    html.dark .sc-sky    { --sc-bg: rgba(2,132,199,.18); }
+  </style>
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');}());</script>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Side overlay -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ===== SECURITY PANEL ===== -->
+<div class="panel-overlay" id="securityPanel">
+  <div class="panel-topbar">
+    <button class="panel-back-btn" onclick="closePanel('securityPanel')">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </button>
+    <span class="panel-topbar-title">Security &amp; Compliance</span>
+  </div>
+  <div class="panel-inner">
+
+    <div class="security-hero-banner">
+      <div class="security-hero-inner">
+        <div class="security-hero-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Enterprise-Grade Security
+        </div>
+        <h1>Your Payments, Protected at Every Layer</h1>
+        <p>NexaPay is built on a foundation of bank-grade security standards. Every transaction, API call, and data point is protected using the most advanced security protocols available.</p>
+        <div class="security-badges-row">
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="pci-dss.png" alt="PCI DSS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="badge-text">PCI DSS</div><div class="badge-sub">Level 1 Certified</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="ssl-tls.png" alt="SSL TLS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div><div class="badge-text">TLS 1.3</div><div class="badge-sub">256-bit Encryption</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="3d-secure.png" alt="3D Secure" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="badge-text">3D Secure</div><div class="badge-sub">v2.0 Ready</div></div>
+          </div>
+          <div class="sec-badge-pill">
+            <div class="badge-icon"><img src="iso-27001.png" alt="ISO 27001" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><svg viewBox="0 0 24 24" style="display:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><div class="badge-text">ISO 27001</div><div class="badge-sub">Information Security</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="pci-dss.png" alt="PCI DSS" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><svg viewBox="0 0 24 24" style="display:none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><h3>PCI DSS Level 1 Compliance</h3><div class="sec-sub">The gold standard in payment security</div></div>
+      </div>
+      <p>NexaPay is PCI DSS Level 1 compliant — the highest certification level defined by the Payment Card Industry Data Security Standard. This means every component of our payment infrastructure is independently audited annually by a Qualified Security Assessor (QSA).</p>
+      <div class="sec-highlights">
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Annual QSA Audit</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Quarterly Network Scans</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Penetration Testing</span></div>
+        <div class="sec-highlight"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Cardholder Data Protection</span></div>
+      </div>
+      <p>Our compliance covers all 12 PCI DSS requirements including network security, access control, vulnerability management, monitoring, and information security policy. Merchants on NexaPay inherit our compliance posture — reducing your own PCI scope significantly.</p>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="ssl-tls.png" alt="TLS Encryption" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><svg viewBox="0 0 24 24" style="display:none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><h3>TLS 1.3 Encryption in Transit</h3><div class="sec-sub">All data encrypted end-to-end</div></div>
+      </div>
+      <p>All communication between your application and NexaPay APIs is encrypted using TLS 1.3 — the latest and most secure version of the Transport Layer Security protocol. Older TLS versions (1.0, 1.1) and SSL are explicitly rejected at our API gateway.</p>
+      <ul class="sec-list">
+        <li>256-bit AES encryption for all API traffic and webhook payloads</li>
+        <li>Perfect Forward Secrecy (PFS) enabled on all endpoints</li>
+        <li>HSTS (HTTP Strict Transport Security) enforced with one-year max-age</li>
+        <li>Certificate pinning available for mobile SDK integrations</li>
+        <li>All data at rest encrypted using AES-256 with key management via HSM</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="3d-secure.png" alt="3D Secure" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><svg viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><h3>3D Secure Authentication</h3><div class="sec-sub">Additional authentication layer for every payment</div></div>
+      </div>
+      <p>NexaPay supports 3D Secure 2.0 (3DS2) across all supported mobile money networks. This provides an additional authentication layer that confirms the identity of the payer before a transaction is authorised, dramatically reducing fraud and chargebacks.</p>
+      <div class="sec-callout">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>3DS2 enables risk-based authentication — low-risk transactions flow seamlessly without user friction, while high-risk transactions trigger additional verification steps. This means fewer abandoned payments and stronger protection.</p>
+      </div>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div><h3>Fraud Detection &amp; Prevention</h3><div class="sec-sub">Real-time threat intelligence</div></div>
+      </div>
+      <p>Our multi-layer fraud detection engine analyses every transaction in real time using machine learning models trained on African mobile money patterns. Suspicious activity is flagged and reviewed within seconds.</p>
+      <ul class="sec-list">
+        <li>Velocity checks — detecting unusual transaction frequency per account</li>
+        <li>Device fingerprinting and geo-IP mismatch detection</li>
+        <li>Phone number reputation scoring across all four countries</li>
+        <li>SIM swap detection integration with MTN, Airtel, and EcoCash</li>
+        <li>Merchant-configurable risk thresholds and auto-block rules</li>
+        <li>24/7 fraud operations team monitoring live transaction feeds</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><img src="iso-27001.png" alt="ISO 27001" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><svg viewBox="0 0 24 24" style="display:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div><h3>Data Residency &amp; Privacy</h3><div class="sec-sub">Your data stays in Africa</div></div>
+      </div>
+      <p>NexaPay processes and stores all transaction data within African data centres. We maintain separate data residency zones for Zambia, Zimbabwe, Botswana, and Namibia to comply with each country's data sovereignty requirements.</p>
+      <ul class="sec-list">
+        <li>Data for Zambian merchants stored in Zambia-based infrastructure</li>
+        <li>Full compliance with Bank of Zambia, RBOZ, NBFIRA, and BoN data regulations</li>
+        <li>GDPR-aligned data handling for any EU-connected integrations</li>
+        <li>Zero data sharing with advertisers, aggregators, or third-party brokers</li>
+        <li>Right to deletion (RTBF) honoured within 72 hours of valid request</li>
+      </ul>
+    </div>
+
+    <div class="sec-section">
+      <div class="sec-section-header">
+        <div class="sec-section-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div><h3>Penetration Testing</h3><div class="sec-sub">Tested by external experts quarterly</div></div>
+      </div>
+      <p>NexaPay undergoes rigorous penetration testing by independent security firms every quarter. Our scope covers web application security, API security, network infrastructure, mobile SDK security, and social engineering resilience.</p>
+      <ul class="sec-list">
+        <li>OWASP Top 10 vulnerability testing on every major release</li>
+        <li>API fuzzing and injection attack simulation</li>
+        <li>Full network and infrastructure pen test quarterly</li>
+        <li>All critical findings resolved within 24 hours; high findings within 7 days</li>
+        <li>Summary security reports available to enterprise merchants on request</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FAQ PANEL ===== -->
+<div class="panel-overlay" id="faqPanel">
+  <div class="panel-topbar">
+    <button class="panel-back-btn" onclick="closePanel('faqPanel')">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </button>
+    <span class="panel-topbar-title">Frequently Asked Questions</span>
+  </div>
+  <div class="panel-inner">
+
+    <div class="faq-hero-banner">
+      <div class="faq-hero-inner">
+        <div class="faq-badge">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Help Centre
+        </div>
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know about NexaPay — from getting started to enterprise integration and billing. Can't find what you're looking for? Contact us at support@nexapay.africa.</p>
+      </div>
+    </div>
+
+    <div class="faq-category-title">Getting Started</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What is NexaPay and how does it work?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          NexaPay is a unified mobile money payment gateway that enables businesses and developers to accept digital payments across <strong>Zambia, Botswana, Zimbabwe, and Namibia</strong> through a single, simple REST API. Instead of integrating separately with MTN, Airtel, EcoCash, Orange Money, and other networks, you integrate once with NexaPay and we handle all the complexity. Merchants sign up, get verified, receive API keys, and can start accepting live payments within 24–48 hours of approval.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How long does it take to go live?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Most merchants go live within <strong>24–48 business hours</strong> of submitting complete verification documents. The process is: (1) Sign up and submit your business documents, (2) Our compliance team reviews your application — typically same-day, (3) Once approved, you receive your production API keys and are ready to accept payments. You can begin integrating in our sandbox immediately upon registration — no waiting required.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What countries and networks does NexaPay support?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          NexaPay currently supports four countries with the following networks:
+          <ul>
+            <li><strong>Zambia (ZMW):</strong> MTN Mobile Money, Airtel Money, Zamtel Kwacha</li>
+            <li><strong>Zimbabwe (USD/ZWG):</strong> EcoCash, OneMoney, Telecash</li>
+            <li><strong>Botswana (BWP):</strong> Orange Money, MyZaka (BancABC), BTC Mobile</li>
+            <li><strong>Namibia (NAD):</strong> MTC MobiPay, TN Mobile Pay, Telecom Namibia Pay</li>
+          </ul>
+          We are actively working to expand to additional Southern African countries. Sign up for our newsletter to be notified when new countries launch.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is there a sandbox / test environment?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Yes. NexaPay provides a <strong>full-featured sandbox environment</strong> that mirrors production exactly. You can test all payment scenarios — successful charges, failures, timeouts, reversals, and webhook events — without touching real money. Sandbox API keys are available immediately upon registration. Our sandbox documentation includes pre-set test phone numbers that simulate different payment outcomes for all four countries.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-category-title">Pricing &amp; Fees</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What are NexaPay's transaction fees?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          NexaPay charges a simple flat-rate per successful transaction. There are <strong>no monthly fees, no setup fees, and no hidden charges</strong>. Standard rates per country:
+          <ul>
+            <li><strong>Zambia:</strong> 2.5% per transaction (min ZMW 0.50). High-volume: from 1.5%</li>
+            <li><strong>Zimbabwe:</strong> 2.0% per transaction (min USD 0.10). High-volume: from 1.5%</li>
+            <li><strong>Botswana:</strong> 2.0% per transaction (min BWP 0.20). High-volume: from 1.5%</li>
+            <li><strong>Namibia:</strong> 2.0% per transaction (min NAD 0.50). High-volume: from 1.5%</li>
+          </ul>
+          Volume discounts apply from 1,000+ transactions/month. Contact sales for enterprise pricing.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Are there any monthly fees or setup costs?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <strong>No.</strong> NexaPay is entirely pay-as-you-go. You only pay when you successfully process a transaction. There is no monthly subscription, no annual fee, no minimum transaction volume, and no fee for failed transactions. API access, dashboard access, sandbox environment, webhooks, and developer support are all included at no extra cost.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        When and how do I receive my settlements?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Settlements are processed on a <strong>T+1 business day</strong> cycle by default (next business day). Enterprise merchants can request T+0 (same-day) settlements. Funds are settled to your registered merchant mobile wallet or bank account in the local currency of each country. You can view real-time settlement reports in your merchant dashboard, and configure settlement notifications via webhook or email.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-category-title">Integration &amp; Technical</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What programming languages and frameworks are supported?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          NexaPay provides a standard REST API that can be used with any language. We additionally provide official SDKs for:
+          <ul>
+            <li><strong>JavaScript / Node.js</strong> — with TypeScript support and full type definitions</li>
+            <li><strong>Python</strong> — compatible with Django, Flask, and FastAPI</li>
+            <li><strong>PHP</strong> — compatible with Laravel and WordPress/WooCommerce</li>
+            <li><strong>React Native / Expo</strong> — for mobile app integrations</li>
+          </ul>
+          All SDKs are open source, available on GitHub, and actively maintained by the Elicate Technologies team.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How do webhooks work?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          When a payment event occurs (e.g., payment.completed, payment.failed, refund.processed), NexaPay sends a signed HTTP POST request to your configured webhook URL. All webhook payloads are signed using HMAC-SHA256 with your webhook secret — always verify the signature before processing. NexaPay retries failed webhook deliveries up to 5 times with exponential backoff. You can view and replay webhook events from your merchant dashboard.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How do I handle refunds?
+        <div class="faq-chevrone"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Refunds can be initiated via the API or directly from your merchant dashboard. NexaPay supports both <strong>full refunds and partial refunds</strong>. Refund requests are typically processed within 1–2 business days, after which the funds are returned to the customer's mobile wallet. You can track refund status in real time via the dashboard or by listening to the <code>refund.completed</code> webhook event.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-category-title">Security &amp; Compliance</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is NexaPay PCI DSS compliant?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Yes. NexaPay is <strong>PCI DSS Level 1 certified</strong> — the highest level of certification. Our infrastructure is audited annually by a Qualified Security Assessor (QSA). All payment data is processed within our PCI-compliant environment, which significantly reduces the compliance burden on your own systems. Merchants integrating via our API generally qualify for a simplified SAQ-A or SAQ-A-EP self-assessment questionnaire.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How does NexaPay protect against fraud?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          We use a multi-layer approach: real-time machine learning fraud models, velocity controls, SIM swap detection, device fingerprinting, geo-IP mismatch detection, and phone number reputation scoring. Additionally, all transactions go through 3D Secure authentication where supported by the network. Merchants can configure their own risk thresholds via the dashboard API. Our fraud operations team monitors live traffic 24/7.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What happens if I have a dispute or chargeback?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Disputes are managed through your merchant dashboard. When a dispute is opened, you receive a notification and have a defined window to submit evidence. NexaPay acts as the intermediary between you and the mobile network operators. Our disputes team handles the entire process and provides guidance on evidence requirements for each network. Chargebacks on mobile money are rare compared to card payments, given the PIN-authenticated nature of mobile money transactions.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-category-title">Account &amp; Support</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What support options are available?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          All merchants receive access to:
+          <ul>
+            <li><strong>Email support</strong> — support@nexapay.africa (response within 4 hours on business days)</li>
+            <li><strong>WhatsApp / Phone</strong> — +27 63 453 0070 (business hours, Monday–Friday)</li>
+            <li><strong>Developer documentation</strong> — comprehensive API reference and integration guides</li>
+            <li><strong>Sandbox environment</strong> — self-service testing at any time</li>
+          </ul>
+          Enterprise merchants additionally receive a dedicated account manager and priority 24/7 support with sub-1-hour response time SLAs.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I accept payments in multiple countries from one account?
+        <div class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <strong>Yes, absolutely.</strong> A single NexaPay merchant account gives you access to all four countries — Zambia, Zimbabwe, Botswana, and Namibia. You use a single API key and simply specify the country code in each transaction request. Multi-country settlement is supported: you can receive ZMW, USD, BWP, and NAD settlements to separate wallets or accounts for each country. Your dashboard provides a unified view of transactions and analytics across all countries.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo-link">
+      <img src="nexapay.png" width="36" height="36" alt="NexaPay" style="border-radius:10px;display:block;object-fit:contain;">
+      <div>
+        <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+        <div class="logo-sub">by Elicate Technologies</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== DRAWER ===== -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <a href="index.html" class="logo-link">
+      <img src="nexapay.png" width="30" height="30" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+      <span class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></span>
+    </a>
+    <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
+  </div>
+
+  <ul class="drawer-nav">
+    <li>
+      <a href="#features" onclick="scrollToSection('features'); closeDrawer();">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        Features
+      </a>
+    </li>
+    <li>
+      <a href="#services" onclick="scrollToSection('services'); closeDrawer();">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+        Services
+      </a>
+    </li>
+    <li>
+      <a href="#how-it-works" onclick="scrollToSection('how-it-works'); closeDrawer();">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        How It Works
+      </a>
+    </li>
+    <li>
+      <a href="docs.html" onclick="navigateTo('docs.html')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+        Documentation
+      </a>
+    </li>
+    <li>
+      <a href="#pricing" onclick="scrollToSection('pricing'); closeDrawer();">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        Pricing
+      </a>
+    </li>
+    <li>
+      <a href="about.html" onclick="navigateTo('about.html')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+        About Us
+      </a>
+    </li>
+    <li>
+      <a href="blog.html" onclick="navigateTo('blog.html')">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Blog
+      </a>
+    </li>
+    <li>
+      <a href="security.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Security
+      </a>
+    </li>
+    <li>
+      <a href="faq.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        FAQ
+      </a>
+    </li>
+  </ul>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-actions">
+    <a href="auth.html" class="btn btn-outline btn-full" onclick="navigateTo('auth.html?mode=signin')">Sign In</a>
+    <a href="auth.html" class="btn btn-primary btn-full" onclick="navigateTo('auth.html?mode=register')">Get Started</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Now live across Zambia, Zimbabwe, Botswana &amp; Namibia
+  </div>
+
+  <h1>
+    Accept Mobile Money<br />
+    <span class="highlight">Payments</span> with One API
+  </h1>
+
+  <p>
+    NexaPay gives developers a simple, powerful API to integrate mobile money payments into any website, mobile app, or platform. Built for Southern Africa, powered by Elicate Technologies.
+  </p>
+
+  <div class="hero-actions">
+    <a href="auth.html" class="btn-hero-primary" onclick="spinThen('auth.html?mode=register')">
+      Start Integrating
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a href="docs.html" class="btn-hero-secondary" onclick="spinThen('docs.html')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      View Documentation
+    </a>
+  </div>
+
+  <!-- Code Card -->
+  <div class="code-card-wrap">
+    <div class="code-card">
+      <div class="code-header">
+        <div class="code-dots">
+          <div class="code-dot red"></div>
+          <div class="code-dot yellow"></div>
+          <div class="code-dot green"></div>
+        </div>
+        <span class="code-filename">payment.js</span>
+        <button class="code-copy-btn" id="copyBtn" onclick="copyCode()" title="Copy code">
+          <svg id="copyIcon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copyLabel">Copy</span>
+        </button>
+      </div>
+      <div class="code-tabs">
+        <button class="code-tab active" onclick="switchTab('zmw')">🇿🇲 Zambia</button>
+        <button class="code-tab" onclick="switchTab('zwl')">🇿🇼 Zimbabwe</button>
+        <button class="code-tab" onclick="switchTab('bwp')">🇧🇼 Botswana</button>
+        <button class="code-tab" onclick="switchTab('nad')">🇳🇦 Namibia</button>
+      </div>
+      <div class="code-body">
+        <div class="code-pane active" id="pane-zmw">
+          <span class="c-comment">// Initialize NexaPay — Zambia</span><br/>
+          <span class="c-keyword">const</span> <span class="c-var">payment</span> = <span class="c-keyword">await</span> <span class="c-fn">NexaPay.charge</span>({<br/>
+          &nbsp;&nbsp;<span class="c-prop">amount</span>: <span class="c-num">250.00</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">currency</span>: <span class="c-string">"ZMW"</span>,<span class="c-comment"> // Zambian Kwacha</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">phone</span>: <span class="c-string">"+260 96XXXXXXX"</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">network</span>: <span class="c-string">"MTN"</span>, <span class="c-comment">// MTN | Airtel | Zamtel</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">country</span>: <span class="c-string">"ZM"</span><br/>
+          });
+        </div>
+        <div class="code-pane" id="pane-zwl">
+          <span class="c-comment">// Initialize NexaPay — Zimbabwe</span><br/>
+          <span class="c-keyword">const</span> <span class="c-var">payment</span> = <span class="c-keyword">await</span> <span class="c-fn">NexaPay.charge</span>({<br/>
+          &nbsp;&nbsp;<span class="c-prop">amount</span>: <span class="c-num">50.00</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">currency</span>: <span class="c-string">"USD"</span>,<span class="c-comment"> // USD accepted in ZW</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">phone</span>: <span class="c-string">"+263 77XXXXXXX"</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">network</span>: <span class="c-string">"ECOCASH"</span>, <span class="c-comment">// EcoCash | OneMoney | Telecash</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">country</span>: <span class="c-string">"ZW"</span><br/>
+          });
+        </div>
+        <div class="code-pane" id="pane-bwp">
+          <span class="c-comment">// Initialize NexaPay — Botswana</span><br/>
+          <span class="c-keyword">const</span> <span class="c-var">payment</span> = <span class="c-keyword">await</span> <span class="c-fn">NexaPay.charge</span>({<br/>
+          &nbsp;&nbsp;<span class="c-prop">amount</span>: <span class="c-num">150.00</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">currency</span>: <span class="c-string">"BWP"</span>,<span class="c-comment"> // Botswana Pula</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">phone</span>: <span class="c-string">"+267 71XXXXXXX"</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">network</span>: <span class="c-string">"ORANGE"</span>, <span class="c-comment">// Orange | MyZaka | BTC Mobile</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">country</span>: <span class="c-string">"BW"</span><br/>
+          });
+        </div>
+        <div class="code-pane" id="pane-nad">
+          <span class="c-comment">// Initialize NexaPay — Namibia</span><br/>
+          <span class="c-keyword">const</span> <span class="c-var">payment</span> = <span class="c-keyword">await</span> <span class="c-fn">NexaPay.charge</span>({<br/>
+          &nbsp;&nbsp;<span class="c-prop">amount</span>: <span class="c-num">200.00</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">currency</span>: <span class="c-string">"NAD"</span>,<span class="c-comment"> // Namibian Dollar</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">phone</span>: <span class="c-string">"+264 81XXXXXXX"</span>,<br/>
+          &nbsp;&nbsp;<span class="c-prop">network</span>: <span class="c-string">"MTC"</span>, <span class="c-comment">// MTC MobiPay | TN Mobile | Telecom NA</span><br/>
+          &nbsp;&nbsp;<span class="c-prop">country</span>: <span class="c-string">"NA"</span><br/>
+          });
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick feature pillars -->
+  <div class="quick-features">
+    <div class="qf-item">
+      <div class="qf-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <div class="qf-title">Mobile Money</div>
+      <div class="qf-sub">All major networks across 4 countries</div>
+    </div>
+    <div class="qf-item">
+      <div class="qf-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <div class="qf-title">REST API</div>
+      <div class="qf-sub">Easy integration</div>
+    </div>
+    <div class="qf-item">
+      <div class="qf-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="qf-title">SDKs Ready</div>
+      <div class="qf-sub">All major frameworks</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NETWORKS ===== -->
+<div class="networks-section anim-on-scroll">
+  <div class="networks-inner">
+    <div class="networks-label">Supported Networks Across Southern Africa</div>
+    <div class="networks-grid">
+      <div class="network-chip">
+        <img src="mtn-zambia.png" alt="MTN Zambia" onerror="this.style.display='none'"/>
+        <span>MTN</span><span class="country-tag">ZM</span>
+      </div>
+      <div class="network-chip">
+        <img src="airtel-zambia.png" alt="Airtel Zambia" onerror="this.style.display='none'"/>
+        <span>Airtel</span><span class="country-tag">ZM</span>
+      </div>
+      <div class="network-chip">
+        <img src="zamtel-zambia.png" alt="Zamtel Zambia" onerror="this.style.display='none'"/>
+        <span>Zamtel</span><span class="country-tag">ZM</span>
+      </div>
+      <div class="network-chip">
+        <img src="ecocash-zimbabwe.png" alt="EcoCash Zimbabwe" onerror="this.style.display='none'"/>
+        <span>EcoCash</span><span class="country-tag">ZW</span>
+      </div>
+      <div class="network-chip">
+        <img src="onemoney-zimbabwe.png" alt="OneMoney Zimbabwe" onerror="this.style.display='none'"/>
+        <span>OneMoney</span><span class="country-tag">ZW</span>
+      </div>
+      <div class="network-chip">
+        <img src="telecash-zimbabwe.png" alt="Telecash Zimbabwe" onerror="this.style.display='none'"/>
+        <span>Telecash</span><span class="country-tag">ZW</span>
+      </div>
+      <div class="network-chip">
+        <img src="orange-botswana.png" alt="Orange Money Botswana" onerror="this.style.display='none'"/>
+        <span>Orange Money</span><span class="country-tag">BW</span>
+      </div>
+      <div class="network-chip">
+        <img src="myzaka-botswana.png" alt="MyZaka Botswana" onerror="this.style.display='none'"/>
+        <span>MyZaka</span><span class="country-tag">BW</span>
+      </div>
+      <div class="network-chip">
+        <img src="btcmobile-botswana.png" alt="BTC Mobile Botswana" onerror="this.style.display='none'"/>
+        <span>BTC Mobile</span><span class="country-tag">BW</span>
+      </div>
+      <div class="network-chip">
+        <img src="mtc-namibia.png" alt="MTC Namibia" onerror="this.style.display='none'"/>
+        <span>MTC MobiPay</span><span class="country-tag">NA</span>
+      </div>
+      <div class="network-chip">
+        <img src="tnmobile-namibia.png" alt="TN Mobile Namibia" onerror="this.style.display='none'"/>
+        <span>TN Mobile</span><span class="country-tag">NA</span>
+      </div>
+      <div class="network-chip">
+        <img src="telecomna-namibia.png" alt="Telecom Namibia" onerror="this.style.display='none'"/>
+        <span>Telecom NA</span><span class="country-tag">NA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STATS BANNER ===== -->
+<div class="stats-banner anim-on-scroll">
+  <div class="stats-banner-inner">
+    <div class="stats-banner-top">
+      <div class="stats-banner-headline">
+        <h2>Empowering Businesses With Data-Driven Strategy &amp; Performance-Focused Growth Solutions.</h2>
+        <p>Trusted by merchants across Southern Africa to power their payment operations.</p>
+      </div>
+      <a href="auth.html" class="stats-cta-btn" onclick="spinThen('auth.html?mode=register')">
+        Let's Work Together
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">99.9<sup>%</sup></div><div class="stat-label">Uptime Guarantee</div></div>
+      <div class="stat-item"><div class="stat-num">1M<span class="plus">+</span></div><div class="stat-label">Transactions Processed</div></div>
+      <div class="stat-item"><div class="stat-num">1K<span class="plus">+</span></div><div class="stat-label">Active Merchants</div></div>
+      <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Customer Support</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FEATURES ===== -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-header anim-on-scroll">
+      <h2>Everything You Need to Accept Payments</h2>
+      <p>From API integration to payment links, NexaPay provides all the tools to accept mobile money payments across Southern Africa.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>Instant Payments</h3>
+        <p>Process mobile money payments in real-time via MTN, Airtel, Zamtel, EcoCash, OneMoney, and more across all four countries.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h3>API Key Management</h3>
+        <p>Generate, rotate, and manage your API keys securely from your merchant dashboard with full audit trails.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <h3>Payment Links</h3>
+        <p>Create shareable payment links for quick collections without any code integration required. Perfect for non-technical merchants.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h3>Real-time Analytics</h3>
+        <p>Monitor transactions, revenue, and performance with detailed analytics on your merchant dashboard in real time.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Enterprise Security</h3>
+        <p>Bank-grade encryption and security protocols to protect every transaction and API call across all supported countries.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Developer Friendly</h3>
+        <p>Comprehensive documentation, SDKs for popular frameworks, webhook notifications, and responsive developer support.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <h3>Multi-Currency</h3>
+        <p>Accept ZMW, USD (Zimbabwe), BWP, and NAD seamlessly — with automatic currency routing based on country code.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <h3>Instant Webhooks</h3>
+        <p>Real-time webhook delivery with automatic retry logic and API key rotation to keep your systems always in sync.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h3>SDKs &amp; Libraries</h3>
+        <p>Official SDKs for JavaScript, Python, PHP, and more. Drop-in libraries with full TypeScript support and clear documentation.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>KYC &amp; Compliance</h3>
+        <p>Built-in identity verification for all four countries — NRC, national ID, and passport document checks with selfie liveness detection.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg></div>
+        <h3>Refunds &amp; Reversals</h3>
+        <p>One-click full or partial refunds with automated reconciliation. Reversal requests are processed within one business day.</p>
+      </div>
+      <div class="feature-card anim-on-scroll">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <h3>Sandbox Environment</h3>
+        <p>Full-featured sandbox that mirrors production exactly. Test every payment scenario, edge case, and webhook event before going live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="section" id="services">
+  <div class="section-inner">
+    <div class="section-header anim-on-scroll">
+      <h2>Our Products &amp; Services</h2>
+      <p>A full suite of payment tools built for developers, merchants, and businesses across Southern Africa.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- 1 Digital Wallet -->
+      <div class="service-card sc-blue anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div class="sc-title">Digital Wallet</div>
+        <div class="sc-desc">Store, send, and receive money in your NexaPay wallet across ZMW, USD, BWP, and NAD — all from one unified balance.</div>
+        <span class="sc-tag">Wallet</span>
+      </div>
+
+      <!-- 2 Mobile Money Payments -->
+      <div class="service-card sc-purple anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <div class="sc-title">Mobile Money Payments</div>
+        <div class="sc-desc">Accept payments from MTN, Airtel, Zamtel, EcoCash, Orange Money, MTC, and 6+ more networks with a single API call.</div>
+        <span class="sc-tag">Collections</span>
+      </div>
+
+      <!-- 3 Payment Links -->
+      <div class="service-card sc-green anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <div class="sc-title">Payment Links</div>
+        <div class="sc-desc">Generate a shareable payment link in seconds. No coding needed — paste it in WhatsApp, email, or a social post and start collecting.</div>
+        <span class="sc-tag">No-code</span>
+      </div>
+
+      <!-- 4 Money Transfers -->
+      <div class="service-card sc-orange anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="sc-title">Money Transfers</div>
+        <div class="sc-desc">Send money instantly to any mobile money wallet in Zambia, Zimbabwe, Botswana, or Namibia. Settle same-day or next business day.</div>
+        <span class="sc-tag">Disbursements</span>
+      </div>
+
+      <!-- 5 Merchant Dashboard -->
+      <div class="service-card sc-teal anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="sc-title">Merchant Dashboard</div>
+        <div class="sc-desc">A real-time control panel for all your transactions, settlements, refunds, API keys, and analytics — across every country in one view.</div>
+        <span class="sc-tag">Analytics</span>
+      </div>
+
+      <!-- 6 Virtual Cards -->
+      <div class="service-card sc-rose anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><circle cx="17" cy="15" r="2"/></svg>
+        </div>
+        <div class="sc-title">Virtual Cards</div>
+        <div class="sc-desc">Issue virtual prepaid cards for your team or customers — fund them from your wallet and use them for secure online purchases worldwide.</div>
+        <span class="sc-tag">Coming Soon</span>
+      </div>
+
+      <!-- 7 Bulk Payments -->
+      <div class="service-card sc-amber anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="sc-title">Bulk Payments</div>
+        <div class="sc-desc">Disburse salaries, commissions, or refunds to hundreds of mobile money recipients in a single API call or CSV upload from your dashboard.</div>
+        <span class="sc-tag">Enterprise</span>
+      </div>
+
+      <!-- 8 API & Webhooks -->
+      <div class="service-card sc-sky anim-on-scroll">
+        <div class="sc-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="sc-title">API &amp; Webhooks</div>
+        <div class="sc-desc">RESTful API with full SDKs for JavaScript, Python, and PHP. Real-time webhook delivery with retry logic, sandbox testing, and OpenAPI docs.</div>
+        <span class="sc-tag">Developer</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<div class="why-us-section">
+  <div class="why-us-watermark">Why Us</div>
+  <div class="why-us-inner">
+    <div class="why-us-left anim-on-scroll">
+      <div class="why-us-label">Why Choose Us</div>
+      <h2>Building Digital Payment Solutions for African Businesses</h2>
+      <p>Our team brings deep industry expertise and delivers innovative, result-driven strategies tailored to your business goals. We work closely with organisations to solve complex challenges, optimise performance, and accelerate growth across Zambia, Zimbabwe, Botswana, and Namibia.</p>
+      <ul class="why-us-checklist">
+        <li>Dedicated Team of Industry Specialists</li>
+        <li>Data-Driven Insights &amp; Smart Planning</li>
+        <li>Performance-Focused Growth Solutions</li>
+        <li>99.9% Uptime Guarantee</li>
+        <li>24/7 Customer Support</li>
+      </ul>
+      <a href="auth.html" class="btn-why-us" onclick="spinThen('auth.html?mode=register')">
+        Get Started Today
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="why-us-stat-grid anim-on-scroll">
+      <div class="why-stat-card"><div class="why-stat-emoji">⚡</div><div class="why-stat-num">2s</div><div class="why-stat-label">Avg. Payment Speed</div></div>
+      <div class="why-stat-card"><div class="why-stat-emoji">🔒</div><div class="why-stat-num">100%</div><div class="why-stat-label">Secure Transactions</div></div>
+      <div class="why-stat-card"><div class="why-stat-emoji">🌍</div><div class="why-stat-num">4</div><div class="why-stat-label">Countries Supported</div></div>
+      <div class="why-stat-card"><div class="why-stat-emoji">💼</div><div class="why-stat-num">12+</div><div class="why-stat-label">Networks Integrated</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section" id="how-it-works" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-header anim-on-scroll">
+      <h2>How It Works</h2>
+      <p>Get started accepting payments in four simple steps.</p>
+    </div>
+    <div class="steps" style="max-width: 580px; margin: 0 auto;">
+      <div class="step">
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+        <div>
+          <div class="step-label">Step 01</div>
+          <h3>Create an Account</h3>
+          <p>Sign up as a merchant using your email or Google account. Provide your business details for verification across Zambia, Zimbabwe, Botswana, or Namibia.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div>
+          <div class="step-label">Step 02</div>
+          <h3>Get Verified</h3>
+          <p>Our team reviews and verifies your merchant account. Once approved, you can generate your API keys and configure your preferred payment networks.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div>
+          <div class="step-label">Step 03</div>
+          <h3>Integrate the API</h3>
+          <p>Use our comprehensive documentation to integrate the payment API into your website, mobile app, or platform. Our SDKs make it fast and straightforward.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <div>
+          <div class="step-label">Step 04</div>
+          <h3>Start Collecting</h3>
+          <p>Accept mobile money payments in ZMW, USD, BWP, and NAD from MTN, Airtel, EcoCash, Orange Money, MTC, and more — instantly, from day one.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="section" id="pricing">
+  <div class="section-inner">
+    <div class="section-header anim-on-scroll">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Flat-rate per transaction. No monthly fees, no setup costs. Volume discounts applied automatically. Covers all four countries.</p>
+    </div>
+    <div class="pricing-carousel-wrap anim-on-scroll">
+      <div class="pricing-carousel" id="pricingCarousel">
+
+        <!-- Zambia Card -->
+        <div class="pricing-country-card pcc-zambia">
+          <div class="pcc-flag">🇿🇲</div>
+          <div class="pcc-country">Zambia</div>
+          <div class="pcc-currency">Zambian Kwacha (ZMW) &middot; MTN / Airtel / Zamtel</div>
+          <div class="pcc-rate-row">
+            <div class="pcc-rate-big">2.5%</div>
+            <div class="pcc-rate-label">per transaction</div>
+          </div>
+          <div class="pcc-tiers">
+            <div class="pcc-tiers-title">Volume Tiers</div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1 – 100 txns/mo</span><span class="pcc-tier-rate">2.5%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">101 – 1,000 txns/mo</span><span class="pcc-tier-rate">2.0%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1,001 – 10,000 txns/mo</span><span class="pcc-tier-rate">1.5%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">10,000+ txns/mo</span><span class="pcc-tier-rate">Custom</span></div>
+          </div>
+          <div class="pcc-divider"></div>
+          <ul class="pcc-features">
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Min. fee: ZMW 0.50 per transaction</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Settlement: T+1 business day in ZMW</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>No monthly or setup fees</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Refunds at no extra charge</li>
+          </ul>
+          <div class="pcc-networks">
+            <span class="pcc-net-chip">MTN Mobile Money</span>
+            <span class="pcc-net-chip">Airtel Money</span>
+            <span class="pcc-net-chip">Zamtel Kwacha</span>
+          </div>
+          <a href="auth.html" class="btn-pcc" onclick="spinThen('auth.html?mode=register')">Get Started — Zambia</a>
+        </div>
+
+        <!-- Zimbabwe Card -->
+        <div class="pricing-country-card pcc-zimbabwe">
+          <div class="pcc-flag">🇿🇼</div>
+          <div class="pcc-country">Zimbabwe</div>
+          <div class="pcc-currency">USD / ZWG &middot; EcoCash / OneMoney / Telecash</div>
+          <div class="pcc-rate-row">
+            <div class="pcc-rate-big">2.0%</div>
+            <div class="pcc-rate-label">per transaction</div>
+          </div>
+          <div class="pcc-tiers">
+            <div class="pcc-tiers-title">Volume Tiers</div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1 – 100 txns/mo</span><span class="pcc-tier-rate">2.0%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">101 – 1,000 txns/mo</span><span class="pcc-tier-rate">1.7%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1,001 – 10,000 txns/mo</span><span class="pcc-tier-rate">1.4%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">10,000+ txns/mo</span><span class="pcc-tier-rate">Custom</span></div>
+          </div>
+          <div class="pcc-divider"></div>
+          <ul class="pcc-features">
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Min. fee: USD 0.10 per transaction</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Settlement: T+1 business day in USD</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>USD &amp; ZWG supported</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Refunds at no extra charge</li>
+          </ul>
+          <div class="pcc-networks">
+            <span class="pcc-net-chip">EcoCash</span>
+            <span class="pcc-net-chip">OneMoney</span>
+            <span class="pcc-net-chip">Telecash</span>
+          </div>
+          <a href="auth.html" class="btn-pcc" onclick="spinThen('auth.html?mode=register')">Get Started — Zimbabwe</a>
+        </div>
+
+        <!-- Botswana Card -->
+        <div class="pricing-country-card pcc-botswana">
+          <div class="pcc-flag">🇧🇼</div>
+          <div class="pcc-country">Botswana</div>
+          <div class="pcc-currency">Botswana Pula (BWP) &middot; Orange / MyZaka / BTC</div>
+          <div class="pcc-rate-row">
+            <div class="pcc-rate-big">2.0%</div>
+            <div class="pcc-rate-label">per transaction</div>
+          </div>
+          <div class="pcc-tiers">
+            <div class="pcc-tiers-title">Volume Tiers</div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1 – 100 txns/mo</span><span class="pcc-tier-rate">2.0%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">101 – 1,000 txns/mo</span><span class="pcc-tier-rate">1.7%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1,001 – 10,000 txns/mo</span><span class="pcc-tier-rate">1.4%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">10,000+ txns/mo</span><span class="pcc-tier-rate">Custom</span></div>
+          </div>
+          <div class="pcc-divider"></div>
+          <ul class="pcc-features">
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Min. fee: BWP 0.20 per transaction</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Settlement: T+1 business day in BWP</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>No monthly or setup fees</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Refunds at no extra charge</li>
+          </ul>
+          <div class="pcc-networks">
+            <span class="pcc-net-chip">Orange Money</span>
+            <span class="pcc-net-chip">MyZaka</span>
+            <span class="pcc-net-chip">BTC Mobile</span>
+          </div>
+          <a href="auth.html" class="btn-pcc" onclick="spinThen('auth.html?mode=register')">Get Started — Botswana</a>
+        </div>
+
+        <!-- Namibia Card -->
+        <div class="pricing-country-card pcc-namibia">
+          <div class="pcc-flag">🇳🇦</div>
+          <div class="pcc-country">Namibia</div>
+          <div class="pcc-currency">Namibian Dollar (NAD) &middot; MTC / TN Mobile / Telecom</div>
+          <div class="pcc-rate-row">
+            <div class="pcc-rate-big">2.0%</div>
+            <div class="pcc-rate-label">per transaction</div>
+          </div>
+          <div class="pcc-tiers">
+            <div class="pcc-tiers-title">Volume Tiers</div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1 – 100 txns/mo</span><span class="pcc-tier-rate">2.0%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">101 – 1,000 txns/mo</span><span class="pcc-tier-rate">1.7%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">1,001 – 10,000 txns/mo</span><span class="pcc-tier-rate">1.4%</span></div>
+            <div class="pcc-tier-row"><span class="pcc-tier-vol">10,000+ txns/mo</span><span class="pcc-tier-rate">Custom</span></div>
+          </div>
+          <div class="pcc-divider"></div>
+          <ul class="pcc-features">
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Min. fee: NAD 0.50 per transaction</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Settlement: T+1 business day in NAD</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>No monthly or setup fees</li>
+            <li><div class="pcc-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Refunds at no extra charge</li>
+          </ul>
+          <div class="pcc-networks">
+            <span class="pcc-net-chip">MTC MobiPay</span>
+            <span class="pcc-net-chip">TN Mobile</span>
+            <span class="pcc-net-chip">Telecom NA</span>
+          </div>
+          <a href="auth.html" class="btn-pcc" onclick="spinThen('auth.html?mode=register')">Get Started — Namibia</a>
+        </div>
+
+      </div>
+      <!-- Scroll dots -->
+      <div class="pricing-carousel-dots" id="pricingDots">
+        <div class="pc-dot active" onclick="scrollToCard(0)"></div>
+        <div class="pc-dot" onclick="scrollToCard(1)"></div>
+        <div class="pc-dot" onclick="scrollToCard(2)"></div>
+        <div class="pc-dot" onclick="scrollToCard(3)"></div>
+      </div>
+    </div>
+
+    <!-- Enterprise CTA -->
+    <div class="pricing-enterprise-cta anim-on-scroll">
+      <h3>Need Custom Enterprise Pricing?</h3>
+      <p>If your business processes 10,000+ transactions per month or requires multi-country bulk pricing, our enterprise team will create a custom plan tailored to your volume and requirements.</p>
+      <a href="mailto:enterprise@nexapay.africa" class="btn-enterprise">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact Enterprise Sales
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ANALYTICS & REPORTS ===== -->
+<div class="analytics-section anim-on-scroll">
+  <div class="analytics-inner">
+    <div class="analytics-header">
+      <h2>Analytics &amp; Reports</h2>
+      <p>Real-time transaction insights across all four countries — volume, success rates, network performance, and settlement tracking.</p>
+    </div>
+    <div class="analytics-scroll-wrap">
+      <div class="analytics-grid">
+
+        <!-- Zambia Analytics -->
+        <div class="analytics-card ac-zm">
+          <div class="analytics-card-header">
+            <div class="analytics-card-title"><span class="flag-circle">🇿🇲</span> Zambia</div>
+            <span class="analytics-badge up">↑ 18% MoM</span>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar" style="height:55%"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:62%"></div><div class="bar-label">Feb</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:58%"></div><div class="bar-label">Mar</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:70%"></div><div class="bar-label">Apr</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:78%"></div><div class="bar-label">May</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:100%"></div><div class="bar-label">Jun</div></div>
+          </div>
+          <div class="analytics-stats">
+            <div class="analytics-stat"><div class="analytics-stat-val">K 2.4M</div><div class="analytics-stat-key">Vol. (ZMW)</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">97.2%</div><div class="analytics-stat-key">Success Rate</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">18,430</div><div class="analytics-stat-key">Transactions</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">1.8s</div><div class="analytics-stat-key">Avg. Speed</div></div>
+          </div>
+          <div class="analytics-networks-row">
+            <span class="analytics-net-badge">MTN 58%</span>
+            <span class="analytics-net-badge">Airtel 32%</span>
+            <span class="analytics-net-badge">Zamtel 10%</span>
+          </div>
+        </div>
+
+        <!-- Zimbabwe Analytics -->
+        <div class="analytics-card ac-zw">
+          <div class="analytics-card-header">
+            <div class="analytics-card-title"><span class="flag-circle">🇿🇼</span> Zimbabwe</div>
+            <span class="analytics-badge up">↑ 12% MoM</span>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar" style="height:48%"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:54%"></div><div class="bar-label">Feb</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:65%"></div><div class="bar-label">Mar</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:60%"></div><div class="bar-label">Apr</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:73%"></div><div class="bar-label">May</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:100%"></div><div class="bar-label">Jun</div></div>
+          </div>
+          <div class="analytics-stats">
+            <div class="analytics-stat"><div class="analytics-stat-val">$184K</div><div class="analytics-stat-key">Vol. (USD)</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">96.8%</div><div class="analytics-stat-key">Success Rate</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">9,215</div><div class="analytics-stat-key">Transactions</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">2.1s</div><div class="analytics-stat-key">Avg. Speed</div></div>
+          </div>
+          <div class="analytics-networks-row">
+            <span class="analytics-net-badge">EcoCash 72%</span>
+            <span class="analytics-net-badge">OneMoney 21%</span>
+            <span class="analytics-net-badge">Telecash 7%</span>
+          </div>
+        </div>
+
+        <!-- Botswana Analytics -->
+        <div class="analytics-card ac-bw">
+          <div class="analytics-card-header">
+            <div class="analytics-card-title"><span class="flag-circle">🇧🇼</span> Botswana</div>
+            <span class="analytics-badge up">↑ 22% MoM</span>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar" style="height:38%"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:50%"></div><div class="bar-label">Feb</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:55%"></div><div class="bar-label">Mar</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:62%"></div><div class="bar-label">Apr</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:80%"></div><div class="bar-label">May</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:100%"></div><div class="bar-label">Jun</div></div>
+          </div>
+          <div class="analytics-stats">
+            <div class="analytics-stat"><div class="analytics-stat-val">P 920K</div><div class="analytics-stat-key">Vol. (BWP)</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">98.1%</div><div class="analytics-stat-key">Success Rate</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">6,740</div><div class="analytics-stat-key">Transactions</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">1.6s</div><div class="analytics-stat-key">Avg. Speed</div></div>
+          </div>
+          <div class="analytics-networks-row">
+            <span class="analytics-net-badge">Orange 49%</span>
+            <span class="analytics-net-badge">MyZaka 38%</span>
+            <span class="analytics-net-badge">BTC 13%</span>
+          </div>
+        </div>
+
+        <!-- Namibia Analytics -->
+        <div class="analytics-card ac-na">
+          <div class="analytics-card-header">
+            <div class="analytics-card-title"><span class="flag-circle">🇳🇦</span> Namibia</div>
+            <span class="analytics-badge up">↑ 9% MoM</span>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar" style="height:42%"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:47%"></div><div class="bar-label">Feb</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:53%"></div><div class="bar-label">Mar</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:61%"></div><div class="bar-label">Apr</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:70%"></div><div class="bar-label">May</div></div>
+            <div class="bar-wrap"><div class="bar" style="height:100%"></div><div class="bar-label">Jun</div></div>
+          </div>
+          <div class="analytics-stats">
+            <div class="analytics-stat"><div class="analytics-stat-val">N$430K</div><div class="analytics-stat-key">Vol. (NAD)</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">97.5%</div><div class="analytics-stat-key">Success Rate</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">4,380</div><div class="analytics-stat-key">Transactions</div></div>
+            <div class="analytics-stat"><div class="analytics-stat-val">2.0s</div><div class="analytics-stat-key">Avg. Speed</div></div>
+          </div>
+          <div class="analytics-networks-row">
+            <span class="analytics-net-badge">MTC 61%</span>
+            <span class="analytics-net-badge">TN Mobile 27%</span>
+            <span class="analytics-net-badge">Telecom 12%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="analytics-scroll-hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      Scroll to see all countries
+    </div>
+  </div>
+</div>
+
+<!-- ===== COLLECTION SHOWCASE ===== -->
+<section class="collection-section anim-on-scroll">
+  <div class="collection-inner">
+    <div class="collection-text">
+      <div class="collection-badge">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Smart Collections
+      </div>
+      <h2>Collect Payments Effortlessly</h2>
+      <p>NexaPay's collection interface lets your customers pay via mobile money, bank transfer, or card — all from one seamless checkout experience.</p>
+    </div>
+    <div class="collection-img-wrap">
+      <img src="collection.png" alt="NexaPay Collections — Payment Method Screen"/>
+    </div>
+  </div>
+</section>
+
+<!-- ===== READY CTA ===== -->
+<div class="ready-cta anim-on-scroll">
+  <div class="ready-cta-inner">
+    <h2>Ready to Transform Your Business?</h2>
+    <p>Join thousands of businesses already using NexaPay for their mobile money payment needs across Southern Africa.</p>
+    <a href="auth.html" class="btn-ready" onclick="spinThen('auth.html?mode=register')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Start collecting payments
+    </a>
+  </div>
+</div>
+
+<!-- ===== CONTACT FORM ===== -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-header anim-on-scroll">
+      <h2>Reach us directly.</h2>
+      <p>Send us a message and we will get back to you shortly. It will be our pleasure to answer any questions you may have.</p>
+    </div>
+    <div class="contact-card anim-on-scroll">
+      <div id="cfForm">
+        <div class="cf-group">
+          <input id="cfName" class="cf-input" type="text" placeholder="Name" autocomplete="name"/>
+        </div>
+        <div class="cf-group">
+          <input id="cfEmail" class="cf-input" type="email" placeholder="Email" autocomplete="email"/>
+        </div>
+        <div class="cf-group">
+          <textarea id="cfMsg" class="cf-textarea" placeholder="Write us a message"></textarea>
+        </div>
+        <button class="btn-send" onclick="sendMessage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Us A Message
+        </button>
+      </div>
+      <div class="cf-success" id="cfSuccess">
+        <div class="cf-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3>Sent successfully!</h3>
+        <p>Thanks for reaching out. We'll get back to you as soon as possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="index.html" class="logo-link" style="margin-bottom:.75rem;display:inline-flex">
+        <img src="nexapay.png" width="32" height="32" alt="NexaPay" style="border-radius:9px;display:block;object-fit:contain;">
+        <div>
+          <div class="logo-text">Nexa<span class="logo-pay-accent">Pay</span></div>
+          <div class="logo-sub">by Elicate Technologies</div>
+        </div>
+      </a>
+      <p class="footer-brand-desc">
+        Accept mobile money payments seamlessly across Zambia, Zimbabwe, Botswana, and Namibia. Built for developers and merchants by Elicate Technologies Limited.
+      </p>
+      <div class="footer-contact-icons">
+        <a href="mailto:support@nexapay.africa" class="footer-icon-btn" title="Email us">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="https://wa.me/27634530070" class="footer-icon-btn" title="WhatsApp / Call">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features" onclick="scrollToSection('features')">Features</a></li>
+          <li><a href="#services" onclick="scrollToSection('services')">Services</a></li>
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="#pricing" onclick="scrollToSection('pricing')">Pricing</a></li>
+          <li><a href="#how-it-works" onclick="scrollToSection('how-it-works')">How It Works</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="aml.html">AML Policy</a></li>
+          <li><a href="security.html">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <a href="mailto:support@nexapay.africa">support@nexapay.africa</a>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <a href="https://wa.me/27634530070">+27 63 453 0070</a>
+        </div>
+        <div class="footer-contact-item">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <span>Room 217, Broadway, Ndola, Zambia</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 <span>Elicate Technologies Limited</span>. All rights reserved. &nbsp;&middot;&nbsp;
+      NexaPay &mdash; Mobile Payments for Southern Africa
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== DRAWER =====
+  function toggleDrawer() {
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const hamburger = document.getElementById('hamburger');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    hamburger.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===== PANEL (Security & FAQ) =====
+  function openPanel(id) {
+    // Close any currently open panels first
+    document.querySelectorAll('.panel-overlay.open').forEach(function(p) {
+      p.classList.remove('open');
+    });
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Reset scroll AFTER browser has painted to avoid stale position on mobile
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        panel.scrollTop = 0;
+      });
+    });
+  }
+  function closePanel(id) {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    panel.classList.remove('open');
+    // Only restore scroll if no other panel is still open
+    if (!document.querySelector('.panel-overlay.open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  // ===== NAVIGATE WITH TRANSITION =====
+  function spinThen(url) {
+    event && event.preventDefault();
+    if (window.NexaPayNav) { window.NexaPayNav.go(url); } else { window.location.href = url; }
+  }
+  function navigateTo(url) {
+    event && event.preventDefault();
+    closeDrawer();
+    spinThen(url);
+  }
+
+  // ===== SCROLL TO SECTION =====
+  function scrollToSection(id) {
+    event && event.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const navH = 68;
+      const top = el.getBoundingClientRect().top + window.scrollY - navH - 16;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
+
+  // ===== CODE TABS =====
+  function switchTab(country) {
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.code-pane').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('pane-' + country).classList.add('active');
+  }
+
+  // ===== COPY CODE =====
+  function copyCode() {
+    const activePane = document.querySelector('.code-pane.active');
+    if (!activePane) return;
+    const raw = activePane.innerText || activePane.textContent;
+    const clean = raw.replace(/\u00a0/g, ' ').trim();
+    navigator.clipboard.writeText(clean).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const icon = document.getElementById('copyIcon');
+      const label = document.getElementById('copyLabel');
+      btn.classList.add('copied');
+      icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+      label.textContent = 'Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        icon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+        label.textContent = 'Copy';
+      }, 2000);
+    }).catch(() => {});
+  }
+
+  // ===== SEND MESSAGE =====
+  function sendMessage() {
+    const name = document.getElementById('cfName').value.trim();
+    const email = document.getElementById('cfEmail').value.trim();
+    const msg = document.getElementById('cfMsg').value.trim();
+    if (!name || !email || !msg) { return; }
+    const btn = document.querySelector('.btn-send');
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('cfForm').style.display = 'none';
+      document.getElementById('cfSuccess').classList.add('show');
+    }, 900);
+  }
+
+  // ===== NAVBAR SCROLL =====
+  const navbar = document.getElementById('navbar');
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    progressBar.style.transform = `scaleX(${scrolled})`;
+  }, { passive: true });
+
+  // ===== INTERSECTION OBSERVER =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => { entry.target.classList.add('visible'); }, i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.anim-on-scroll, .step').forEach(el => observer.observe(el));
+
+  // ===== CLOSE DRAWER ON RESIZE =====
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeDrawer(); });
+
+  // ===== DARK MODE TOGGLE =====
+  (function() {
+    var btn = document.getElementById('dark-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  })();
+
+  // ===== PRICING CAROUSEL AUTO-SCROLL =====
+  (function() {
+    const carousel = document.getElementById('pricingCarousel');
+    const dots = document.querySelectorAll('#pricingDots .pc-dot');
+    if (!carousel) return;
+
+    let currentCard = 0;
+    let autoScrollTimer = null;
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    function getCardWidth() {
+      const card = carousel.querySelector('.pricing-country-card');
+      if (!card) return 0;
+      return card.offsetWidth + 20; // card + gap
+    }
+
+    function scrollToCard(idx) {
+      if (idx < 0) idx = 3;
+      if (idx > 3) idx = 0;
+      currentCard = idx;
+      carousel.scrollTo({ left: getCardWidth() * idx, behavior: 'smooth' });
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    // expose globally for dot clicks
+    window.scrollToCard = scrollToCard;
+
+    // Auto-scroll — slow (4 seconds per card)
+    function startAutoScroll() {
+      autoScrollTimer = setInterval(() => {
+        if (!isDragging) scrollToCard((currentCard + 1) % 4);
+      }, 4000);
+    }
+    function stopAutoScroll() { clearInterval(autoScrollTimer); }
+
+    startAutoScroll();
+
+    // Drag to scroll
+    carousel.addEventListener('mousedown', (e) => {
+      isDragging = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft;
+      carousel.classList.add('grabbing'); stopAutoScroll();
+    });
+    carousel.addEventListener('mouseleave', () => { isDragging = false; carousel.classList.remove('grabbing'); startAutoScroll(); });
+    carousel.addEventListener('mouseup', () => { isDragging = false; carousel.classList.remove('grabbing'); startAutoScroll(); });
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      carousel.scrollLeft = scrollLeft - (e.pageX - carousel.offsetLeft - startX) * 1.5;
+    });
+
+    // Touch support
+    carousel.addEventListener('touchstart', () => { stopAutoScroll(); }, { passive: true });
+    carousel.addEventListener('touchend', () => { startAutoScroll(); }, { passive: true });
+
+    // Update dots on manual scroll
+    carousel.addEventListener('scroll', () => {
+      const cw = getCardWidth();
+      if (!cw) return;
+      const idx = Math.round(carousel.scrollLeft / cw);
+      if (idx !== currentCard) {
+        currentCard = Math.max(0, Math.min(3, idx));
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentCard));
+      }
+    }, { passive: true });
+  })();
+
+  // ===== FAQ TOGGLE =====
+  function toggleFaq(el) {
+    const answer = el.nextElementSibling;
+    const isOpen = el.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-q.open').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    // open this one if it was closed
+    if (!isOpen) {
+      el.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+</script>
+
+<!-- Page transition system — must load last -->
+<script src="sw-transitions.js"></script>
+</body>
+</html>
